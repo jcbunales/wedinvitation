@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#f5f1e7" />
+  <title>Our Wedding Invitation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600;700&family=Parisienne&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="invitation-intro-active">
+  <div id="invitationIntro" class="invitation-intro" aria-labelledby="introCoupleNames" role="dialog" aria-modal="true">
+    <div class="intro-glow" aria-hidden="true"></div>
+    <div class="intro-botanical intro-botanical-left" aria-hidden="true">❧</div>
+    <div class="intro-botanical intro-botanical-right" aria-hidden="true">❧</div>
+
+    <div class="intro-stage">
+      <p class="intro-kicker">You’re invited</p>
+      <div id="introEnvelope" class="intro-envelope" aria-hidden="true">
+        <div class="envelope-back"></div>
+        <div class="intro-card-preview">
+          <span class="preview-flourish">❧</span>
+          <p>Together with their families</p>
+          <h1 id="introCoupleNames"><span id="introPartnerOne">Olivia</span><em>&amp;</em><span id="introPartnerTwo">Ethan</span></h1>
+          <div class="preview-rule"><span>✦</span></div>
+          <strong id="introWeddingDate">24 August 2026</strong>
+          <small>Wedding Invitation</small>
+        </div>
+        <div class="envelope-pocket"></div>
+        <div class="envelope-flap"></div>
+        <div class="wax-seal"><span>F</span></div>
+      </div>
+      <button id="openInvitationBtn" class="open-invitation-btn" type="button" aria-controls="invitationIntro">
+        <span>Open invitation</span>
+        <span class="open-arrow" aria-hidden="true">↓</span>
+      </button>
+      <p class="intro-hint">Tap to open our wedding invitation</p>
+    </div>
+  </div>
+
+  <div class="page-shell">
+    <header class="topbar">
+      <a href="#home" class="brand" aria-label="Wedding invitation home">
+        <span class="brand-mark">F</span>
+        <span class="brand-text">Forever & Always</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="#details">Details</a>
+        <a href="#schedule">Schedule</a>
+        <a href="#venue">Venue</a>
+        <a href="#rsvp">RSVP</a>
+      </nav>
+      <button class="ghost-btn admin-open" type="button">Admin</button>
+    </header>
+
+    <main>
+      <section id="home" class="hero-section">
+        <div class="paper-card invitation-card">
+          <svg class="fern fern-top-left" viewBox="0 0 220 320" aria-hidden="true">
+            <g fill="none" stroke="currentColor" stroke-linecap="round">
+              <path d="M30 292 C62 210 90 126 163 30" stroke-width="3"/>
+              <path d="M55 238 C26 225 17 206 18 185"/>
+              <path d="M67 213 C39 197 34 174 38 152"/>
+              <path d="M81 184 C54 165 53 143 60 121"/>
+              <path d="M96 155 C73 138 72 117 80 98"/>
+              <path d="M112 126 C92 110 93 91 101 74"/>
+              <path d="M132 96 C116 82 118 66 127 52"/>
+              <path d="M58 234 C76 224 88 207 93 188"/>
+              <path d="M72 207 C91 197 103 179 108 159"/>
+              <path d="M87 179 C107 168 119 149 124 129"/>
+              <path d="M103 150 C123 140 135 120 140 100"/>
+              <path d="M120 121 C138 112 149 94 154 75"/>
+              <path d="M139 91 C154 83 163 69 168 52"/>
+            </g>
+          </svg>
+          <svg class="fern fern-bottom-right" viewBox="0 0 220 320" aria-hidden="true">
+            <g fill="none" stroke="currentColor" stroke-linecap="round">
+              <path d="M30 292 C62 210 90 126 163 30" stroke-width="3"/>
+              <path d="M55 238 C26 225 17 206 18 185"/>
+              <path d="M67 213 C39 197 34 174 38 152"/>
+              <path d="M81 184 C54 165 53 143 60 121"/>
+              <path d="M96 155 C73 138 72 117 80 98"/>
+              <path d="M112 126 C92 110 93 91 101 74"/>
+              <path d="M132 96 C116 82 118 66 127 52"/>
+              <path d="M58 234 C76 224 88 207 93 188"/>
+              <path d="M72 207 C91 197 103 179 108 159"/>
+              <path d="M87 179 C107 168 119 149 124 129"/>
+              <path d="M103 150 C123 140 135 120 140 100"/>
+              <path d="M120 121 C138 112 149 94 154 75"/>
+              <path d="M139 91 C154 83 163 69 168 52"/>
+            </g>
+          </svg>
+
+          <div class="invitation-copy">
+            <p class="eyebrow">Together with their families</p>
+            <h1><span id="partnerOneDisplay">Olivia</span><span class="ampersand">&</span><span id="partnerTwoDisplay">Ethan</span></h1>
+            <p class="invite-line">joyfully invite you to celebrate their wedding</p>
+            <div class="date-block">
+              <span id="weddingDayDisplay" class="day">Saturday</span>
+              <strong id="weddingDateDisplay">24 August 2026</strong>
+              <span id="weddingTimeDisplay">4:00 PM</span>
+            </div>
+            <div class="divider"><span>✦</span></div>
+            <p id="venueNameDisplay" class="venue-name">The Garden Estate</p>
+            <p id="venueAddressDisplay" class="venue-address">123 Bloomfield Road, Sydney NSW</p>
+            <a href="#rsvp" class="primary-btn">Kindly RSVP</a>
+          </div>
+        </div>
+
+        <div class="countdown-panel" aria-label="Wedding countdown">
+          <p>Counting down to our day</p>
+          <div class="countdown-grid">
+            <div><strong id="countDays">000</strong><span>Days</span></div>
+            <div><strong id="countHours">00</strong><span>Hours</span></div>
+            <div><strong id="countMinutes">00</strong><span>Minutes</span></div>
+            <div><strong id="countSeconds">00</strong><span>Seconds</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="details" class="content-section split-section">
+        <div>
+          <p class="section-kicker">Our celebration</p>
+          <h2>A day surrounded by the people we love.</h2>
+        </div>
+        <div class="body-copy">
+          <p id="welcomeMessageDisplay">We are so excited to celebrate this chapter with you. Join us for a garden ceremony, dinner, drinks, dancing, and a night to remember.</p>
+          <p class="small-note">Please submit one RSVP per invited household. If your invitation includes a guest, you can confirm their attendance in the form below.</p>
+        </div>
+      </section>
+
+      <section id="schedule" class="content-section muted-section">
+        <div class="section-heading centered">
+          <p class="section-kicker">Order of the day</p>
+          <h2>Wedding schedule</h2>
+        </div>
+        <div id="scheduleCards" class="schedule-grid"></div>
+      </section>
+
+      <section id="venue" class="content-section venue-section">
+        <div class="venue-card">
+          <div>
+            <p class="section-kicker">Where to find us</p>
+            <h2 id="venueHeadingDisplay">The Garden Estate</h2>
+            <p id="venueFullAddressDisplay">123 Bloomfield Road, Sydney NSW</p>
+            <p id="venueNotesDisplay">Complimentary parking is available on site. Please arrive 20–30 minutes before the ceremony begins.</p>
+            <a id="mapLinkDisplay" class="primary-btn" href="https://maps.google.com" target="_blank" rel="noreferrer">Open in Maps</a>
+          </div>
+          <div class="map-art" aria-label="Decorative venue map">
+            <div class="map-road road-a"></div>
+            <div class="map-road road-b"></div>
+            <div class="map-road road-c"></div>
+            <div class="map-lake"></div>
+            <div class="map-pin"><span>♥</span></div>
+            <span class="map-label">Ceremony</span>
+          </div>
+        </div>
+      </section>
+
+      <section id="rsvp" class="content-section rsvp-section">
+        <div class="section-heading centered">
+          <p class="section-kicker">Please reply</p>
+          <h2>RSVP</h2>
+          <p id="rsvpDeadlineDisplay">Kindly respond by 1 July 2026.</p>
+        </div>
+
+        <div class="rsvp-layout">
+          <form id="rsvpForm" class="form-card">
+            <div id="rsvpLookupStep">
+              <label for="guestLookup">Your name or email</label>
+              <div class="lookup-row">
+                <input id="guestLookup" type="text" placeholder="e.g. Alex Morgan" autocomplete="name" required />
+                <button type="button" id="findInvitationBtn" class="primary-btn compact">Find invitation</button>
+              </div>
+              <p class="form-help">Use the name or email address that appears on your invitation.</p>
+            </div>
+
+            <div id="rsvpResponseStep" class="hidden">
+              <div class="guest-found-banner">
+                <span>Invitation found for</span>
+                <strong id="foundGuestName"></strong>
+              </div>
+
+              <fieldset>
+                <legend>Will you attend?</legend>
+                <div class="choice-grid">
+                  <label class="choice-card">
+                    <input type="radio" name="attendance" value="Attending" required />
+                    <span>Joyfully accepts</span>
+                  </label>
+                  <label class="choice-card">
+                    <input type="radio" name="attendance" value="Declined" required />
+                    <span>Regretfully declines</span>
+                  </label>
+                </div>
+              </fieldset>
+
+              <div id="attendingFields">
+                <div class="form-grid two-col">
+                  <div>
+                    <label for="partyAttending">Guests attending</label>
+                    <select id="partyAttending"></select>
+                  </div>
+                  <div>
+                    <label for="mealChoice">Meal preference</label>
+                    <select id="mealChoice">
+                      <option value="No preference">No preference</option>
+                      <option value="Chicken">Chicken</option>
+                      <option value="Beef">Beef</option>
+                      <option value="Fish">Fish</option>
+                      <option value="Vegetarian">Vegetarian</option>
+                      <option value="Vegan">Vegan</option>
+                    </select>
+                  </div>
+                </div>
+                <label for="plusOneName">Guest / plus-one name</label>
+                <input id="plusOneName" type="text" placeholder="Optional" />
+              </div>
+
+              <label for="dietaryNotes">Dietary requirements or message</label>
+              <textarea id="dietaryNotes" rows="4" placeholder="Allergies, accessibility needs, song request, or a note for the couple"></textarea>
+
+              <div class="form-actions">
+                <button type="button" id="backToLookupBtn" class="ghost-btn">Back</button>
+                <button type="submit" class="primary-btn">Submit RSVP</button>
+              </div>
+            </div>
+
+            <div id="rsvpSuccess" class="success-panel hidden">
+              <div class="success-icon">✓</div>
+              <h3>Thank you!</h3>
+              <p>Your RSVP has been saved. We cannot wait to celebrate with you.</p>
+              <button type="button" id="submitAnotherBtn" class="ghost-btn">Submit another RSVP</button>
+            </div>
+          </form>
+
+          <aside class="rsvp-note">
+            <span class="botanical-icon">❧</span>
+            <h3>Need to update your response?</h3>
+            <p>Search your invitation again using the same name or email. Your latest response will replace the previous one.</p>
+            <div class="mini-stats">
+              <div><strong id="publicAttendingCount">0</strong><span>Guests attending</span></div>
+              <div><strong id="publicResponsesCount">0</strong><span>Responses received</span></div>
+            </div>
+          </aside>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <span id="footerCouple">Olivia & Ethan</span>
+      <span>Made with love · <span id="footerYear">2026</span></span>
+    </footer>
+  </div>
+
+  <div id="adminModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="adminTitle">
+    <div class="modal-backdrop admin-close"></div>
+    <div class="admin-panel">
+      <button class="modal-close admin-close" type="button" aria-label="Close admin dashboard">×</button>
+
+      <div id="adminLogin" class="admin-login">
+        <div class="admin-login-card">
+          <span class="botanical-icon">❧</span>
+          <p class="section-kicker">Private area</p>
+          <h2 id="adminTitle">Wedding Admin</h2>
+          <p>Manage guests, confirmations, venue details, and wedding information.</p>
+          <label for="adminPasscode">Passcode</label>
+          <input id="adminPasscode" type="password" placeholder="Enter passcode" />
+          <button id="adminLoginBtn" class="primary-btn" type="button">Open dashboard</button>
+          <p class="form-help">Demo passcode: <strong>wedding2026</strong></p>
+          <p id="adminLoginError" class="error-text hidden">Incorrect passcode.</p>
+        </div>
+      </div>
+
+      <div id="adminDashboard" class="admin-dashboard hidden">
+        <aside class="admin-sidebar">
+          <div class="admin-brand">
+            <div class="brand-mark">F</div>
+            <div><strong>Wedding Admin</strong><span id="adminCoupleName">Olivia & Ethan</span></div>
+          </div>
+          <nav id="adminNav">
+            <button class="active" data-admin-tab="overview">Overview</button>
+            <button data-admin-tab="guests">Guest list</button>
+            <button data-admin-tab="confirmations">Confirmations</button>
+            <button data-admin-tab="details">Wedding details</button>
+            <button data-admin-tab="data">Export / Import</button>
+          </nav>
+          <button id="adminLogoutBtn" class="sidebar-logout" type="button">Lock dashboard</button>
+        </aside>
+
+        <section class="admin-main">
+          <div class="admin-mobile-heading">
+            <strong>Wedding Admin</strong>
+            <select id="mobileAdminNav" aria-label="Admin section">
+              <option value="overview">Overview</option>
+              <option value="guests">Guest list</option>
+              <option value="confirmations">Confirmations</option>
+              <option value="details">Wedding details</option>
+              <option value="data">Export / Import</option>
+            </select>
+          </div>
+
+          <div id="adminTab-overview" class="admin-tab active">
+            <div class="admin-title-row">
+              <div><p class="section-kicker">Dashboard</p><h2>Overview</h2></div>
+              <button id="copyInviteLinkBtn" class="ghost-btn" type="button">Copy invitation link</button>
+            </div>
+            <div class="stat-grid">
+              <article><span>Total invited</span><strong id="statInvited">0</strong><small>Across all households</small></article>
+              <article><span>Attending</span><strong id="statAttending">0</strong><small id="statAttendingPercent">0% of invited guests</small></article>
+              <article><span>Declined</span><strong id="statDeclined">0</strong><small>Confirmed not attending</small></article>
+              <article><span>Awaiting reply</span><strong id="statPending">0</strong><small>Households still pending</small></article>
+            </div>
+            <div class="dashboard-grid">
+              <article class="admin-card">
+                <div class="card-title-row"><h3>RSVP progress</h3><span id="responseRateText">0%</span></div>
+                <div class="progress-track"><div id="responseProgress" class="progress-fill"></div></div>
+                <div id="statusLegend" class="status-legend"></div>
+              </article>
+              <article class="admin-card">
+                <h3>Wedding snapshot</h3>
+                <dl class="snapshot-list">
+                  <div><dt>Date</dt><dd id="snapshotDate"></dd></div>
+                  <div><dt>Venue</dt><dd id="snapshotVenue"></dd></div>
+                  <div><dt>RSVP deadline</dt><dd id="snapshotDeadline"></dd></div>
+                </dl>
+              </article>
+            </div>
+            <article class="admin-card">
+              <div class="card-title-row"><h3>Recent responses</h3><button class="text-btn" data-admin-tab-link="confirmations">View all</button></div>
+              <div id="recentResponses" class="recent-list"></div>
+            </article>
+          </div>
+
+          <div id="adminTab-guests" class="admin-tab">
+            <div class="admin-title-row">
+              <div><p class="section-kicker">Invitations</p><h2>Guest list</h2></div>
+              <button id="addGuestBtn" class="primary-btn" type="button">+ Add guest</button>
+            </div>
+            <div class="toolbar">
+              <input id="guestSearch" type="search" placeholder="Search guests…" />
+              <select id="guestStatusFilter">
+                <option value="All">All statuses</option>
+                <option value="Pending">Pending</option>
+                <option value="Attending">Attending</option>
+                <option value="Declined">Declined</option>
+              </select>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Guest / household</th><th>Contact</th><th>Invited</th><th>Status</th><th>Attending</th><th></th></tr></thead>
+                <tbody id="guestTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div id="adminTab-confirmations" class="admin-tab">
+            <div class="admin-title-row">
+              <div><p class="section-kicker">Responses</p><h2>Confirmation list</h2></div>
+              <button id="exportRsvpCsvBtn" class="ghost-btn" type="button">Export CSV</button>
+            </div>
+            <div id="confirmationCards" class="confirmation-grid"></div>
+          </div>
+
+          <div id="adminTab-details" class="admin-tab">
+            <div class="admin-title-row"><div><p class="section-kicker">Invitation settings</p><h2>Wedding details</h2></div></div>
+            <form id="weddingDetailsForm" class="settings-form">
+              <div class="settings-section">
+                <h3>Couple</h3>
+                <div class="form-grid two-col">
+                  <div><label for="settingPartnerOne">Partner one</label><input id="settingPartnerOne" required /></div>
+                  <div><label for="settingPartnerTwo">Partner two</label><input id="settingPartnerTwo" required /></div>
+                </div>
+                <label for="settingWelcome">Welcome message</label>
+                <textarea id="settingWelcome" rows="4"></textarea>
+              </div>
+              <div class="settings-section">
+                <h3>Date & RSVP</h3>
+                <div class="form-grid two-col">
+                  <div><label for="settingWeddingDate">Wedding date</label><input id="settingWeddingDate" type="date" required /></div>
+                  <div><label for="settingWeddingTime">Ceremony time</label><input id="settingWeddingTime" type="time" required /></div>
+                  <div><label for="settingRsvpDeadline">RSVP deadline</label><input id="settingRsvpDeadline" type="date" required /></div>
+                  <div><label for="settingPasscode">Admin passcode</label><input id="settingPasscode" type="text" required /></div>
+                </div>
+              </div>
+              <div class="settings-section">
+                <h3>Venue</h3>
+                <div class="form-grid two-col">
+                  <div><label for="settingVenueName">Venue name</label><input id="settingVenueName" required /></div>
+                  <div><label for="settingVenueAddress">Address</label><input id="settingVenueAddress" required /></div>
+                </div>
+                <label for="settingMapLink">Google Maps link</label><input id="settingMapLink" type="url" />
+                <label for="settingVenueNotes">Guest notes</label><textarea id="settingVenueNotes" rows="3"></textarea>
+              </div>
+              <div class="settings-section">
+                <div class="card-title-row"><h3>Schedule</h3><button id="addScheduleItemBtn" class="text-btn" type="button">+ Add item</button></div>
+                <div id="scheduleEditor"></div>
+              </div>
+              <div class="sticky-save"><button class="primary-btn" type="submit">Save wedding details</button><span id="settingsSaved" class="saved-text hidden">Saved ✓</span></div>
+            </form>
+          </div>
+
+          <div id="adminTab-data" class="admin-tab">
+            <div class="admin-title-row"><div><p class="section-kicker">Backup</p><h2>Export / Import</h2></div></div>
+            <div class="dashboard-grid">
+              <article class="admin-card">
+                <h3>Export wedding data</h3>
+                <p>Download a complete JSON backup containing wedding details, guest list, and RSVP responses.</p>
+                <button id="exportJsonBtn" class="primary-btn" type="button">Download backup</button>
+              </article>
+              <article class="admin-card">
+                <h3>Import backup</h3>
+                <p>Restore data from a JSON backup created by this website.</p>
+                <label class="file-input-label">Choose JSON file<input id="importJsonInput" type="file" accept="application/json,.json" /></label>
+                <p id="importStatus" class="form-help"></p>
+              </article>
+            </div>
+            <article class="admin-card danger-zone">
+              <h3>Reset demo data</h3>
+              <p>Deletes all saved information from this browser and restores the sample wedding and guest list.</p>
+              <button id="resetDataBtn" class="danger-btn" type="button">Reset all data</button>
+            </article>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <div id="guestEditorModal" class="mini-modal hidden" role="dialog" aria-modal="true" aria-labelledby="guestEditorTitle">
+    <div class="modal-backdrop guest-editor-close"></div>
+    <form id="guestEditorForm" class="mini-modal-card">
+      <button class="modal-close guest-editor-close" type="button" aria-label="Close guest editor">×</button>
+      <p class="section-kicker">Guest record</p>
+      <h2 id="guestEditorTitle">Add guest</h2>
+      <input id="editingGuestId" type="hidden" />
+      <label for="editGuestName">Guest / household name</label><input id="editGuestName" required />
+      <div class="form-grid two-col">
+        <div><label for="editGuestEmail">Email</label><input id="editGuestEmail" type="email" /></div>
+        <div><label for="editGuestPhone">Phone</label><input id="editGuestPhone" type="tel" /></div>
+        <div><label for="editGuestPartySize">Invited party size</label><input id="editGuestPartySize" type="number" min="1" max="20" value="1" required /></div>
+        <div><label for="editGuestGroup">Group</label><input id="editGuestGroup" placeholder="Family, Friends…" /></div>
+      </div>
+      <label for="editGuestNotes">Admin notes</label><textarea id="editGuestNotes" rows="3"></textarea>
+      <div class="form-actions"><button class="ghost-btn guest-editor-close" type="button">Cancel</button><button class="primary-btn" type="submit">Save guest</button></div>
+    </form>
+  </div>
+
+  <div id="toast" class="toast hidden" role="status"></div>
+  <script src="app.js"></script>
+</body>
+</html>
