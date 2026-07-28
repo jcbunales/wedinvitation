@@ -266,10 +266,16 @@
           <p class="section-kicker">Private area</p>
           <h2 id="adminTitle">Wedding Admin</h2>
           <p>Manage guests, confirmations, venue details, and wedding information.</p>
-          <label for="adminPasscode">Passcode</label>
-          <input id="adminPasscode" type="password" placeholder="Enter passcode" />
+          <div id="adminEmailGroup" class="hidden">
+            <label for="adminEmail">Admin email</label>
+            <input id="adminEmail" type="email" placeholder="you@example.com" autocomplete="username" />
+          </div>
+          <label id="adminPasswordLabel" for="adminPasscode">Passcode</label>
+          <input id="adminPasscode" type="password" placeholder="Enter passcode" autocomplete="current-password" />
           <button id="adminLoginBtn" class="primary-btn" type="button">Open dashboard</button>
-          <p class="form-help">Demo passcode: <strong>wedding2026</strong></p>
+          <p id="localAdminHelp" class="form-help">Demo passcode: <strong>wedding2026</strong></p>
+          <p id="supabaseAdminHelp" class="form-help hidden">Use the email/password account you create in Supabase Auth.</p>
+          <p id="dataModeStatus" class="form-help"></p>
           <p id="adminLoginError" class="error-text hidden">Incorrect passcode.</p>
         </div>
       </div>
@@ -314,6 +320,11 @@
               <article><span>Awaiting reply</span><strong id="statPending">0</strong><small>Households still pending</small></article>
             </div>
             <div class="dashboard-grid">
+              <article class="admin-card">
+                <h3>Data connection</h3>
+                <p id="adminDataConnection">Local browser storage is active.</p>
+                <p class="form-help">To use Supabase on GitHub Pages, fill in <code>supabase-config.js</code> and run <code>supabase-setup.sql</code> once in your Supabase SQL Editor.</p>
+              </article>
               <article class="admin-card">
                 <div class="card-title-row"><h3>RSVP progress</h3><span id="responseRateText">0%</span></div>
                 <div class="progress-track"><div id="responseProgress" class="progress-fill"></div></div>
@@ -382,7 +393,7 @@
                   <div><label for="settingWeddingDate">Wedding date</label><input id="settingWeddingDate" type="date" required /></div>
                   <div><label for="settingWeddingTime">Ceremony time</label><input id="settingWeddingTime" type="time" required /></div>
                   <div><label for="settingRsvpDeadline">RSVP deadline</label><input id="settingRsvpDeadline" type="date" required /></div>
-                  <div><label for="settingPasscode">Admin passcode</label><input id="settingPasscode" type="text" required /></div>
+                  <div id="localPasscodeSetting"><label for="settingPasscode">Admin passcode</label><input id="settingPasscode" type="text" required /></div>
                 </div>
               </div>
               <div class="settings-section">
@@ -448,6 +459,8 @@
   </div>
 
   <div id="toast" class="toast hidden" role="status"></div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

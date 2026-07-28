@@ -30,9 +30,24 @@ const defaultState = {
   ]
 };
 
-let state = loadState();
+const SUPABASE_CONFIG = window.WEDDING_SUPABASE_CONFIG || {};
+const SUPABASE_MODE = Boolean(
+  SUPABASE_CONFIG.enabled &&
+  SUPABASE_CONFIG.url &&
+  SUPABASE_CONFIG.publishableKey &&
+  window.supabase?.createClient
+);
+const supabaseDb = SUPABASE_MODE
+  ? window.supabase.createClient(SUPABASE_CONFIG.url, SUPABASE_CONFIG.publishableKey)
+  : null;
+
+let state = SUPABASE_MODE
+  ? { wedding: clone(defaultState.wedding), guests: [] }
+  : loadState();
 let activeGuestId = null;
+let activeGuestRecord = null;
 let toastTimer = null;
+let remotePublicStats = { attending: 0, responses: 0 };
 
 function clone(value) { return JSON.parse(JSON.stringify(value)); }
 function loadState() {
@@ -48,7 +63,157 @@ function loadState() {
     return clone(defaultState);
   }
 }
-function saveState() { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+function saveState() {
+  if (!SUPABASE_MODE) localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+
+function weddingToRow(wedding) {
+  return {
+    id: 1,
+    partner_one: wedding.partnerOne,
+    partner_two: wedding.partnerTwo,
+    wedding_date: wedding.weddingDate,
+    wedding_time: wedding.weddingTime,
+    rsvp_deadline: wedding.rsvpDeadline,
+    venue_name: wedding.venueName,
+    venue_address: wedding.venueAddress,
+    map_link: wedding.mapLink || "",
+    venue_notes: wedding.venueNotes || "",
+    welcome_message: wedding.welcomeMessage || "",
+    schedule: Array.isArray(wedding.schedule) ? wedding.schedule : []
+  };
+}
+
+function rowToWedding(row) {
+  if (!row) return clone(defaultState.wedding);
+  const normalisedTime = row.wedding_time ? String(row.wedding_time).slice(0, 5) : defaultState.wedding.weddingTime;
+  return {
+    ...clone(defaultState.wedding),
+    partnerOne: row.partner_one ?? defaultState.wedding.partnerOne,
+    partnerTwo: row.partner_two ?? defaultState.wedding.partnerTwo,
+    weddingDate: row.wedding_date ?? defaultState.wedding.weddingDate,
+    weddingTime: normalisedTime,
+    rsvpDeadline: row.rsvp_deadline ?? defaultState.wedding.rsvpDeadline,
+    venueName: row.venue_name ?? defaultState.wedding.venueName,
+    venueAddress: row.venue_address ?? defaultState.wedding.venueAddress,
+    mapLink: row.map_link ?? "",
+    venueNotes: row.venue_notes ?? "",
+    welcomeMessage: row.welcome_message ?? "",
+    schedule: Array.isArray(row.schedule) ? row.schedule : clone(defaultState.wedding.schedule),
+    passcode: state?.wedding?.passcode || defaultState.wedding.passcode
+  };
+}
+
+function guestToRow(guest, includeId = true) {
+  const row = {
+    name: guest.name,
+    email: guest.email || "",
+    phone: guest.phone || "",
+    party_size: Number(guest.partySize || 1),
+    group_name: guest.group || "",
+    admin_notes: guest.adminNotes || "",
+    status: guest.status || "Pending",
+    attending_count: Number(guest.attendingCount || 0),
+    meal_choice: guest.mealChoice || "",
+    plus_one_name: guest.plusOneName || "",
+    dietary_notes: guest.dietaryNotes || "",
+    responded_at: guest.respondedAt || null
+  };
+  if (includeId && guest.id && /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(guest.id)) row.id = guest.id;
+  return row;
+}
+
+function rowToGuest(row) {
+  return {
+    id: String(row.id),
+    name: row.name || "",
+    email: row.email || "",
+    phone: row.phone || "",
+    partySize: Number(row.party_size || 1),
+    group: row.group_name || "",
+    adminNotes: row.admin_notes || "",
+    status: row.status || "Pending",
+    attendingCount: Number(row.attending_count || 0),
+    mealChoice: row.meal_choice || "",
+    plusOneName: row.plus_one_name || "",
+    dietaryNotes: row.dietary_notes || "",
+    respondedAt: row.responded_at || null
+  };
+}
+
+async function refreshRemoteStats() {
+  if (!SUPABASE_MODE) return;
+  const { data, error } = await supabaseDb.rpc("public_rsvp_stats");
+  if (error) throw error;
+  const row = Array.isArray(data) ? data[0] : data;
+  remotePublicStats = { attending: Number(row?.attending || 0), responses: Number(row?.responses || 0) };
+}
+
+async function verifyRemoteAdmin() {
+  if (!SUPABASE_MODE) return true;
+  const { data, error } = await supabaseDb.rpc("is_wedding_admin");
+  if (error) throw error;
+  return data === true;
+}
+
+async function loadRemotePublicData() {
+  if (!SUPABASE_MODE) return;
+  const { data, error } = await supabaseDb.from("wedding_settings").select("*").eq("id", 1).single();
+  if (error) throw error;
+  state.wedding = rowToWedding(data);
+  await refreshRemoteStats();
+}
+
+async function loadRemoteAdminData() {
+  if (!SUPABASE_MODE) return;
+  const [settingsResult, guestsResult] = await Promise.all([
+    supabaseDb.from("wedding_settings").select("*").eq("id", 1).single(),
+    supabaseDb.from("guests").select("*").order("name")
+  ]);
+  if (settingsResult.error) throw settingsResult.error;
+  if (guestsResult.error) throw guestsResult.error;
+  state.wedding = rowToWedding(settingsResult.data);
+  state.guests = (guestsResult.data || []).map(rowToGuest);
+}
+
+async function saveWeddingRemote() {
+  if (!SUPABASE_MODE) { saveState(); return; }
+  const { error } = await supabaseDb.from("wedding_settings").upsert(weddingToRow(state.wedding), { onConflict: "id" });
+  if (error) throw error;
+}
+
+async function upsertGuestRemote(guest) {
+  if (!SUPABASE_MODE) return guest;
+  const row = guestToRow(guest, Boolean(guest.id));
+  const query = guest.id && row.id
+    ? supabaseDb.from("guests").update(row).eq("id", guest.id).select().single()
+    : supabaseDb.from("guests").insert(row).select().single();
+  const { data, error } = await query;
+  if (error) throw error;
+  return rowToGuest(data);
+}
+
+async function deleteGuestRemote(id) {
+  if (!SUPABASE_MODE) return;
+  const { error } = await supabaseDb.from("guests").delete().eq("id", id);
+  if (error) throw error;
+}
+
+async function replaceRemoteState(nextState) {
+  if (!SUPABASE_MODE) return;
+  state.wedding = { ...clone(defaultState.wedding), ...(nextState.wedding || {}) };
+  await saveWeddingRemote();
+  const { error: deleteError } = await supabaseDb.from("guests").delete().not("id", "is", null);
+  if (deleteError) throw deleteError;
+  if (Array.isArray(nextState.guests) && nextState.guests.length) {
+    const rows = nextState.guests.map(g => guestToRow(g, false));
+    const { error: insertError } = await supabaseDb.from("guests").insert(rows);
+    if (insertError) throw insertError;
+  }
+  await loadRemoteAdminData();
+  await refreshRemoteStats();
+}
+
 function byId(id) { return document.getElementById(id); }
 function escapeHtml(value = "") {
   return String(value).replace(/[&<>'"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" }[c]));
@@ -118,6 +283,11 @@ function renderScheduleCards() {
 }
 
 function renderPublicStats() {
+  if (SUPABASE_MODE) {
+    byId("publicResponsesCount").textContent = remotePublicStats.responses;
+    byId("publicAttendingCount").textContent = remotePublicStats.attending;
+    return;
+  }
   const answered = state.guests.filter(g => g.status !== "Pending").length;
   const attending = state.guests.reduce((sum, g) => sum + (g.status === "Attending" ? Number(g.attendingCount || 0) : 0), 0);
   byId("publicResponsesCount").textContent = answered;
@@ -145,8 +315,19 @@ function findGuest(query) {
     || state.guests.find(g => g.name.toLowerCase().includes(needle) || (g.email && g.email.toLowerCase().includes(needle)));
 }
 
+async function lookupGuest(query) {
+  const value = query.trim();
+  if (!value) return null;
+  if (!SUPABASE_MODE) return findGuest(value);
+  const { data, error } = await supabaseDb.rpc("lookup_guest", { p_query: value });
+  if (error) throw error;
+  const row = Array.isArray(data) ? data[0] : data;
+  return row ? rowToGuest(row) : null;
+}
+
 function showRsvpGuest(guest) {
   activeGuestId = guest.id;
+  activeGuestRecord = guest;
   byId("foundGuestName").textContent = guest.name;
   const select = byId("partyAttending");
   select.innerHTML = Array.from({ length: guest.partySize }, (_, i) => `<option value="${i + 1}">${i + 1}</option>`).join("");
@@ -163,6 +344,7 @@ function showRsvpGuest(guest) {
 
 function resetRsvp() {
   activeGuestId = null;
+  activeGuestRecord = null;
   byId("guestLookup").value = "";
   byId("rsvpResponseStep").classList.add("hidden");
   byId("rsvpSuccess").classList.add("hidden");
@@ -175,56 +357,176 @@ function toggleAttendingFields() {
 }
 
 document.querySelectorAll('input[name="attendance"]').forEach(el => el.addEventListener("change", toggleAttendingFields));
-byId("findInvitationBtn").addEventListener("click", () => {
-  const guest = findGuest(byId("guestLookup").value);
-  if (!guest) return showToast("We couldn't find that invitation. Try the full name or email address.");
-  showRsvpGuest(guest);
+byId("findInvitationBtn").addEventListener("click", async () => {
+  const button = byId("findInvitationBtn");
+  button.disabled = true;
+  const originalText = button.textContent;
+  button.textContent = "Searching…";
+  try {
+    const guest = await lookupGuest(byId("guestLookup").value);
+    if (!guest) return showToast("We couldn't find that invitation. Try the exact full name or email address.");
+    showRsvpGuest(guest);
+  } catch (error) {
+    console.error(error);
+    showToast("Could not check the invitation right now. Please try again.");
+  } finally {
+    button.disabled = false;
+    button.textContent = originalText;
+  }
 });
 byId("guestLookup").addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); byId("findInvitationBtn").click(); } });
 byId("backToLookupBtn").addEventListener("click", resetRsvp);
 byId("submitAnotherBtn").addEventListener("click", resetRsvp);
-byId("rsvpForm").addEventListener("submit", e => {
+byId("rsvpForm").addEventListener("submit", async e => {
   e.preventDefault();
-  const guest = state.guests.find(g => g.id === activeGuestId);
+  const guest = activeGuestRecord || state.guests.find(g => g.id === activeGuestId);
   if (!guest) return;
   const attendance = document.querySelector('input[name="attendance"]:checked')?.value;
   if (!attendance) return showToast("Please choose whether you can attend.");
+
   guest.status = attendance;
   guest.attendingCount = attendance === "Attending" ? Number(byId("partyAttending").value) : 0;
   guest.mealChoice = attendance === "Attending" ? byId("mealChoice").value : "";
   guest.plusOneName = attendance === "Attending" ? byId("plusOneName").value.trim() : "";
   guest.dietaryNotes = byId("dietaryNotes").value.trim();
   guest.respondedAt = new Date().toISOString();
-  saveState();
-  renderAllAdmin();
-  renderPublicStats();
-  byId("rsvpResponseStep").classList.add("hidden");
-  byId("rsvpSuccess").classList.remove("hidden");
+
+  const submitButton = e.submitter || e.currentTarget.querySelector('[type="submit"]');
+  if (submitButton) submitButton.disabled = true;
+  try {
+    if (SUPABASE_MODE) {
+      const { error } = await supabaseDb.rpc("submit_rsvp", {
+        p_guest_id: guest.id,
+        p_status: guest.status,
+        p_attending_count: guest.attendingCount,
+        p_meal_choice: guest.mealChoice,
+        p_plus_one_name: guest.plusOneName,
+        p_dietary_notes: guest.dietaryNotes
+      });
+      if (error) throw error;
+      const adminCopy = state.guests.find(g => g.id === guest.id);
+      if (adminCopy) Object.assign(adminCopy, guest);
+      await refreshRemoteStats();
+    } else {
+      saveState();
+    }
+    if (!byId("adminDashboard").classList.contains("hidden")) renderAllAdmin();
+    renderPublicStats();
+    byId("rsvpResponseStep").classList.add("hidden");
+    byId("rsvpSuccess").classList.remove("hidden");
+  } catch (error) {
+    console.error(error);
+    showToast("Your RSVP could not be saved. Please try again.");
+  } finally {
+    if (submitButton) submitButton.disabled = false;
+  }
 });
 
-function openAdmin() {
+function configureDataModeUI() {
+  const emailGroup = byId("adminEmailGroup");
+  const localHelp = byId("localAdminHelp");
+  const remoteHelp = byId("supabaseAdminHelp");
+  const passwordLabel = byId("adminPasswordLabel");
+  const passcodeSetting = byId("localPasscodeSetting");
+  const modeStatus = byId("dataModeStatus");
+  const connection = byId("adminDataConnection");
+
+  if (SUPABASE_MODE) {
+    emailGroup?.classList.remove("hidden");
+    localHelp?.classList.add("hidden");
+    remoteHelp?.classList.remove("hidden");
+    if (passwordLabel) passwordLabel.textContent = "Password";
+    if (byId("adminPasscode")) byId("adminPasscode").placeholder = "Supabase account password";
+    passcodeSetting?.classList.add("hidden");
+    if (modeStatus) modeStatus.textContent = "Supabase connected · shared cloud data";
+    if (connection) connection.textContent = "Supabase is connected. Wedding settings, guests, and RSVPs are shared across devices.";
+  } else {
+    emailGroup?.classList.add("hidden");
+    localHelp?.classList.remove("hidden");
+    remoteHelp?.classList.add("hidden");
+    if (passwordLabel) passwordLabel.textContent = "Passcode";
+    passcodeSetting?.classList.remove("hidden");
+    if (modeStatus) modeStatus.textContent = "Local mode · this browser only";
+    if (connection) connection.textContent = "Local browser storage is active. Configure supabase-config.js to use shared cloud data.";
+  }
+}
+
+async function openAdmin() {
   byId("adminModal").classList.remove("hidden");
-  byId("adminPasscode").focus();
+  if (SUPABASE_MODE) {
+    const { data } = await supabaseDb.auth.getSession();
+    if (data?.session) {
+      try {
+        if (!(await verifyRemoteAdmin())) {
+          await supabaseDb.auth.signOut();
+          throw new Error("This account is not listed as a wedding admin.");
+        }
+        await loadRemoteAdminData();
+        byId("adminLogin").classList.add("hidden");
+        byId("adminDashboard").classList.remove("hidden");
+        renderPublic();
+        renderAllAdmin();
+        return;
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    byId("adminEmail").focus();
+  } else {
+    byId("adminPasscode").focus();
+  }
 }
 function closeAdmin() { byId("adminModal").classList.add("hidden"); }
 document.querySelectorAll(".admin-open").forEach(btn => btn.addEventListener("click", openAdmin));
 document.querySelectorAll(".admin-close").forEach(btn => btn.addEventListener("click", closeAdmin));
 byId("adminLoginBtn").addEventListener("click", loginAdmin);
 byId("adminPasscode").addEventListener("keydown", e => { if (e.key === "Enter") loginAdmin(); });
-function loginAdmin() {
-  if (byId("adminPasscode").value === state.wedding.passcode) {
-    byId("adminLoginError").classList.add("hidden");
+byId("adminEmail")?.addEventListener("keydown", e => { if (e.key === "Enter") byId("adminPasscode").focus(); });
+
+async function loginAdmin() {
+  const errorEl = byId("adminLoginError");
+  const button = byId("adminLoginBtn");
+  errorEl.classList.add("hidden");
+  button.disabled = true;
+  const originalText = button.textContent;
+  button.textContent = "Opening…";
+  try {
+    if (SUPABASE_MODE) {
+      const email = byId("adminEmail").value.trim();
+      const password = byId("adminPasscode").value;
+      if (!email || !password) throw new Error("Enter your Supabase admin email and password.");
+      const { error } = await supabaseDb.auth.signInWithPassword({ email, password });
+      if (error) throw error;
+      if (!(await verifyRemoteAdmin())) {
+        await supabaseDb.auth.signOut();
+        throw new Error("This account is not listed as a wedding admin.");
+      }
+      await loadRemoteAdminData();
+      await refreshRemoteStats();
+      renderPublic();
+    } else if (byId("adminPasscode").value !== state.wedding.passcode) {
+      throw new Error("Incorrect passcode.");
+    }
+
     byId("adminLogin").classList.add("hidden");
     byId("adminDashboard").classList.remove("hidden");
     byId("adminPasscode").value = "";
     renderAllAdmin();
-  } else {
-    byId("adminLoginError").classList.remove("hidden");
+  } catch (error) {
+    console.error(error);
+    errorEl.textContent = SUPABASE_MODE ? (error.message || "Could not sign in.") : "Incorrect passcode.";
+    errorEl.classList.remove("hidden");
+  } finally {
+    button.disabled = false;
+    button.textContent = originalText;
   }
 }
-byId("adminLogoutBtn").addEventListener("click", () => {
+
+byId("adminLogoutBtn").addEventListener("click", async () => {
+  if (SUPABASE_MODE) await supabaseDb.auth.signOut();
   byId("adminDashboard").classList.add("hidden");
   byId("adminLogin").classList.remove("hidden");
+  if (SUPABASE_MODE) state.guests = [];
 });
 
 function setAdminTab(tab) {
@@ -350,7 +652,7 @@ byId("scheduleEditor").addEventListener("click", e => {
   state.wedding.schedule.splice(Number(btn.dataset.removeSchedule), 1);
   renderScheduleEditor();
 });
-byId("weddingDetailsForm").addEventListener("submit", e => {
+byId("weddingDetailsForm").addEventListener("submit", async e => {
   e.preventDefault();
   document.querySelectorAll(".schedule-editor-row").forEach(row => {
     const index = Number(row.dataset.scheduleIndex);
@@ -368,17 +670,28 @@ byId("weddingDetailsForm").addEventListener("submit", e => {
     weddingDate: byId("settingWeddingDate").value,
     weddingTime: byId("settingWeddingTime").value,
     rsvpDeadline: byId("settingRsvpDeadline").value,
-    passcode: byId("settingPasscode").value.trim(),
+    passcode: byId("settingPasscode").value.trim() || state.wedding.passcode,
     venueName: byId("settingVenueName").value.trim(),
     venueAddress: byId("settingVenueAddress").value.trim(),
     mapLink: byId("settingMapLink").value.trim(),
     venueNotes: byId("settingVenueNotes").value.trim()
   };
-  saveState();
-  renderPublic();
-  renderAllAdmin();
-  byId("settingsSaved").classList.remove("hidden");
-  setTimeout(() => byId("settingsSaved").classList.add("hidden"), 1800);
+
+  const saveButton = e.submitter || e.currentTarget.querySelector('[type="submit"]');
+  if (saveButton) saveButton.disabled = true;
+  try {
+    await saveWeddingRemote();
+    renderPublic();
+    syncInvitationIntro();
+    renderAllAdmin();
+    byId("settingsSaved").classList.remove("hidden");
+    setTimeout(() => byId("settingsSaved").classList.add("hidden"), 1800);
+  } catch (error) {
+    console.error(error);
+    showToast("Wedding details could not be saved.");
+  } finally {
+    if (saveButton) saveButton.disabled = false;
+  }
 });
 
 function renderAllAdmin() {
@@ -403,7 +716,7 @@ function openGuestEditor(id = "") {
 function closeGuestEditor() { byId("guestEditorModal").classList.add("hidden"); }
 byId("addGuestBtn").addEventListener("click", () => openGuestEditor());
 document.querySelectorAll(".guest-editor-close").forEach(el => el.addEventListener("click", closeGuestEditor));
-byId("guestEditorForm").addEventListener("submit", e => {
+byId("guestEditorForm").addEventListener("submit", async e => {
   e.preventDefault();
   const id = byId("editingGuestId").value;
   const existing = state.guests.find(g => g.id === id);
@@ -422,22 +735,46 @@ byId("guestEditorForm").addEventListener("submit", e => {
     dietaryNotes: existing?.dietaryNotes || "",
     respondedAt: existing?.respondedAt || null
   };
-  if (existing) Object.assign(existing, record); else state.guests.push(record);
-  saveState();
-  renderAllAdmin();
-  renderPublicStats();
-  closeGuestEditor();
-  showToast(existing ? "Guest updated." : "Guest added.");
+
+  const saveButton = e.submitter || e.currentTarget.querySelector('[type="submit"]');
+  if (saveButton) saveButton.disabled = true;
+  try {
+    if (SUPABASE_MODE) {
+      const savedGuest = await upsertGuestRemote(record);
+      if (existing) Object.assign(existing, savedGuest); else state.guests.push(savedGuest);
+      await refreshRemoteStats();
+    } else {
+      if (existing) Object.assign(existing, record); else state.guests.push(record);
+      saveState();
+    }
+    renderAllAdmin();
+    renderPublicStats();
+    closeGuestEditor();
+    showToast(existing ? "Guest updated." : "Guest added.");
+  } catch (error) {
+    console.error(error);
+    showToast("Guest could not be saved.");
+  } finally {
+    if (saveButton) saveButton.disabled = false;
+  }
 });
-function deleteGuest(id) {
+
+async function deleteGuest(id) {
   const guest = state.guests.find(g => g.id === id);
   if (!guest) return;
   if (!confirm(`Delete ${guest.name} from the guest list?`)) return;
-  state.guests = state.guests.filter(g => g.id !== id);
-  saveState();
-  renderAllAdmin();
-  renderPublicStats();
-  showToast("Guest deleted.");
+  try {
+    await deleteGuestRemote(id);
+    state.guests = state.guests.filter(g => g.id !== id);
+    if (!SUPABASE_MODE) saveState();
+    else await refreshRemoteStats();
+    renderAllAdmin();
+    renderPublicStats();
+    showToast("Guest deleted.");
+  } catch (error) {
+    console.error(error);
+    showToast("Guest could not be deleted.");
+  }
 }
 
 function downloadFile(filename, content, type) {
@@ -462,30 +799,50 @@ byId("importJsonInput").addEventListener("change", e => {
   const file = e.target.files?.[0];
   if (!file) return;
   const reader = new FileReader();
-  reader.onload = () => {
+  reader.onload = async () => {
     try {
       const imported = JSON.parse(reader.result);
       if (!imported.wedding || !Array.isArray(imported.guests)) throw new Error("Invalid backup");
-      state = imported;
-      saveState();
+      if (SUPABASE_MODE) {
+        await replaceRemoteState(imported);
+      } else {
+        state = imported;
+        saveState();
+      }
       renderPublic();
+      syncInvitationIntro();
       renderAllAdmin();
+      renderPublicStats();
       byId("importStatus").textContent = "Backup imported successfully.";
       showToast("Backup imported.");
-    } catch {
-      byId("importStatus").textContent = "That file does not look like a valid wedding backup.";
+    } catch (error) {
+      console.error(error);
+      byId("importStatus").textContent = "The backup could not be imported.";
     }
   };
   reader.readAsText(file);
 });
-byId("resetDataBtn").addEventListener("click", () => {
+
+byId("resetDataBtn").addEventListener("click", async () => {
   if (!confirm("Reset all wedding and RSVP data to the original demo?")) return;
-  state = clone(defaultState);
-  saveState();
-  renderPublic();
-  renderAllAdmin();
-  showToast("Demo data restored.");
+  try {
+    if (SUPABASE_MODE) {
+      await replaceRemoteState(clone(defaultState));
+    } else {
+      state = clone(defaultState);
+      saveState();
+    }
+    renderPublic();
+    syncInvitationIntro();
+    renderAllAdmin();
+    renderPublicStats();
+    showToast("Demo data restored.");
+  } catch (error) {
+    console.error(error);
+    showToast("The data could not be reset.");
+  }
 });
+
 byId("copyInviteLinkBtn").addEventListener("click", async () => {
   try {
     await navigator.clipboard.writeText(location.href.split("#")[0]);
@@ -494,9 +851,6 @@ byId("copyInviteLinkBtn").addEventListener("click", async () => {
     showToast("Copying is unavailable in this browser. Copy the address bar instead.");
   }
 });
-
-renderPublic();
-populateSettingsForm();
 
 // Opening invitation animation
 function syncInvitationIntro() {
@@ -534,9 +888,30 @@ function openInvitationIntro() {
   }, finishDelay);
 }
 
-syncInvitationIntro();
 const openInvitationButton = byId("openInvitationBtn");
 if (openInvitationButton) {
   openInvitationButton.addEventListener("click", openInvitationIntro);
   openInvitationButton.focus({ preventScroll: true });
 }
+
+async function initialiseWeddingSite() {
+  configureDataModeUI();
+  renderPublic();
+  populateSettingsForm();
+  syncInvitationIntro();
+
+  if (!SUPABASE_MODE) return;
+  try {
+    await loadRemotePublicData();
+    renderPublic();
+    populateSettingsForm();
+    syncInvitationIntro();
+  } catch (error) {
+    console.error("Supabase initialisation failed:", error);
+    const modeStatus = byId("dataModeStatus");
+    if (modeStatus) modeStatus.textContent = "Supabase configured, but the database could not be reached.";
+    showToast("Supabase is configured but could not be reached.");
+  }
+}
+
+initialiseWeddingSite();
