@@ -13,6 +13,15 @@ const defaultState = {
     venueNotes: "Complimentary parking is available on site. Please arrive 20–30 minutes before the ceremony begins.",
     welcomeMessage: "We are so excited to celebrate this chapter with you. Join us for a garden ceremony, dinner, drinks, dancing, and a night to remember.",
     passcode: "wedding2026",
+    entourage: [
+      { role: "Parents of the Bride", names: "Maria & Antonio Santos" },
+      { role: "Parents of the Groom", names: "Grace & Michael Reyes" },
+      { role: "Maid of Honour", names: "Sofia Santos" },
+      { role: "Best Man", names: "Daniel Reyes" },
+      { role: "Bridesmaids", names: "Isabella Cruz · Mia Chen · Ava Wilson" },
+      { role: "Groomsmen", names: "Noah Lee · Liam Carter · Ethan Tan" }
+    ],
+    dressMotif: "We would love our guests to dress in elegant earth tones inspired by our wedding palette. Olive green, burgundy, warm neutrals, and soft cream accents are especially welcome.",
     schedule: [
       { time: "3:30 PM", title: "Guest arrival", note: "Please make your way to the garden ceremony area." },
       { time: "4:00 PM", title: "Ceremony", note: "We say “I do” surrounded by our favourite people." },
@@ -80,6 +89,8 @@ function weddingToRow(wedding) {
     map_link: wedding.mapLink || "",
     venue_notes: wedding.venueNotes || "",
     welcome_message: wedding.welcomeMessage || "",
+    entourage: Array.isArray(wedding.entourage) ? wedding.entourage : [],
+    dress_motif: wedding.dressMotif || "",
     schedule: Array.isArray(wedding.schedule) ? wedding.schedule : []
   };
 }
@@ -99,6 +110,8 @@ function rowToWedding(row) {
     mapLink: row.map_link ?? "",
     venueNotes: row.venue_notes ?? "",
     welcomeMessage: row.welcome_message ?? "",
+    entourage: Array.isArray(row.entourage) ? row.entourage : clone(defaultState.wedding.entourage),
+    dressMotif: row.dress_motif ?? defaultState.wedding.dressMotif,
     schedule: Array.isArray(row.schedule) ? row.schedule : clone(defaultState.wedding.schedule),
     passcode: state?.wedding?.passcode || defaultState.wedding.passcode
   };
@@ -267,9 +280,24 @@ function renderPublic() {
   byId("rsvpDeadlineDisplay").textContent = `Kindly respond by ${formatDate(w.rsvpDeadline)}.`;
   byId("footerCouple").textContent = `${w.partnerOne} & ${w.partnerTwo}`;
   byId("footerYear").textContent = new Date(w.weddingDate).getFullYear();
+  byId("dressInitialOne").textContent = (w.partnerOne || "O").trim().charAt(0).toUpperCase();
+  byId("dressInitialTwo").textContent = (w.partnerTwo || "E").trim().charAt(0).toUpperCase();
+  byId("dressMotifMessage").textContent = w.dressMotif || defaultState.wedding.dressMotif;
+  renderEntourage();
   renderScheduleCards();
   renderPublicStats();
   updateCountdown();
+}
+
+function renderEntourage() {
+  const items = Array.isArray(state.wedding.entourage) ? state.wedding.entourage : [];
+  byId("entourageGrid").innerHTML = items.length ? items.map(item => `
+    <article class="entourage-card">
+      <span class="entourage-flourish">✦</span>
+      <p>${escapeHtml(item.role || "Entourage")}</p>
+      <h3>${escapeHtml(item.names || "")}</h3>
+    </article>
+  `).join("") : `<p class="empty-entourage">Entourage details will be announced soon.</p>`;
 }
 
 function renderScheduleCards() {
@@ -631,6 +659,8 @@ function populateSettingsForm() {
   byId("settingVenueAddress").value = w.venueAddress;
   byId("settingMapLink").value = w.mapLink;
   byId("settingVenueNotes").value = w.venueNotes;
+  byId("settingEntourage").value = (w.entourage || []).map(item => `${item.role} | ${item.names}`).join("\n");
+  byId("settingDressMotif").value = w.dressMotif || "";
   renderScheduleEditor();
 }
 function renderScheduleEditor() {
@@ -662,6 +692,11 @@ byId("weddingDetailsForm").addEventListener("submit", async e => {
       note: row.querySelector('[data-field="note"]').value.trim()
     };
   });
+  const entourage = byId("settingEntourage").value.split(/\r?\n/).map(line => line.trim()).filter(Boolean).map(line => {
+    const [role, ...nameParts] = line.split("|");
+    return { role: (role || "Entourage").trim(), names: nameParts.join("|").trim() };
+  }).filter(item => item.names);
+
   state.wedding = {
     ...state.wedding,
     partnerOne: byId("settingPartnerOne").value.trim(),
@@ -674,7 +709,9 @@ byId("weddingDetailsForm").addEventListener("submit", async e => {
     venueName: byId("settingVenueName").value.trim(),
     venueAddress: byId("settingVenueAddress").value.trim(),
     mapLink: byId("settingMapLink").value.trim(),
-    venueNotes: byId("settingVenueNotes").value.trim()
+    venueNotes: byId("settingVenueNotes").value.trim(),
+    entourage,
+    dressMotif: byId("settingDressMotif").value.trim()
   };
 
   const saveButton = e.submitter || e.currentTarget.querySelector('[type="submit"]');

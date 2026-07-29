@@ -114,3 +114,6 @@ The opening screen uses a layered envelope structure:
 5. wax seal
 
 The card is sized and positioned inside the pocket in the closed state, then moves above the pocket only during the opening sequence. Separate mobile sizing is included to prevent card/flap overlap on narrow screens.
+
+## Entourage and dress motif
+The public invitation now includes editable Wedding Entourage and Dress Motif sections using an olive green and burgundy palette. In Admin > Wedding details, edit the entourage as one line per role using `Role | Name(s)` and update the guest dress guidance. If your Supabase project was created with an older version, re-run `supabase-setup.sql`; it uses `ADD COLUMN IF NOT EXISTS` for the new settings fields.

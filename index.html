@@ -49,6 +49,8 @@
       <nav class="nav-links" aria-label="Primary navigation">
         <a href="#details">Details</a>
         <a href="#schedule">Schedule</a>
+        <a href="#entourage">Entourage</a>
+        <a href="#dress">Dress</a>
         <a href="#venue">Venue</a>
         <a href="#rsvp">RSVP</a>
       </nav>
@@ -137,6 +139,37 @@
           <h2>Wedding schedule</h2>
         </div>
         <div id="scheduleCards" class="schedule-grid"></div>
+      </section>
+
+      <section id="entourage" class="content-section entourage-section">
+        <div class="section-heading centered">
+          <p class="section-kicker">The people beside us</p>
+          <h2>Wedding entourage</h2>
+          <p class="section-intro">With love and gratitude, we celebrate the family and friends who will stand with us on our wedding day.</p>
+        </div>
+        <div id="entourageGrid" class="entourage-grid"></div>
+      </section>
+
+      <section id="dress" class="content-section dress-section">
+        <div class="dress-card">
+          <div class="dress-copy">
+            <p class="section-kicker">Dress motif</p>
+            <h2>Olive green &amp; burgundy</h2>
+            <p id="dressMotifMessage">We would love our guests to dress in elegant earth tones inspired by our wedding palette. Olive green, burgundy, warm neutrals, and soft cream accents are especially welcome.</p>
+            <div class="motif-swatches" aria-label="Wedding colour palette">
+              <div class="motif-swatch"><span class="swatch olive"></span><strong>Olive Green</strong><small>#5F6F3A</small></div>
+              <div class="motif-swatch"><span class="swatch burgundy"></span><strong>Burgundy</strong><small>#7B2438</small></div>
+              <div class="motif-swatch"><span class="swatch cream"></span><strong>Warm Cream</strong><small>#F5F1E7</small></div>
+            </div>
+            <p class="dress-note"><strong>Gentle note:</strong> Please avoid an all-white or bridal-white outfit.</p>
+          </div>
+          <div class="dress-art" aria-hidden="true">
+            <span class="dress-arch dress-arch-one"></span>
+            <span class="dress-arch dress-arch-two"></span>
+            <div class="dress-monogram"><span id="dressInitialOne">O</span><em>&amp;</em><span id="dressInitialTwo">E</span></div>
+            <span class="dress-leaf">❧</span>
+          </div>
+        </div>
       </section>
 
       <section id="venue" class="content-section venue-section">
@@ -404,6 +437,16 @@
                 </div>
                 <label for="settingMapLink">Google Maps link</label><input id="settingMapLink" type="url" />
                 <label for="settingVenueNotes">Guest notes</label><textarea id="settingVenueNotes" rows="3"></textarea>
+              </div>
+              <div class="settings-section">
+                <h3>Entourage</h3>
+                <p class="form-help">Enter one role per line using <strong>Role | Name(s)</strong>.</p>
+                <textarea id="settingEntourage" rows="8" placeholder="Parents of the Bride | Maria & Antonio Santos&#10;Maid of Honour | Sofia Reyes&#10;Best Man | Daniel Cruz"></textarea>
+              </div>
+              <div class="settings-section">
+                <h3>Dress motif</h3>
+                <label for="settingDressMotif">Guest dress guidance</label>
+                <textarea id="settingDressMotif" rows="4" placeholder="Olive green, burgundy, warm neutrals, and soft cream accents are welcome."></textarea>
               </div>
               <div class="settings-section">
                 <div class="card-title-row"><h3>Schedule</h3><button id="addScheduleItemBtn" class="text-btn" type="button">+ Add item</button></div>

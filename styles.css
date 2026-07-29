@@ -2,14 +2,20 @@
   --cream: #f5f1e7;
   --paper: #fffdf8;
   --paper-2: #f8f5ec;
-  --sage: #71836b;
-  --sage-dark: #465746;
-  --sage-soft: #dfe7da;
-  --ink: #263127;
-  --muted: #70776d;
-  --line: rgba(70, 87, 70, .18);
-  --gold: #aa8c57;
-  --danger: #9d4d44;
+  --olive: #5f6f3a;
+  --olive-dark: #3f4c2c;
+  --olive-soft: #e7eadc;
+  --burgundy: #7b2438;
+  --burgundy-dark: #571827;
+  --burgundy-soft: #efe1e4;
+  --sage: var(--olive);
+  --sage-dark: var(--olive-dark);
+  --sage-soft: var(--olive-soft);
+  --ink: #2b3024;
+  --muted: #716c64;
+  --line: rgba(63, 76, 44, .18);
+  --gold: #b08d57;
+  --danger: var(--burgundy);
   --shadow: 0 28px 60px rgba(53, 66, 51, .14);
 }
 
@@ -139,7 +145,7 @@ a { color: inherit; }
   display: block;
   margin: 12px 0 7px;
   font-family: "Parisienne", "Brush Script MT", cursive;
-  color: var(--gold);
+  color: var(--burgundy);
   font-size: .65em;
   line-height: 1;
 }
@@ -693,4 +699,141 @@ body.invitation-intro-opened .page-shell { opacity: 1; transform: none; filter: 
   opacity: 1;
   transform: translateY(0);
   transition-delay: .58s;
+}
+
+
+/* Olive green + burgundy wedding palette */
+.section-kicker { color: var(--burgundy); }
+.brand-mark { border-color: var(--burgundy); color: var(--burgundy); }
+.primary-btn { background: var(--olive-dark); }
+.primary-btn:hover { background: #334022; }
+.text-btn { color: var(--burgundy); }
+.fern { color: rgba(95,111,58,.58); }
+.schedule-card time, .divider { color: var(--burgundy); }
+.divider::before, .divider::after { background: rgba(123,36,56,.35); }
+.map-pin { background: var(--burgundy); }
+.botanical-icon { color: var(--olive); }
+.wax-seal { background: var(--burgundy) !important; box-shadow: 0 7px 15px rgba(87,24,39,.28) !important; }
+.open-invitation-btn { background: var(--olive-dark); }
+.open-invitation-btn:hover { background: #334022; }
+
+.section-intro {
+  max-width: 680px;
+  margin: 18px auto 0;
+  color: var(--muted);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 20px;
+  line-height: 1.55;
+}
+
+.entourage-section { padding-top: 105px; padding-bottom: 105px; }
+.entourage-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: 16px;
+  margin-top: 48px;
+}
+.entourage-card {
+  position: relative;
+  min-height: 180px;
+  padding: 34px 26px 28px;
+  text-align: center;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  box-shadow: 0 14px 35px rgba(63,76,44,.06);
+  overflow: hidden;
+}
+.entourage-card::after {
+  content: "";
+  position: absolute;
+  width: 96px;
+  height: 96px;
+  right: -54px;
+  bottom: -54px;
+  border: 1px solid rgba(123,36,56,.24);
+  border-radius: 50%;
+}
+.entourage-flourish { color: var(--burgundy); font-size: 13px; }
+.entourage-card p {
+  margin: 12px 0 7px;
+  color: var(--olive-dark);
+  text-transform: uppercase;
+  letter-spacing: .16em;
+  font-size: 10px;
+  font-weight: 700;
+}
+.entourage-card h3 {
+  margin: 0;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 27px;
+  font-weight: 500;
+  line-height: 1.15;
+}
+.empty-entourage { grid-column: 1/-1; text-align: center; color: var(--muted); }
+
+.dress-section { max-width: 1180px; padding-top: 40px; }
+.dress-card {
+  display: grid;
+  grid-template-columns: 1.15fr .85fr;
+  min-height: 520px;
+  background: var(--olive-dark);
+  color: #fffdf8;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+.dress-copy { padding: clamp(42px,7vw,82px); align-self: center; }
+.dress-copy .section-kicker { color: #dbc7aa; }
+.dress-copy h2 { color: #fffdf8; }
+.dress-copy > p:not(.section-kicker):not(.dress-note) { max-width: 650px; color: rgba(255,253,248,.78); }
+.motif-swatches {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 12px;
+  margin: 34px 0 26px;
+}
+.motif-swatch {
+  padding: 12px;
+  border: 1px solid rgba(255,255,255,.18);
+  background: rgba(255,255,255,.06);
+}
+.swatch { display: block; width: 100%; height: 62px; margin-bottom: 10px; border: 1px solid rgba(255,255,255,.18); }
+.swatch.olive { background: #5f6f3a; }
+.swatch.burgundy { background: #7b2438; }
+.swatch.cream { background: #f5f1e7; }
+.motif-swatch strong { display: block; font-family: "Cormorant Garamond",Georgia,serif; font-size: 18px; }
+.motif-swatch small { color: rgba(255,255,255,.58); font-size: 10px; letter-spacing: .08em; }
+.dress-note { margin: 0; padding-top: 18px; border-top: 1px solid rgba(255,255,255,.16); color: rgba(255,255,255,.72); font-size: 13px; }
+.dress-art {
+  position: relative;
+  min-height: 460px;
+  background: var(--burgundy);
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+}
+.dress-art::before {
+  content: "";
+  position: absolute;
+  inset: 24px;
+  border: 1px solid rgba(245,241,231,.32);
+}
+.dress-arch { position: absolute; border: 1px solid rgba(245,241,231,.20); border-radius: 50% 50% 0 0; }
+.dress-arch-one { width: 310px; height: 420px; bottom: -95px; left: 50%; transform: translateX(-50%); }
+.dress-arch-two { width: 245px; height: 350px; bottom: -70px; left: 50%; transform: translateX(-50%); }
+.dress-monogram { position: relative; z-index: 2; display: flex; align-items: center; gap: 10px; font-family: "Cormorant Garamond", Georgia, serif; font-size: 70px; }
+.dress-monogram em { font-family: "Parisienne", cursive; font-size: 48px; color: #dbc7aa; font-style: normal; }
+.dress-leaf { position: absolute; right: 34px; top: 26px; font: 90px Georgia,serif; color: rgba(245,241,231,.16); transform: rotate(22deg); }
+
+@media (max-width: 900px) {
+  .entourage-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .dress-card { grid-template-columns: 1fr; }
+  .dress-art { min-height: 330px; }
+}
+@media (max-width: 620px) {
+  .entourage-grid { grid-template-columns: 1fr; }
+  .entourage-card { min-height: 150px; }
+  .motif-swatches { grid-template-columns: 1fr; }
+  .swatch { height: 45px; }
+  .dress-copy { padding: 42px 25px; }
+  .dress-art { min-height: 285px; }
 }
