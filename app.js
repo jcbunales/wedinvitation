@@ -21,7 +21,7 @@ const defaultState = {
       { role: "Bridesmaids", names: "Isabella Cruz · Mia Chen · Ava Wilson" },
       { role: "Groomsmen", names: "Noah Lee · Liam Carter · Ethan Tan" }
     ],
-    dressMotif: "We would love our guests to dress in elegant earth tones inspired by our wedding palette. Olive green, burgundy, warm neutrals, and soft cream accents are especially welcome.",
+    dressMotif: "We would love our guests to dress in elegant earth tones inspired by our wedding palette. Olive green is the preferred shade, while burgundy, warm neutrals, and soft cream accents are also welcome.",
     schedule: [
       { time: "3:30 PM", title: "Guest arrival", note: "Please make your way to the garden ceremony area." },
       { time: "4:00 PM", title: "Ceremony", note: "We say “I do” surrounded by our favourite people." },
@@ -904,13 +904,22 @@ function syncInvitationIntro() {
 
 function openInvitationIntro() {
   const intro = byId("invitationIntro");
-  if (!intro || intro.classList.contains("is-opening")) return;
-  intro.classList.add("is-opening");
+  if (!intro || intro.classList.contains("is-breaking") || intro.classList.contains("is-opening")) return;
 
   const reducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
-  const revealDelay = reducedMotion ? 10 : 1050;
-  const finishDelay = reducedMotion ? 20 : 1850;
+  const flapDelay = reducedMotion ? 5 : 430;
+  const revealDelay = reducedMotion ? 10 : 1780;
+  const finishDelay = reducedMotion ? 20 : 2850;
 
+  // Stage 1: crack the wax seal before the envelope moves.
+  intro.classList.add("is-breaking");
+
+  // Stage 2: fold the flap back and slowly draw the invitation card out.
+  window.setTimeout(() => {
+    intro.classList.add("is-opening");
+  }, flapDelay);
+
+  // Stage 3: lift the card clear of the pocket while the website comes into focus.
   window.setTimeout(() => {
     intro.classList.add("is-revealing");
     document.body.classList.remove("invitation-intro-active");

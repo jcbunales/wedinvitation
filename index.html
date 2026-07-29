@@ -50,7 +50,7 @@
         <a href="#details">Details</a>
         <a href="#schedule">Schedule</a>
         <a href="#entourage">Entourage</a>
-        <a href="#dress">Dress</a>
+        <a href="#dress">Attire</a>
         <a href="#venue">Venue</a>
         <a href="#rsvp">RSVP</a>
       </nav>
@@ -153,21 +153,42 @@
       <section id="dress" class="content-section dress-section">
         <div class="dress-card">
           <div class="dress-copy">
-            <p class="section-kicker">Dress motif</p>
-            <h2>Olive green &amp; burgundy</h2>
+            <p class="section-kicker">Attire guide</p>
+            <h2>Olive green &amp; burgundy motif</h2>
             <p id="dressMotifMessage">We would love our guests to dress in elegant earth tones inspired by our wedding palette. Olive green, burgundy, warm neutrals, and soft cream accents are especially welcome.</p>
             <div class="motif-swatches" aria-label="Wedding colour palette">
               <div class="motif-swatch"><span class="swatch olive"></span><strong>Olive Green</strong><small>#5F6F3A</small></div>
               <div class="motif-swatch"><span class="swatch burgundy"></span><strong>Burgundy</strong><small>#7B2438</small></div>
               <div class="motif-swatch"><span class="swatch cream"></span><strong>Warm Cream</strong><small>#F5F1E7</small></div>
             </div>
+            <div class="attire-guide-grid">
+              <article class="attire-guide-card">
+                <span class="attire-pill">Ladies</span>
+                <h3>Formal gown or midi dress</h3>
+                <p>Olive green is the preferred shade. You may also wear burgundy, champagne, or soft neutral accents.</p>
+              </article>
+              <article class="attire-guide-card">
+                <span class="attire-pill">Gentlemen</span>
+                <h3>Formal suit or barong</h3>
+                <p>Black, charcoal, beige, or deep neutrals are welcome, with olive green or burgundy ties, pocket squares, or accents.</p>
+              </article>
+            </div>
             <p class="dress-note"><strong>Gentle note:</strong> Please avoid an all-white or bridal-white outfit.</p>
           </div>
-          <div class="dress-art" aria-hidden="true">
-            <span class="dress-arch dress-arch-one"></span>
-            <span class="dress-arch dress-arch-two"></span>
-            <div class="dress-monogram"><span id="dressInitialOne">O</span><em>&amp;</em><span id="dressInitialTwo">E</span></div>
-            <span class="dress-leaf">❧</span>
+          <div class="dress-art">
+            <span class="dress-arch dress-arch-one" aria-hidden="true"></span>
+            <span class="dress-arch dress-arch-two" aria-hidden="true"></span>
+            <div class="dress-visual-card">
+              <div class="dress-visual-header">
+                <span class="attire-pill">Gown sample</span>
+                <div class="dress-monogram"><span id="dressInitialOne">O</span><em>&amp;</em><span id="dressInitialTwo">E</span></div>
+              </div>
+              <div class="dress-illustration-frame">
+                <img src="assets/attire-guide-sample.jpg" alt="Vector-style wedding attire inspiration illustration of a bride and groom from the back" />
+              </div>
+              <p class="dress-visual-note">Sample style inspiration for the wedding motif</p>
+            </div>
+            <span class="dress-leaf" aria-hidden="true">❧</span>
           </div>
         </div>
       </section>
@@ -444,8 +465,8 @@
                 <textarea id="settingEntourage" rows="8" placeholder="Parents of the Bride | Maria & Antonio Santos&#10;Maid of Honour | Sofia Reyes&#10;Best Man | Daniel Cruz"></textarea>
               </div>
               <div class="settings-section">
-                <h3>Dress motif</h3>
-                <label for="settingDressMotif">Guest dress guidance</label>
+                <h3>Attire guide / dress motif</h3>
+                <label for="settingDressMotif">Attire guidance text</label>
                 <textarea id="settingDressMotif" rows="4" placeholder="Olive green, burgundy, warm neutrals, and soft cream accents are welcome."></textarea>
               </div>
               <div class="settings-section">
