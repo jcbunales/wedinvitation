@@ -16,28 +16,13 @@ create table if not exists public.wedding_settings (
   map_link text default '',
   venue_notes text default '',
   welcome_message text default '',
-  entourage jsonb not null default '[]'::jsonb,
-  dress_motif text default '',
   schedule jsonb not null default '[]'::jsonb,
   updated_at timestamptz not null default now()
 );
 
--- Safe upgrades for projects created with an earlier version of this website.
-alter table public.wedding_settings add column if not exists entourage jsonb not null default '[]'::jsonb;
-alter table public.wedding_settings add column if not exists dress_motif text default '';
-
--- Populate the new fields for an existing project if they have not been configured yet.
-update public.wedding_settings
-set entourage = '[{"role":"Parents of the Bride","names":"Maria & Antonio Santos"},{"role":"Parents of the Groom","names":"Grace & Michael Reyes"},{"role":"Maid of Honour","names":"Sofia Santos"},{"role":"Best Man","names":"Daniel Reyes"}]'::jsonb
-where id = 1 and entourage = '[]'::jsonb;
-
-update public.wedding_settings
-set dress_motif = 'We would love our guests to dress in elegant earth tones inspired by our wedding palette. Olive green, burgundy, warm neutrals, and soft cream accents are especially welcome.'
-where id = 1 and coalesce(dress_motif, '') = '';
-
 insert into public.wedding_settings (
   id, partner_one, partner_two, wedding_date, wedding_time, rsvp_deadline,
-  venue_name, venue_address, map_link, venue_notes, welcome_message, entourage, dress_motif, schedule
+  venue_name, venue_address, map_link, venue_notes, welcome_message, schedule
 )
 values (
   1,
@@ -51,8 +36,6 @@ values (
   'https://maps.google.com/?q=The+Garden+Estate+Sydney',
   'Complimentary parking is available on site. Please arrive 20–30 minutes before the ceremony begins.',
   'We are so excited to celebrate this chapter with you. Join us for a garden ceremony, dinner, drinks, dancing, and a night to remember.',
-  '[{"role":"Parents of the Bride","names":"Maria & Antonio Santos"},{"role":"Parents of the Groom","names":"Grace & Michael Reyes"},{"role":"Maid of Honour","names":"Sofia Santos"},{"role":"Best Man","names":"Daniel Reyes"}]'::jsonb,
-  'We would love our guests to dress in elegant earth tones inspired by our wedding palette. Olive green, burgundy, warm neutrals, and soft cream accents are especially welcome.',
   '[{"time":"3:30 PM","title":"Guest arrival","note":"Please make your way to the garden ceremony area."},{"time":"4:00 PM","title":"Ceremony","note":"We say “I do” surrounded by our favourite people."},{"time":"5:00 PM","title":"Cocktail hour","note":"Drinks, canapés, photos, and time to mingle."},{"time":"6:15 PM","title":"Reception","note":"Dinner, speeches, cake, and dancing into the night."}]'::jsonb
 )
 on conflict (id) do nothing;

@@ -12,7 +12,7 @@
   Never place a secret/service-role key in a public GitHub Pages repository.
 */
 window.WEDDING_SUPABASE_CONFIG = {
-  enabled: true,
-  url: "https://biuheptwrsggwblrynrb.supabase.co",
-  publishableKey: "sb_publishable_p4tGSYPLqBwEQCyYepEzLw_Yvh7ASJZ"
+  enabled: false,
+  url: "https://YOUR_PROJECT.supabase.co",
+  publishableKey: "sb_publishable_YOUR_KEY"
 };
