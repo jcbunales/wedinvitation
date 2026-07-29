@@ -904,43 +904,35 @@ function syncInvitationIntro() {
 
 function openInvitationIntro() {
   const intro = byId("invitationIntro");
-  if (!intro || intro.classList.contains("is-breaking") || intro.classList.contains("is-opening")) return;
+  if (!intro || intro.classList.contains("is-opening")) return;
+  intro.classList.add("is-opening", "is-breaking");
 
   const reducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
-  if (reducedMotion) {
-    intro.classList.add("is-breaking", "is-opening");
-    window.setTimeout(() => {
-      intro.classList.add("is-revealing");
-      document.body.classList.remove("invitation-intro-active");
-      document.body.classList.add("invitation-intro-opened");
-    }, 10);
-    window.setTimeout(() => {
-      intro.classList.add("is-finished");
-      intro.setAttribute("aria-hidden", "true");
-      const mainHeading = document.querySelector(".invitation-copy h1");
-      if (mainHeading) mainHeading.setAttribute("tabindex", "-1");
-    }, 20);
-    return;
-  }
-
-  intro.classList.add("is-breaking");
+  const flapDelay = reducedMotion ? 5 : 430;
+  const cardDelay = reducedMotion ? 10 : 940;
+  const revealDelay = reducedMotion ? 15 : 1880;
+  const finishDelay = reducedMotion ? 25 : 2700;
 
   window.setTimeout(() => {
-    intro.classList.add("is-opening");
-  }, 360);
+    intro.classList.add("flap-open");
+  }, flapDelay);
+
+  window.setTimeout(() => {
+    intro.classList.add("card-rising");
+  }, cardDelay);
 
   window.setTimeout(() => {
     intro.classList.add("is-revealing");
     document.body.classList.remove("invitation-intro-active");
     document.body.classList.add("invitation-intro-opened");
-  }, 1320);
+  }, revealDelay);
 
   window.setTimeout(() => {
     intro.classList.add("is-finished");
     intro.setAttribute("aria-hidden", "true");
     const mainHeading = document.querySelector(".invitation-copy h1");
     if (mainHeading) mainHeading.setAttribute("tabindex", "-1");
-  }, 2250);
+  }, finishDelay);
 }
 
 const openInvitationButton = byId("openInvitationBtn");
@@ -970,4 +962,3 @@ async function initialiseWeddingSite() {
 }
 
 initialiseWeddingSite();
-
