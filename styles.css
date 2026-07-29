@@ -433,59 +433,68 @@ body.invitation-intro-active { overflow: hidden; }
   transition: opacity .35s ease, transform .35s ease;
 }
 
-/* Olive green + burgundy envelope redesign */
+/* Luxury olive green + burgundy envelope with gold lining */
 .intro-envelope {
-  --env-w: min(470px, 86vw);
+  --env-w: min(476px, 86vw);
   position: relative;
   width: var(--env-w);
-  aspect-ratio: 1.5 / 1;
+  aspect-ratio: 1.52 / 1;
   margin: 0 auto 30px;
   isolation: isolate;
   transform-style: preserve-3d;
-  filter: drop-shadow(0 24px 28px rgba(49, 58, 35, .18));
-  transition: transform .9s cubic-bezier(.2,.75,.2,1);
+  filter: drop-shadow(0 26px 32px rgba(49,58,35,.18));
+  transition: transform .95s cubic-bezier(.2,.75,.2,1);
 }
 .envelope-back,
 .envelope-pocket,
 .envelope-flap {
   position: absolute;
   inset: 0;
-  border-radius: 10px;
+  border-radius: 12px;
 }
 .envelope-back {
   z-index: 1;
   overflow: hidden;
-  border: 1px solid rgba(68, 78, 46, .32);
-  background: linear-gradient(180deg, #eef0e6 0%, #d8dec7 100%);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.55), inset 0 -10px 18px rgba(68,78,46,.08);
+  border: 1px solid rgba(63,76,44,.34);
+  background:
+    radial-gradient(circle at 18% 20%, rgba(255,255,255,.34), transparent 36%),
+    linear-gradient(180deg, #f4f5ee 0%, #dfe5d2 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.7),
+    inset 0 -12px 22px rgba(63,76,44,.08);
 }
 .envelope-back::before {
   content: "";
   position: absolute;
   inset: 14px;
-  border: 1px solid rgba(123,36,56,.18);
-  border-radius: 7px;
+  border: 1px solid rgba(176,141,87,.32);
+  border-radius: 8px;
 }
 .envelope-back::after {
   content: "";
   position: absolute;
   left: 50%;
-  top: 20%;
-  width: 70%;
-  height: 68%;
+  top: 18%;
+  width: 72%;
+  height: 69%;
   transform: translateX(-50%);
-  border-radius: 0 0 18px 18px;
-  background: linear-gradient(180deg, rgba(123,36,56,.22), rgba(123,36,56,.08));
+  border-radius: 0 0 22px 22px;
+  background:
+    linear-gradient(180deg, rgba(176,141,87,.4) 0%, rgba(176,141,87,.18) 24%, rgba(123,36,56,.08) 80%, rgba(123,36,56,.03) 100%),
+    linear-gradient(180deg, rgba(255,248,221,.92), rgba(233,219,174,.9));
+  box-shadow: inset 0 0 0 1px rgba(176,141,87,.28);
 }
 .envelope-pocket {
   z-index: 4;
   overflow: hidden;
-  border: 1px solid rgba(68, 78, 46, .28);
+  border: 1px solid rgba(63,76,44,.28);
   background:
-    linear-gradient(140deg, rgba(255,255,255,.4), transparent 42%),
-    linear-gradient(180deg, #e4e8d7 0%, #cfd7ba 100%);
+    linear-gradient(140deg, rgba(255,255,255,.34), transparent 42%),
+    linear-gradient(180deg, #e4ead8 0%, #ced8b8 100%);
   clip-path: polygon(0 30%, 50% 65%, 100% 30%, 100% 100%, 0 100%);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.5), inset 0 -8px 18px rgba(63,76,44,.12);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.5),
+    inset 0 -10px 18px rgba(63,76,44,.12);
 }
 .envelope-pocket::before,
 .envelope-pocket::after {
@@ -494,29 +503,47 @@ body.invitation-intro-active { overflow: hidden; }
   top: 27%;
   bottom: -1px;
   width: 54%;
-  background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(98,114,60,.06));
+  background: linear-gradient(180deg, rgba(255,255,255,.1), rgba(98,114,60,.05));
 }
 .envelope-pocket::before {
   left: -4%;
-  border-right: 1px solid rgba(68,78,46,.12);
+  border-right: 1px solid rgba(176,141,87,.18);
   clip-path: polygon(0 0, 100% 43%, 100% 100%, 0 100%);
 }
 .envelope-pocket::after {
   right: -4%;
-  border-left: 1px solid rgba(68,78,46,.12);
+  border-left: 1px solid rgba(176,141,87,.18);
   clip-path: polygon(0 43%, 100% 0, 100% 100%, 0 100%);
+}
+.envelope-pocket .gold-lining,
+.intro-envelope::before {
+  content: "";
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  top: 6%;
+  height: 52%;
+  z-index: 2;
+  clip-path: polygon(0 0, 100% 0, 50% 86%);
+  background:
+    linear-gradient(180deg, rgba(255,248,221,.98), rgba(233,219,174,.95) 45%, rgba(194,164,99,.92) 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(176,141,87,.35),
+    inset 0 -6px 10px rgba(176,141,87,.18);
 }
 .envelope-flap {
   z-index: 6;
-  height: 68%;
+  height: 69%;
   transform-origin: top center;
   transform: rotateX(0deg);
-  background: linear-gradient(180deg, #7b2438 0%, #5d1b2a 100%);
-  border: 1px solid rgba(87, 24, 39, .35);
+  background: linear-gradient(180deg, #8a2940 0%, #6f2033 54%, #591928 100%);
+  border: 1px solid rgba(87,24,39,.42);
   clip-path: polygon(0 0, 100% 0, 50% 100%);
   backface-visibility: hidden;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.12);
-  transition: transform .95s cubic-bezier(.2,.8,.2,1), opacity .3s ease;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.12),
+    inset 0 -8px 18px rgba(54,13,24,.16);
+  transition: transform 1.02s cubic-bezier(.2,.8,.2,1), opacity .3s ease;
 }
 .envelope-flap::before {
   content: "";
@@ -524,36 +551,36 @@ body.invitation-intro-active { overflow: hidden; }
   inset: 14px 16px auto;
   height: calc(100% - 24px);
   clip-path: polygon(0 0, 100% 0, 50% 100%);
-  border: 1px solid rgba(244,235,221,.16);
+  border: 1px solid rgba(255,236,194,.22);
 }
 .envelope-flap::after {
   content: "";
   position: absolute;
   left: 50%;
   bottom: 18%;
-  width: 88px;
+  width: 92px;
   height: 2px;
   transform: translateX(-50%);
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,.24), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255,236,194,.38), transparent);
 }
 .wax-seal {
   position: absolute;
   z-index: 7;
   left: 50%;
   top: 52%;
-  width: 64px;
-  height: 64px;
+  width: 66px;
+  height: 66px;
   transform: translate(-50%, -50%) rotate(-6deg);
   border-radius: 49% 51% 46% 54%;
   display: grid;
   place-items: center;
-  color: rgba(255,255,255,.92);
+  color: rgba(255,249,243,.96);
   font-family: "Cormorant Garamond", Georgia, serif;
   font-size: 26px;
   font-weight: 600;
-  background: radial-gradient(circle at 35% 30%, #a13650, #7b2438 62%, #5d1b2a 100%);
-  border: 4px double rgba(255,255,255,.22);
-  box-shadow: 0 10px 18px rgba(87,24,39,.28), inset 0 0 0 2px rgba(79,18,34,.16);
+  background: radial-gradient(circle at 35% 30%, #b33b5a, #8a2940 62%, #661d2d 100%);
+  border: 4px double rgba(255,236,194,.34);
+  box-shadow: 0 10px 18px rgba(87,24,39,.28), inset 0 0 0 2px rgba(79,18,34,.18);
   transition: opacity .25s ease, transform .45s cubic-bezier(.22,.8,.2,1), filter .25s ease;
 }
 .wax-seal::before,
@@ -584,20 +611,20 @@ body.invitation-intro-active { overflow: hidden; }
   align-items: center;
   color: var(--ink);
   background:
-    linear-gradient(rgba(255,253,248,.99), rgba(255,253,248,.99)),
+    linear-gradient(rgba(255,253,248,.995), rgba(255,253,248,.995)),
     radial-gradient(circle at 10% 10%, rgba(113,131,107,.08), transparent 28%);
-  border: 1px solid rgba(123,36,56,.18);
-  border-radius: 4px;
+  border: 1px solid rgba(176,141,87,.24);
+  border-radius: 5px;
   box-shadow: 0 8px 18px rgba(53,66,51,.08);
   transform: translateY(18%) scale(.95);
   transform-origin: center bottom;
-  transition: transform 1.2s cubic-bezier(.16,.88,.24,1) .3s, box-shadow .8s ease .3s, opacity .2s ease;
+  transition: transform 1.22s cubic-bezier(.16,.88,.24,1) .32s, box-shadow .8s ease .32s, opacity .2s ease;
 }
 .intro-card-preview::before {
   content: "";
   position: absolute;
   inset: 9px;
-  border: 1px solid rgba(170,140,87,.24);
+  border: 1px solid rgba(176,141,87,.26);
   pointer-events: none;
 }
 .preview-flourish {
@@ -644,11 +671,11 @@ body.invitation-intro-active { overflow: hidden; }
   align-items: center;
   gap: 8px;
   margin: 8px 0 6px;
-  color: var(--burgundy);
+  color: var(--gold);
   font-size: 7px;
 }
 .preview-rule::before,
-.preview-rule::after { content: ""; height: 1px; background: rgba(123,36,56,.3); flex: 1; }
+.preview-rule::after { content: ""; height: 1px; background: rgba(176,141,87,.4); flex: 1; }
 .intro-card-preview strong {
   position: relative;
   font-family: "Cormorant Garamond", Georgia, serif;
@@ -670,7 +697,7 @@ body.invitation-intro-active { overflow: hidden; }
   min-width: 198px;
   min-height: 48px;
   padding: 0 20px;
-  border: 1px solid rgba(87,24,39,.18);
+  border: 1px solid rgba(176,141,87,.26);
   border-radius: 999px;
   display: inline-flex;
   align-items: center;
@@ -682,9 +709,13 @@ body.invitation-intro-active { overflow: hidden; }
   cursor: pointer;
   font: 600 13px "Inter", Arial, sans-serif;
   letter-spacing: .02em;
-  transition: transform .25s ease, background .25s ease, opacity .35s ease;
+  transition: transform .25s ease, background .25s ease, opacity .35s ease, box-shadow .25s ease;
 }
-.open-invitation-btn:hover { transform: translateY(-2px); background: linear-gradient(180deg, #61763b, #394823); }
+.open-invitation-btn:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(180deg, #61763b, #394823);
+  box-shadow: 0 14px 28px rgba(70,87,70,.2);
+}
 .open-invitation-btn:focus-visible { outline: 3px solid rgba(95,111,58,.25); outline-offset: 4px; }
 .open-arrow { font-size: 17px; animation: introArrow 1.4s ease-in-out infinite; }
 .intro-hint {
@@ -712,7 +743,7 @@ body.invitation-intro-active { overflow: hidden; }
   bottom: 0;
   height: 13%;
   z-index: 5;
-  background: linear-gradient(180deg, rgba(207,215,186,0), rgba(207,215,186,.56));
+  background: linear-gradient(180deg, rgba(207,215,186,0), rgba(207,215,186,.6));
   pointer-events: none;
 }
 .invitation-intro.is-breaking .wax-seal {
@@ -778,7 +809,7 @@ body.invitation-intro-opened .page-shell { opacity: 1; transform: none; filter: 
   .preview-flourish { top: 8px; right: 11px; font-size: 22px; }
   .intro-card-preview::before { inset: 7px; }
   .intro-botanical { font-size: 150px; }
-  .wax-seal { width: 52px; height: 52px; font-size: 20px; top: 52%; }
+  .wax-seal { width: 54px; height: 54px; font-size: 20px; top: 52%; }
   .invitation-intro.is-opening .intro-card-preview { transform: translateY(-64%) scale(1.005); }
   .invitation-intro.is-revealing .intro-card-preview { transform: translateY(-80%) scale(1.04); }
 }
