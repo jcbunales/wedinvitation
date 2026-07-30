@@ -438,7 +438,7 @@ function configureDataModeUI() {
     if (passwordLabel) passwordLabel.textContent = "Password";
     if (byId("adminPasscode")) byId("adminPasscode").placeholder = "Supabase account password";
     passcodeSetting?.classList.add("hidden");
-    if (modeStatus) modeStatus.textContent = "Supabase connected · shared cloud data";
+    if (modeStatus) modeStatus.textContent = "Online";
     if (connection) connection.textContent = "Supabase is connected. Wedding settings, guests, and RSVPs are shared across devices.";
   } else {
     emailGroup?.classList.add("hidden");
