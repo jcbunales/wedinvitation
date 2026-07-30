@@ -1114,3 +1114,42 @@ body.invitation-intro-opened .page-shell { opacity: 1; transform: none; filter: 
   .dress-visual-note { font-size: 8px; }
 }
 
+
+.venue-image-card {
+  background: #fffdf8;
+  border: 1px solid rgba(176,141,87,.28);
+  box-shadow: 0 20px 40px rgba(47, 53, 37, .10);
+  overflow: hidden;
+}
+.venue-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  background: #faf7f0;
+}
+.venue-image-caption {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 14px 16px 16px;
+  border-top: 1px solid rgba(176,141,87,.18);
+  background: linear-gradient(180deg, rgba(255,253,248,1), rgba(248,244,235,1));
+}
+.venue-image-kicker {
+  color: var(--burgundy);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+.venue-image-caption strong {
+  color: var(--ink);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 28px;
+  font-weight: 600;
+}
+
+@media (max-width: 900px) {
+  .venue-image-caption strong { font-size: 24px; }
+}
