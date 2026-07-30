@@ -151,7 +151,7 @@ a { color: inherit; }
 }
 .invite-line { max-width: 360px; font-family: "Cormorant Garamond", Georgia, serif; font-size: 21px; font-style: italic; color: #596456; }
 .date-block { margin: 28px 0 8px; display: grid; gap: 2px; font-family: "Cormorant Garamond", Georgia, serif; }
-.date-block .day { text-transform: uppercase; font-size: 13px; letter-spacing: .25em; }
+.date-block .day { text-transform: uppercase; font-size: 15px; letter-spacing: .25em; }
 .date-block strong { font-size: 27px; font-weight: 600; letter-spacing: .04em; }
 .date-block span:last-child { font-size: 16px; }
 .divider { width: 160px; display: flex; align-items: center; gap: 14px; color: var(--gold); margin: 24px 0; }
@@ -174,7 +174,7 @@ a { color: inherit; }
 .split-section { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(45px, 8vw, 110px); align-items: start; }
 .content-section h2 { margin: 6px 0 0; font-family: "Cormorant Garamond", Georgia, serif; font-weight: 500; font-size: clamp(42px, 6vw, 66px); line-height: 1; letter-spacing: -.02em; }
 .body-copy { color: var(--muted); font-size: 16px; }
-.small-note { padding-top: 16px; border-top: 1px solid var(--line); font-size: 13px; }
+.small-note { padding-top: 16px; border-top: 1px solid var(--line); font-size: 15px; }
 .muted-section { max-width: none; background: rgba(223, 231, 218, .32); }
 .muted-section > * { max-width: 1040px; margin-left: auto; margin-right: auto; }
 .section-heading.centered { text-align: center; }
@@ -182,7 +182,7 @@ a { color: inherit; }
 .schedule-card { background: rgba(255,255,255,.6); border: 1px solid var(--line); padding: 28px 24px; min-height: 185px; }
 .schedule-card time { color: var(--gold); font-weight: 700; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; }
 .schedule-card h3 { margin: 12px 0 7px; font-family: "Cormorant Garamond", Georgia, serif; font-size: 27px; font-weight: 600; }
-.schedule-card p { color: var(--muted); font-size: 13px; margin: 0; }
+.schedule-card p { color: var(--muted); font-size: 15px; margin: 0; }
 
 .venue-section { padding-top: 100px; padding-bottom: 100px; }
 .venue-card { display: grid; grid-template-columns: 1fr 1fr; background: var(--paper); border: 1px solid var(--line); box-shadow: 0 18px 45px rgba(53,66,51,.08); }
@@ -215,7 +215,7 @@ a { color: inherit; }
 .rsvp-note h3, .success-panel h3 { font-family: "Cormorant Garamond", Georgia, serif; font-size: 30px; margin: 7px 0; }
 .rsvp-note p { color: var(--muted); font-size: 14px; }
 .botanical-icon { font-family: Georgia, serif; color: var(--sage); font-size: 34px; }
-label, legend { display: block; margin-bottom: 8px; font-size: 13px; font-weight: 700; color: #3d483d; }
+label, legend { display: block; margin-bottom: 8px; font-size: 15px; font-weight: 700; color: #3d483d; }
 input, select, textarea {
   width: 100%;
   border: 1px solid rgba(70,87,70,.22);
@@ -297,7 +297,7 @@ footer { max-width: 1180px; margin: 0 auto; padding: 34px 40px 45px; border-top:
 .snapshot-list div { display: grid; grid-template-columns: 110px 1fr; gap: 12px; padding: 11px 0; border-bottom: 1px solid var(--line); }
 .snapshot-list div:last-child { border-bottom: 0; }
 .snapshot-list dt { color: var(--muted); font-size: 12px; }
-.snapshot-list dd { margin: 0; font-weight: 600; font-size: 13px; }
+.snapshot-list dd { margin: 0; font-weight: 600; font-size: 15px; }
 .recent-list { display: grid; }
 .recent-item { display: grid; grid-template-columns: 1fr auto; gap: 18px; padding: 13px 0; border-bottom: 1px solid var(--line); }
 .recent-item:last-child { border-bottom: 0; }
@@ -419,7 +419,7 @@ body.invitation-intro-active { overflow: hidden; }
 }
 .intro-stage {
   position: relative;
-  width: min(560px, calc(100vw - 32px));
+  width: min(640px, calc(100vw - 28px));
   text-align: center;
   perspective: 1800px;
 }
@@ -435,10 +435,10 @@ body.invitation-intro-active { overflow: hidden; }
 
 /* Luxury envelope: olive body, burgundy flap, champagne-gold lining. */
 .intro-envelope {
-  --env-w: min(452px, 86vw);
+  --env-w: min(520px, 90vw);
   position: relative;
   width: var(--env-w);
-  aspect-ratio: 1.58 / 1;
+  aspect-ratio: 1.56 / 1;
   margin: 0 auto 30px;
   isolation: isolate;
   overflow: visible;
@@ -490,11 +490,11 @@ body.invitation-intro-active { overflow: hidden; }
 .intro-card-preview {
   position: absolute;
   z-index: 4;
-  left: 13.5%;
-  right: 13.5%;
+  left: 12%;
+  right: 12%;
   bottom: 7%;
-  height: 72%;
-  padding: 24px 20px 17px;
+  height: 76%;
+  padding: 28px 24px 20px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -537,10 +537,10 @@ body.invitation-intro-active { overflow: hidden; }
 }
 .preview-flourish {
   position: absolute;
-  top: 17px;
-  right: 19px;
+  top: 18px;
+  right: 21px;
   font-family: Georgia, serif;
-  font-size: 23px;
+  font-size: 26px;
   color: rgba(95,111,58,.35);
   transform: rotate(18deg);
 }
@@ -549,7 +549,7 @@ body.invitation-intro-active { overflow: hidden; }
   margin: 0 0 5px;
   text-transform: uppercase;
   letter-spacing: .18em;
-  font-size: 6.5px;
+  font-size: 7px;
   font-weight: 700;
   color: var(--olive-dark);
 }
@@ -557,10 +557,10 @@ body.invitation-intro-active { overflow: hidden; }
   position: relative;
   margin: 2px 0 0;
   width: 100%;
-  max-width: 300px;
+  max-width: 340px;
   font-family: "Cormorant Garamond", Georgia, serif;
   font-weight: 500;
-  font-size: clamp(31px, 5.8vw, 43px);
+  font-size: clamp(36px, 6vw, 50px);
   line-height: .82;
   letter-spacing: -.02em;
   overflow-wrap: anywhere;
@@ -576,7 +576,7 @@ body.invitation-intro-active { overflow: hidden; }
 }
 .preview-rule {
   position: relative;
-  width: 108px;
+  width: 122px;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -594,7 +594,7 @@ body.invitation-intro-active { overflow: hidden; }
 .intro-card-preview strong {
   position: relative;
   font-family: "Cormorant Garamond", Georgia, serif;
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 600;
   letter-spacing: .04em;
 }
@@ -602,7 +602,7 @@ body.invitation-intro-active { overflow: hidden; }
   position: relative;
   margin-top: 4px;
   color: var(--muted);
-  font-size: 6.5px;
+  font-size: 7px;
   letter-spacing: .16em;
   text-transform: uppercase;
 }
@@ -720,7 +720,7 @@ body.invitation-intro-active { overflow: hidden; }
 .open-invitation-btn {
   position: relative;
   z-index: 10;
-  min-width: 194px;
+  min-width: 204px;
   min-height: 48px;
   padding: 0 21px;
   border: 1px solid rgba(176,141,87,.34);
@@ -834,26 +834,26 @@ body.invitation-intro-opened .page-shell { opacity: 1; transform: none; filter: 
 
 @media (max-width: 620px) {
   .invitation-intro::before { inset: 12px; }
-  .intro-stage { width: min(410px, calc(100vw - 22px)); }
-  .intro-envelope { --env-w: min(326px, 86vw); margin-bottom: 26px; }
+  .intro-stage { width: min(430px, calc(100vw - 18px)); }
+  .intro-envelope { --env-w: min(370px, 92vw); margin-bottom: 26px; }
   .intro-kicker { margin-bottom: 18px; }
   .intro-card-preview {
-    left: 13.5%;
-    right: 13.5%;
+    left: 12%;
+    right: 12%;
     bottom: 7%;
-    height: 71%;
-    padding: 19px 13px 12px;
+    height: 75%;
+    padding: 22px 16px 14px;
   }
-  .intro-card-preview h1 { font-size: clamp(25px, 7.7vw, 33px); }
-  .intro-card-preview p { font-size: 5.5px; letter-spacing: .14em; }
-  .intro-card-preview strong { font-size: 10.5px; }
-  .intro-card-preview small { font-size: 5.5px; }
-  .preview-rule { width: 82px; margin: 6px 0 5px; }
-  .preview-flourish { top: 12px; right: 13px; font-size: 19px; }
+  .intro-card-preview h1 { font-size: clamp(28px, 8vw, 38px); }
+  .intro-card-preview p { font-size: 6px; letter-spacing: .14em; }
+  .intro-card-preview strong { font-size: 12px; }
+  .intro-card-preview small { font-size: 6px; }
+  .preview-rule { width: 92px; margin: 6px 0 5px; }
+  .preview-flourish { top: 13px; right: 14px; font-size: 21px; }
   .intro-card-preview::before { inset: 7px; }
   .intro-card-preview::after { left: 14px; right: 14px; top: 12px; }
   .intro-botanical { font-size: 145px; }
-  .wax-seal { width: 52px; height: 52px; font-size: 20px; }
+  .wax-seal { width: 56px; height: 56px; font-size: 22px; }
   .invitation-intro.card-rising .intro-card-preview { transform: translateY(-70%) scale(1); }
   .invitation-intro.card-rising .intro-envelope { transform: translateY(20px) scale(.992); }
   .invitation-intro.is-revealing .intro-card-preview { transform: translateY(-85%) scale(1.025); }
@@ -916,7 +916,7 @@ body.invitation-intro-opened .page-shell { opacity: 1; transform: none; filter: 
   border: 1px solid rgba(123,36,56,.24);
   border-radius: 50%;
 }
-.entourage-flourish { color: var(--burgundy); font-size: 13px; }
+.entourage-flourish { color: var(--burgundy); font-size: 15px; }
 .entourage-card p {
   margin: 12px 0 7px;
   color: var(--olive-dark);
@@ -965,7 +965,7 @@ body.invitation-intro-opened .page-shell { opacity: 1; transform: none; filter: 
 .swatch.cream { background: #f5f1e7; }
 .motif-swatch strong { display: block; font-family: "Cormorant Garamond",Georgia,serif; font-size: 18px; }
 .motif-swatch small { color: rgba(255,255,255,.58); font-size: 10px; letter-spacing: .08em; }
-.dress-note { margin: 0; padding-top: 18px; border-top: 1px solid rgba(255,255,255,.16); color: rgba(255,255,255,.72); font-size: 13px; }
+.dress-note { margin: 0; padding-top: 18px; border-top: 1px solid rgba(255,255,255,.16); color: rgba(255,255,255,.72); font-size: 15px; }
 .dress-art {
   position: relative;
   min-height: 460px;
