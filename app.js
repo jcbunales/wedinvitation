@@ -905,13 +905,14 @@ function syncInvitationIntro() {
 function openInvitationIntro() {
   const intro = byId("invitationIntro");
   if (!intro || intro.classList.contains("is-opening")) return;
-  intro.classList.add("is-opening", "is-breaking");
 
+  intro.classList.add("is-opening", "is-breaking");
   const reducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
-  const flapDelay = reducedMotion ? 5 : 430;
-  const cardDelay = reducedMotion ? 10 : 940;
-  const revealDelay = reducedMotion ? 15 : 1880;
-  const finishDelay = reducedMotion ? 25 : 2700;
+
+  const flapDelay = reducedMotion ? 5 : 400;
+  const cardDelay = reducedMotion ? 10 : 1250;
+  const revealDelay = reducedMotion ? 15 : 2150;
+  const finishDelay = reducedMotion ? 25 : 3000;
 
   window.setTimeout(() => {
     intro.classList.add("flap-open");
