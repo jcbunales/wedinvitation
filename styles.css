@@ -2188,3 +2188,330 @@ footer {
   .form-card { border-radius: 32px 32px 14px 14px / 24px 24px 14px 14px; }
   .rsvp-note { border-radius: 28px; }
 }
+
+
+/* ==========================================================
+   Vintage opening stationery redesign
+   Matches the burgundy / olive / antique-gold invitation suite.
+   ========================================================== */
+.invitation-intro {
+  background:
+    radial-gradient(circle at 50% 38%, rgba(255,255,255,.66), transparent 30%),
+    repeating-linear-gradient(0deg, rgba(57,48,38,.025) 0 1px, transparent 1px 5px),
+    repeating-linear-gradient(90deg, rgba(57,48,38,.018) 0 1px, transparent 1px 7px),
+    #ebe6da;
+}
+.invitation-intro::before {
+  inset: 18px;
+  border: 1px solid rgba(var(--gold-rgb), .52);
+  box-shadow: inset 0 0 0 7px rgba(255,255,255,.16);
+}
+.intro-glow {
+  background: radial-gradient(circle, rgba(255,248,226,.56), rgba(255,248,226,0) 70%);
+  filter: blur(14px);
+}
+.intro-kicker {
+  color: var(--burgundy);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: .34em;
+}
+
+.intro-envelope {
+  --env-w: min(550px, 92vw);
+  aspect-ratio: 1.54 / 1;
+  filter: drop-shadow(0 30px 34px rgba(61,54,38,.22));
+}
+.envelope-back,
+.envelope-pocket,
+.envelope-flap {
+  border-radius: 5px;
+}
+.envelope-back {
+  filter: none;
+  border: 1px solid rgba(49,54,27,.65);
+  background:
+    linear-gradient(120deg, rgba(255,255,255,.08), transparent 34%),
+    repeating-linear-gradient(0deg, rgba(255,255,255,.018) 0 1px, transparent 1px 4px),
+    linear-gradient(180deg, #5a5b35 0%, #444626 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.10),
+    inset 0 -20px 32px rgba(28,31,15,.18);
+}
+.envelope-back::before {
+  inset: 10px;
+  border: 1px solid rgba(var(--gold-rgb), .34);
+  border-radius: 2px;
+}
+.envelope-back::after {
+  left: 5%;
+  right: 5%;
+  top: 5%;
+  height: 64%;
+  clip-path: polygon(0 0, 100% 0, 50% 94%);
+  background:
+    radial-gradient(circle at 23% 31%, rgba(115,51,58,.28) 0 4%, transparent 4.8%),
+    radial-gradient(circle at 70% 22%, rgba(79,81,48,.40) 0 6%, transparent 6.8%),
+    radial-gradient(circle at 45% 52%, rgba(115,51,58,.20) 0 5%, transparent 5.8%),
+    repeating-linear-gradient(125deg, rgba(95,83,53,.11) 0 1px, transparent 1px 8px),
+    linear-gradient(180deg, #d8c49b 0%, #bca36e 56%, #967e4e 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(99,75,37,.28),
+    inset 0 -18px 28px rgba(82,61,33,.13);
+}
+
+.envelope-pocket {
+  filter: none;
+  border: 1px solid rgba(49,54,27,.56);
+  background:
+    linear-gradient(145deg, rgba(255,255,255,.045) 0 49.5%, transparent 50%),
+    linear-gradient(215deg, rgba(255,255,255,.035) 0 49.5%, transparent 50%),
+    repeating-linear-gradient(0deg, rgba(255,255,255,.016) 0 1px, transparent 1px 4px),
+    linear-gradient(180deg, #565831 0%, #414425 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.08),
+    inset 0 -15px 24px rgba(27,30,14,.18);
+}
+.envelope-pocket::before,
+.envelope-pocket::after {
+  border-top-color: rgba(var(--gold-rgb), .22);
+}
+
+.envelope-flap {
+  filter: none;
+  height: 70%;
+  border: 1px solid rgba(49,54,27,.66);
+  background:
+    repeating-linear-gradient(0deg, rgba(255,255,255,.016) 0 1px, transparent 1px 4px),
+    linear-gradient(180deg, #62643a 0%, #4e502e 58%, #3d4022 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.09),
+    inset 0 -11px 20px rgba(27,30,14,.17);
+}
+.envelope-flap::before {
+  inset: 12px 14px auto;
+  border-color: rgba(var(--gold-rgb), .38);
+}
+.envelope-flap::after {
+  width: 112px;
+  background: linear-gradient(90deg, transparent, rgba(var(--gold-rgb), .72), transparent);
+}
+
+.wax-seal {
+  width: 68px;
+  height: 68px;
+  top: 53%;
+  color: #ead6ad;
+  background:
+    radial-gradient(circle at 34% 29%, #91444b 0%, #73333a 58%, #56232b 100%) !important;
+  border: 3px double rgba(var(--gold-rgb), .52);
+  box-shadow:
+    0 12px 21px rgba(73,27,33,.34),
+    inset 0 0 0 4px rgba(73,26,32,.24),
+    inset 0 1px 2px rgba(255,255,255,.12) !important;
+  font-size: 27px;
+}
+.wax-seal span {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(var(--gold-rgb), .50);
+  border-radius: 50%;
+  line-height: 1;
+}
+
+/* Burgundy arched invitation card revealed from the olive envelope. */
+.intro-card-preview {
+  left: 11.5%;
+  right: 11.5%;
+  bottom: 6.5%;
+  height: 80%;
+  padding: 34px 28px 23px;
+  color: #f4e1bd;
+  background:
+    radial-gradient(circle at 50% 5%, rgba(255,255,255,.055), transparent 30%),
+    repeating-linear-gradient(0deg, rgba(255,255,255,.015) 0 1px, transparent 1px 4px),
+    linear-gradient(180deg, #7b3941 0%, #6b2f36 100%);
+  border: 2px solid #56232b;
+  border-radius: 46% 46% 7px 7px / 22% 22% 7px 7px;
+  outline: 1px solid rgba(var(--gold-rgb), .78);
+  outline-offset: -10px;
+  box-shadow: 0 12px 25px rgba(63,31,34,.18);
+}
+.intro-card-preview::before {
+  inset: 13px;
+  border: 1px solid rgba(var(--gold-rgb), .45);
+  border-radius: 43% 43% 2px 2px / 20% 20% 2px 2px;
+}
+.intro-card-preview::after {
+  left: 28%;
+  right: 28%;
+  top: 84px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(var(--gold-rgb), .72), transparent);
+  opacity: 1;
+}
+.preview-flourish { display: none; }
+.preview-monogram {
+  position: relative;
+  z-index: 2;
+  flex: 0 0 auto;
+  width: 54px;
+  height: 54px;
+  margin: 0 0 12px;
+  border: 1px solid rgba(var(--gold-rgb), .82);
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  color: #e4c98d;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1;
+  box-shadow: 0 0 0 4px rgba(var(--gold-rgb), .08);
+}
+.preview-monogram em {
+  color: #d9bc80;
+  font-family: "Parisienne", "Brush Script MT", cursive;
+  font-size: .8em;
+  font-weight: 400;
+}
+.preview-botanical {
+  position: absolute;
+  z-index: 1;
+  color: rgba(var(--gold-rgb), .18);
+  font: 62px Georgia, serif;
+  line-height: 1;
+  pointer-events: none;
+}
+.preview-botanical-left {
+  left: 18px;
+  bottom: 14px;
+  transform: rotate(24deg);
+}
+.preview-botanical-right {
+  right: 18px;
+  top: 28px;
+  transform: rotate(202deg);
+}
+.intro-card-preview p {
+  margin-bottom: 7px;
+  color: #dec492;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: .18em;
+}
+.intro-card-preview h1 {
+  max-width: 360px;
+  color: #f1d8a8;
+  font-size: clamp(36px, 6vw, 51px);
+  line-height: .84;
+  text-shadow: 0 1px 0 rgba(59,27,30,.25);
+}
+.intro-card-preview h1 em {
+  margin: 6px 0 4px;
+  color: var(--gold);
+}
+.preview-rule {
+  width: 132px;
+  margin: 12px 0 8px;
+  color: #dfc181;
+}
+.preview-rule::before,
+.preview-rule::after {
+  background: rgba(var(--gold-rgb), .52);
+}
+.intro-card-preview strong {
+  color: #f1d8a8;
+  font-size: 15px;
+  letter-spacing: .08em;
+}
+.intro-card-preview small {
+  color: rgba(242,221,181,.68);
+  font-size: 7px;
+  letter-spacing: .22em;
+}
+
+.open-invitation-btn {
+  min-width: 218px;
+  border-radius: 3px;
+  border: 1px solid rgba(var(--gold-rgb), .72);
+  color: #f3ddb7;
+  background: var(--burgundy) !important;
+  box-shadow: 0 13px 26px rgba(84,44,47,.20), inset 0 0 0 1px rgba(255,255,255,.025);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 15px;
+  letter-spacing: .08em;
+}
+.open-invitation-btn:hover {
+  background: var(--burgundy-dark) !important;
+}
+.intro-hint { color: #736b5d; }
+
+/* White attire guide requested: retain vintage accents, remove dark panels. */
+.dress-section {
+  background: #fff;
+}
+.dress-card {
+  background: #fff;
+  border-color: rgba(var(--gold-rgb), .56);
+  outline-color: rgba(var(--gold-rgb), .46);
+  box-shadow: 0 24px 54px rgba(62,52,42,.11);
+}
+.dress-copy,
+.dress-art {
+  background: #fff;
+  color: var(--ink);
+}
+.dress-copy h2 { color: var(--burgundy); }
+.dress-copy .section-kicker { color: var(--burgundy); }
+.dress-copy p,
+.dress-note { color: var(--muted); }
+.attire-guide-card,
+.motif-swatch,
+.dress-visual-card {
+  border-color: rgba(var(--gold-rgb), .30);
+  background: #fffdf8;
+}
+.attire-guide-card h3,
+.motif-swatch strong,
+.dress-visual-card strong { color: var(--ink); }
+.attire-guide-card p,
+.motif-swatch small,
+.dress-visual-note { color: var(--muted); }
+.attire-pill {
+  border-color: rgba(var(--burgundy-rgb), .28);
+  color: var(--burgundy);
+  background: rgba(var(--burgundy-rgb), .045);
+}
+.dress-monogram { color: var(--olive); }
+.dress-monogram em { color: var(--burgundy); }
+.dress-arch { border-color: rgba(var(--gold-rgb), .20); }
+.dress-leaf { color: rgba(var(--olive-rgb), .18); }
+
+@media (max-width: 620px) {
+  .intro-envelope { --env-w: min(382px, 94vw); }
+  .intro-card-preview {
+    left: 10.5%;
+    right: 10.5%;
+    height: 78%;
+    padding: 27px 18px 17px;
+    border-radius: 43% 43% 6px 6px / 20% 20% 6px 6px;
+  }
+  .intro-card-preview::before {
+    inset: 9px;
+    border-radius: 40% 40% 2px 2px / 18% 18% 2px 2px;
+  }
+  .intro-card-preview::after { top: 70px; }
+  .preview-monogram { width: 45px; height: 45px; margin-bottom: 9px; font-size: 15px; }
+  .intro-card-preview h1 { font-size: clamp(28px, 8vw, 38px); }
+  .intro-card-preview strong { font-size: 12px; }
+  .preview-botanical { font-size: 48px; }
+  .wax-seal { width: 58px; height: 58px; font-size: 22px; }
+  .wax-seal span { width: 35px; height: 35px; }
+}

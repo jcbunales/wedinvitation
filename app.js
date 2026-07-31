@@ -1640,10 +1640,14 @@ function syncInvitationIntro() {
   const p1 = byId("introPartnerOne");
   const p2 = byId("introPartnerTwo");
   const date = byId("introWeddingDate");
+  const initialOne = byId("introInitialOne");
+  const initialTwo = byId("introInitialTwo");
   const seal = document.querySelector(".wax-seal span");
   if (p1) p1.textContent = w.partnerOne;
   if (p2) p2.textContent = w.partnerTwo;
   if (date) date.textContent = formatDate(w.weddingDate);
+  if (initialOne) initialOne.textContent = (w.partnerOne || "O").trim().charAt(0).toUpperCase() || "O";
+  if (initialTwo) initialTwo.textContent = (w.partnerTwo || "E").trim().charAt(0).toUpperCase() || "E";
   if (seal) seal.textContent = (w.partnerOne || "F").trim().charAt(0).toUpperCase() || "F";
 }
 
