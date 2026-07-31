@@ -66,3 +66,7 @@ The public wedding site uses a burgundy, olive, gold and warm-paper stationery t
 
 ## Arched menu update
 The Home section uses arched vintage invitation cards. Back to menu returns directly to the section launcher, and the Home content uses a staggered entrance animation after the envelope opens.
+
+
+## RSVP layout fix
+The RSVP interface now uses a flexible lookup card. When a guest is found, the main form expands to a full-width response layout so attendance choices, guest counts, meal preference, plus-one, dietary notes, and actions do not become cramped. The companion card collapses into a horizontal summary on desktop and a stacked card on mobile.

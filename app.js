@@ -731,9 +731,24 @@ async function lookupGuest(query) {
   return row ? rowToGuest(row) : null;
 }
 
+function setRsvpDisplayMode(mode = "lookup") {
+  const section = byId("rsvp");
+  const form = byId("rsvpForm");
+  if (!section || !form) return;
+
+  const responseMode = mode === "response";
+  const successMode = mode === "success";
+
+  section.classList.toggle("rsvp-has-found-guest", responseMode);
+  section.classList.toggle("rsvp-is-success", successMode);
+  form.classList.toggle("is-response-mode", responseMode);
+  form.classList.toggle("is-success-mode", successMode);
+}
+
 function showRsvpGuest(guest) {
   activeGuestId = guest.id;
   activeGuestRecord = guest;
+  setRsvpDisplayMode("response");
   byId("foundGuestName").textContent = guest.name;
   const select = byId("partyAttending");
   select.innerHTML = Array.from({ length: guest.partySize }, (_, i) => `<option value="${i + 1}">${i + 1}</option>`).join("");
@@ -751,6 +766,7 @@ function showRsvpGuest(guest) {
 function resetRsvp() {
   activeGuestId = null;
   activeGuestRecord = null;
+  setRsvpDisplayMode("lookup");
   byId("guestLookup").value = "";
   byId("rsvpResponseStep").classList.add("hidden");
   byId("rsvpSuccess").classList.add("hidden");
@@ -820,6 +836,7 @@ byId("rsvpForm").addEventListener("submit", async e => {
     renderPublicStats();
     byId("rsvpResponseStep").classList.add("hidden");
     byId("rsvpSuccess").classList.remove("hidden");
+    setRsvpDisplayMode("success");
   } catch (error) {
     console.error(error);
     showToast("Your RSVP could not be saved. Please try again.");
