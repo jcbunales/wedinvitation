@@ -1743,7 +1743,7 @@ function initialiseSectionAnimations() {
 const PUBLIC_SECTION_IDS = ["home", "details", "schedule", "entourage", "dress", "venue", "rsvp"];
 
 function openPublicSection(sectionId, options = {}) {
-  const { updateHash = true, focusSection = true, scrollToMenu = false } = options;
+  const { updateHash = true, focusSection = true, scrollToMenu = false, fromVintageCard = false } = options;
   const targetId = PUBLIC_SECTION_IDS.includes(sectionId) ? sectionId : "home";
 
   document.body.classList.add("section-tab-mode");
@@ -1787,16 +1787,72 @@ function openPublicSection(sectionId, options = {}) {
     window.scrollTo({ top: 0, behavior: scrollBehavior });
   }
 
+  const activeTarget = byId(targetId);
+  if (activeTarget && fromVintageCard) {
+    activeTarget.classList.remove("card-open-arrival");
+    void activeTarget.offsetWidth;
+    activeTarget.classList.add("card-open-arrival");
+    window.setTimeout(() => activeTarget.classList.remove("card-open-arrival"), 950);
+  }
+
   if (focusSection && !scrollToMenu) {
     const target = byId(targetId);
     if (target) {
       target.setAttribute("tabindex", "-1");
-      window.setTimeout(() => target.focus({ preventScroll: true }), 80);
+      window.setTimeout(() => target.focus({ preventScroll: true }), fromVintageCard ? 260 : 80);
     }
   }
 }
 
+function prepareVintageCardCovers() {
+  document.querySelectorAll(".home-launcher-card").forEach(card => {
+    if (card.querySelector(".vintage-card-cover")) return;
+    const cover = document.createElement("span");
+    cover.className = "vintage-card-cover";
+    cover.setAttribute("aria-hidden", "true");
+    cover.innerHTML = `
+      <span class="vintage-card-cover-ornament">✦</span>
+      <span class="vintage-card-cover-medallion">${card.querySelector(".home-launcher-icon")?.innerHTML || ""}</span>
+      <span class="vintage-card-cover-title">${escapeHtml(card.querySelector("strong")?.textContent || "Invitation")}</span>
+      <span class="vintage-card-cover-line"></span>
+      <span class="vintage-card-cover-hint">Open</span>
+    `;
+    card.appendChild(cover);
+  });
+}
+
+function animateVintageCardOpen(card, targetId) {
+  const reducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+  if (reducedMotion || !card) {
+    openPublicSection(targetId, { fromVintageCard: true });
+    return;
+  }
+
+  if (document.body.classList.contains("vintage-card-transition")) return;
+
+  document.body.classList.add("vintage-card-transition");
+  card.classList.add("is-opening-vintage-card");
+  card.setAttribute("aria-expanded", "true");
+
+  document.querySelectorAll(".home-launcher-card").forEach(item => {
+    if (item !== card) item.classList.add("is-card-dimmed");
+  });
+
+  window.setTimeout(() => {
+    openPublicSection(targetId, { fromVintageCard: true });
+  }, 760);
+
+  window.setTimeout(() => {
+    document.body.classList.remove("vintage-card-transition");
+    card.classList.remove("is-opening-vintage-card");
+    card.removeAttribute("aria-expanded");
+    document.querySelectorAll(".home-launcher-card.is-card-dimmed").forEach(item => item.classList.remove("is-card-dimmed"));
+  }, 1120);
+}
+
 function initialiseSectionNavigation() {
+  prepareVintageCardCovers();
+
   PUBLIC_SECTION_IDS.forEach(id => {
     const section = byId(id);
     if (section) section.classList.add("section-panel");
@@ -1812,6 +1868,13 @@ function initialiseSectionNavigation() {
     if (!PUBLIC_SECTION_IDS.includes(targetId)) return;
     event.preventDefault();
     const returnToMenu = trigger.dataset.returnMenu === "true";
+    const vintageCard = trigger.closest(".home-launcher-card");
+
+    if (vintageCard && targetId !== "home") {
+      animateVintageCardOpen(vintageCard, targetId);
+      return;
+    }
+
     openPublicSection(targetId, { scrollToMenu: returnToMenu, focusSection: !returnToMenu });
   });
 
