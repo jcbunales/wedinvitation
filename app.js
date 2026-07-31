@@ -1805,8 +1805,31 @@ function openPublicSection(sectionId, options = {}) {
 }
 
 function prepareVintageCardCovers() {
+  const cardPreviewContent = {
+    details: { eyebrow: "A glimpse inside", title: "Wedding details", text: "Date, time, location, and everything you need for our special day." },
+    schedule: { eyebrow: "A glimpse inside", title: "Celebration timeline", text: "Ceremony, cocktails, reception, and the order of the day." },
+    entourage: { eyebrow: "A glimpse inside", title: "Our wedding party", text: "Meet the people walking with us and sharing in our celebration." },
+    dress: { eyebrow: "A glimpse inside", title: "Attire guide", text: "Olive green and burgundy inspiration with dress guidance for guests." },
+    venue: { eyebrow: "A glimpse inside", title: "Venue details", text: "Church illustration, address, and directions for the ceremony." },
+    rsvp: { eyebrow: "A glimpse inside", title: "Reply card", text: "Find your invitation and let us know if you can celebrate with us." }
+  };
+
   document.querySelectorAll(".home-launcher-card").forEach(card => {
     if (card.querySelector(".vintage-card-cover")) return;
+    const targetId = card.dataset.sectionTarget || "home";
+    const preview = cardPreviewContent[targetId] || cardPreviewContent.details;
+
+    const inner = document.createElement("span");
+    inner.className = "vintage-card-inner-preview";
+    inner.setAttribute("aria-hidden", "true");
+    inner.innerHTML = `
+      <span class="vintage-card-preview-kicker">${escapeHtml(preview.eyebrow)}</span>
+      <span class="vintage-card-preview-title">${escapeHtml(preview.title)}</span>
+      <span class="vintage-card-preview-rule"><span>✦</span></span>
+      <span class="vintage-card-preview-copy">${escapeHtml(preview.text)}</span>
+    `;
+    card.appendChild(inner);
+
     const cover = document.createElement("span");
     cover.className = "vintage-card-cover";
     cover.setAttribute("aria-hidden", "true");
@@ -1840,14 +1863,14 @@ function animateVintageCardOpen(card, targetId) {
 
   window.setTimeout(() => {
     openPublicSection(targetId, { fromVintageCard: true });
-  }, 760);
+  }, 980);
 
   window.setTimeout(() => {
     document.body.classList.remove("vintage-card-transition");
     card.classList.remove("is-opening-vintage-card");
     card.removeAttribute("aria-expanded");
     document.querySelectorAll(".home-launcher-card.is-card-dimmed").forEach(item => item.classList.remove("is-card-dimmed"));
-  }, 1120);
+  }, 1380);
 }
 
 function initialiseSectionNavigation() {
