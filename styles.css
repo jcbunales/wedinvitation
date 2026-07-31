@@ -3351,3 +3351,215 @@ body.section-tab-mode main > .content-section {
     font-size: 10px;
   }
 }
+
+
+/* === Arched vintage invitation menu + corrected menu return + opening reveal === */
+#sectionMenu {
+  scroll-margin-top: 24px;
+}
+
+.home-launcher-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  align-items: stretch;
+}
+
+.home-launcher-card {
+  min-height: 286px;
+  padding: 56px 20px 30px;
+  border-radius: 48% 48% 26px 26px / 31% 31% 26px 26px;
+  border: 1px solid rgba(188,163,110,.42);
+  background:
+    radial-gradient(circle at 50% 4%, rgba(255,255,255,.9), transparent 38%),
+    linear-gradient(180deg, #fbf7ed 0%, #eee5d5 100%);
+  box-shadow:
+    0 20px 42px rgba(74,57,45,.12),
+    inset 0 1px 0 rgba(255,255,255,.7);
+  transform-origin: center bottom;
+}
+.home-launcher-card::before {
+  inset: 11px;
+  border-radius: 47% 47% 19px 19px / 29% 29% 19px 19px;
+  border: 1px solid rgba(188,163,110,.27);
+}
+.home-launcher-card::after {
+  top: 22px;
+  width: 52px;
+  height: 3px;
+  border-radius: 999px;
+  background: var(--gold);
+  opacity: .62;
+}
+
+.home-launcher-card:nth-child(1),
+.home-launcher-card:nth-child(4) {
+  color: #f7efdf;
+  background:
+    radial-gradient(circle at 50% 5%, rgba(188,163,110,.15), transparent 38%),
+    linear-gradient(180deg, #5b5d36 0%, #44472a 100%);
+}
+.home-launcher-card:nth-child(2),
+.home-launcher-card:nth-child(5) {
+  color: #fff3e2;
+  background:
+    radial-gradient(circle at 50% 5%, rgba(188,163,110,.17), transparent 38%),
+    linear-gradient(180deg, #7a3840 0%, #632b33 100%);
+}
+.home-launcher-card:nth-child(3) {
+  color: var(--olive-dark);
+}
+.home-launcher-card:nth-child(6) {
+  color: #fff4e5 !important;
+  background:
+    radial-gradient(circle at 50% 5%, rgba(188,163,110,.20), transparent 38%),
+    linear-gradient(180deg, #76343c 0%, #55252c 100%);
+}
+.home-launcher-card:nth-child(1)::before,
+.home-launcher-card:nth-child(2)::before,
+.home-launcher-card:nth-child(4)::before,
+.home-launcher-card:nth-child(5)::before,
+.home-launcher-card:nth-child(6)::before {
+  border-color: rgba(238,216,169,.28);
+}
+.home-launcher-card:nth-child(1)::after,
+.home-launcher-card:nth-child(2)::after,
+.home-launcher-card:nth-child(4)::after,
+.home-launcher-card:nth-child(5)::after,
+.home-launcher-card:nth-child(6)::after {
+  background: #d8bd83;
+}
+
+.home-launcher-icon {
+  width: 86px;
+  height: 86px;
+  margin-bottom: 20px;
+  border-radius: 50%;
+  border: 1px solid rgba(188,163,110,.46);
+  background: rgba(255,250,240,.9);
+  box-shadow:
+    inset 0 0 0 7px rgba(188,163,110,.08),
+    0 8px 18px rgba(48,37,29,.08);
+}
+.home-launcher-card:nth-child(1) .home-launcher-icon,
+.home-launcher-card:nth-child(2) .home-launcher-icon,
+.home-launcher-card:nth-child(4) .home-launcher-icon,
+.home-launcher-card:nth-child(5) .home-launcher-icon,
+.home-launcher-card:nth-child(6) .home-launcher-icon {
+  background: rgba(255,247,229,.10);
+  border-color: rgba(232,209,158,.36);
+  box-shadow: inset 0 0 0 7px rgba(232,209,158,.055);
+}
+.home-launcher-card strong {
+  font-size: 31px;
+}
+.home-launcher-card small {
+  max-width: 150px;
+  line-height: 1.35;
+}
+.home-launcher-card:hover,
+.home-launcher-card:focus-visible {
+  transform: translateY(-8px) scale(1.012);
+}
+
+/* Keep the return control near the section content; it returns to the menu cards, not the top invitation. */
+.section-return-wrap {
+  position: relative;
+  z-index: 3;
+  margin-bottom: 22px;
+}
+.section-return-link {
+  box-shadow: 0 8px 20px rgba(65,49,38,.07);
+}
+
+/* Entrance sequence after the envelope opens. */
+body.home-entry-animation #home .invitation-card {
+  animation: homeInvitationEnter .78s cubic-bezier(.16,.82,.22,1) both;
+}
+body.home-entry-animation #home .countdown-panel {
+  animation: homeCountdownEnter .72s cubic-bezier(.16,.82,.22,1) .16s both;
+}
+body.home-entry-animation #home .home-launcher-heading {
+  animation: homeHeadingEnter .68s cubic-bezier(.16,.82,.22,1) .30s both;
+}
+body.home-entry-animation #home .home-launcher-card {
+  animation: homeArchCardEnter .72s cubic-bezier(.16,.82,.22,1) both;
+}
+body.home-entry-animation #home .home-launcher-card:nth-child(1) { animation-delay: .38s; }
+body.home-entry-animation #home .home-launcher-card:nth-child(2) { animation-delay: .46s; }
+body.home-entry-animation #home .home-launcher-card:nth-child(3) { animation-delay: .54s; }
+body.home-entry-animation #home .home-launcher-card:nth-child(4) { animation-delay: .62s; }
+body.home-entry-animation #home .home-launcher-card:nth-child(5) { animation-delay: .70s; }
+body.home-entry-animation #home .home-launcher-card:nth-child(6) { animation-delay: .78s; }
+
+@keyframes homeInvitationEnter {
+  from { opacity: 0; transform: translate3d(0, 24px, 0) scale(.985); }
+  to { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+}
+@keyframes homeCountdownEnter {
+  from { opacity: 0; transform: translate3d(0, 18px, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+@keyframes homeHeadingEnter {
+  from { opacity: 0; transform: translate3d(0, 14px, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+@keyframes homeArchCardEnter {
+  from { opacity: 0; transform: translate3d(0, 28px, 0) scale(.965); }
+  to { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+}
+
+@media (max-width: 900px) {
+  .home-launcher-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .home-launcher-card {
+    min-height: 258px;
+    border-radius: 48% 48% 24px 24px / 30% 30% 24px 24px;
+  }
+}
+
+@media (max-width: 620px) {
+  #sectionMenu { scroll-margin-top: 14px; }
+  .home-launcher-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .home-launcher-card {
+    min-height: 216px;
+    padding: 43px 10px 23px;
+    border-radius: 48% 48% 20px 20px / 28% 28% 20px 20px;
+  }
+  .home-launcher-card::before {
+    inset: 7px;
+    border-radius: 47% 47% 15px 15px / 27% 27% 15px 15px;
+  }
+  .home-launcher-card::after {
+    top: 17px;
+    width: 40px;
+  }
+  .home-launcher-icon {
+    width: 64px;
+    height: 64px;
+    margin-bottom: 13px;
+  }
+  .home-launcher-icon svg {
+    width: 27px;
+    height: 27px;
+  }
+  .home-launcher-card strong {
+    font-size: 23px;
+  }
+  .home-launcher-card small {
+    font-size: 8.5px;
+    letter-spacing: .11em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.home-entry-animation #home .invitation-card,
+  body.home-entry-animation #home .countdown-panel,
+  body.home-entry-animation #home .home-launcher-heading,
+  body.home-entry-animation #home .home-launcher-card {
+    animation: none !important;
+  }
+}

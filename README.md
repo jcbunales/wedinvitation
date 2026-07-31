@@ -62,3 +62,7 @@ When Supabase is enabled, run the updated `supabase-setup.sql` once. It adds `mu
 
 ## Vintage stationery theme
 The public wedding site uses a burgundy, olive, gold and warm-paper stationery treatment inspired by traditional printed invitation suites. Theme colours remain editable from the Admin dashboard.
+
+
+## Arched menu update
+The Home section uses arched vintage invitation cards. Back to menu returns directly to the section launcher, and the Home content uses a staggered entrance animation after the envelope opens.

@@ -1675,7 +1675,8 @@ function openInvitationIntro() {
   window.setTimeout(() => {
     intro.classList.add("is-revealing");
     document.body.classList.remove("invitation-intro-active");
-    document.body.classList.add("invitation-intro-opened");
+    document.body.classList.add("invitation-intro-opened", "home-entry-animation");
+    window.setTimeout(() => document.body.classList.remove("home-entry-animation"), reducedMotion ? 40 : 1800);
   }, revealDelay);
 
   window.setTimeout(() => {
@@ -1725,7 +1726,7 @@ function initialiseSectionAnimations() {
 const PUBLIC_SECTION_IDS = ["home", "details", "schedule", "entourage", "dress", "venue", "rsvp"];
 
 function openPublicSection(sectionId, options = {}) {
-  const { updateHash = true, focusSection = true } = options;
+  const { updateHash = true, focusSection = true, scrollToMenu = false } = options;
   const targetId = PUBLIC_SECTION_IDS.includes(sectionId) ? sectionId : "home";
 
   document.body.classList.add("section-tab-mode");
@@ -1755,9 +1756,21 @@ function openPublicSection(sectionId, options = {}) {
     if (location.hash !== nextHash) history.pushState({ section: targetId }, "", nextHash);
   }
 
-  window.scrollTo({ top: 0, behavior: window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+  const reducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+  const scrollBehavior = reducedMotion ? "auto" : "smooth";
 
-  if (focusSection) {
+  if (targetId === "home" && scrollToMenu) {
+    const menu = byId("sectionMenu");
+    if (menu) {
+      window.setTimeout(() => {
+        menu.scrollIntoView({ behavior: scrollBehavior, block: "start" });
+      }, 30);
+    }
+  } else {
+    window.scrollTo({ top: 0, behavior: scrollBehavior });
+  }
+
+  if (focusSection && !scrollToMenu) {
     const target = byId(targetId);
     if (target) {
       target.setAttribute("tabindex", "-1");
@@ -1781,7 +1794,8 @@ function initialiseSectionNavigation() {
     const targetId = explicit || hashTarget;
     if (!PUBLIC_SECTION_IDS.includes(targetId)) return;
     event.preventDefault();
-    openPublicSection(targetId);
+    const returnToMenu = trigger.dataset.returnMenu === "true";
+    openPublicSection(targetId, { scrollToMenu: returnToMenu, focusSection: !returnToMenu });
   });
 
   window.addEventListener("popstate", () => {
