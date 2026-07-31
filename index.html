@@ -308,6 +308,21 @@
     </footer>
   </div>
 
+  <div id="musicPlayer" class="music-player hidden" aria-label="Background music player">
+    <button id="musicToggleBtn" class="vinyl-button" type="button" aria-label="Play background music">
+      <span class="vinyl-disc" aria-hidden="true">
+        <span class="vinyl-groove vinyl-groove-one"></span>
+        <span class="vinyl-groove vinyl-groove-two"></span>
+        <span class="vinyl-label"><span>♪</span></span>
+      </span>
+    </button>
+    <div class="music-player-copy">
+      <span id="musicPlayerStatus">Wedding music</span>
+      <strong id="musicTitleDisplay">Our Wedding Song</strong>
+    </div>
+    <audio id="weddingAudio" preload="metadata" loop></audio>
+  </div>
+
   <div id="adminModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="adminTitle">
     <div class="modal-backdrop admin-close"></div>
     <div class="admin-panel">
@@ -502,6 +517,32 @@
                   <span data-theme-preview="gold"></span>
                 </div>
               </div>
+              <div class="settings-section music-settings-section">
+                <div class="card-title-row">
+                  <div>
+                    <h3>Background music</h3>
+                    <p class="form-help">Upload a wedding song and show a vinyl player in the lower-right corner of the invitation.</p>
+                  </div>
+                  <label class="music-enabled-toggle"><input id="settingMusicEnabled" type="checkbox" /><span>Enabled</span></label>
+                </div>
+                <div class="form-grid two-col music-admin-grid">
+                  <div>
+                    <label for="settingMusicTitle">Track title</label>
+                    <input id="settingMusicTitle" type="text" placeholder="Our Wedding Song" />
+                  </div>
+                  <div>
+                    <label for="settingMusicFile">Audio file</label>
+                    <input id="settingMusicFile" type="file" accept="audio/*,.mp3,.m4a,.wav,.ogg" />
+                  </div>
+                </div>
+                <div class="music-upload-row">
+                  <button id="uploadMusicBtn" class="primary-btn compact" type="button">Upload music</button>
+                  <button id="removeMusicBtn" class="ghost-btn" type="button">Remove track</button>
+                  <span id="musicUploadStatus" class="form-help">No music uploaded yet.</span>
+                </div>
+                <p class="form-help">Supabase mode stores the audio in the public <code>wedding-media</code> bucket. Local mode stores the file in this browser only.</p>
+              </div>
+
               <div class="settings-section">
                 <div class="card-title-row"><h3>Schedule</h3><button id="addScheduleItemBtn" class="text-btn" type="button">+ Add item</button></div>
                 <div id="scheduleEditor"></div>

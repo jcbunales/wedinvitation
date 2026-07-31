@@ -51,3 +51,10 @@ The public entourage section automatically renders group members in a responsive
 Open **Admin > Wedding details > Theme colors** to change the primary olive, accent burgundy, background cream, and gold detail colors without editing CSS. The page previews changes immediately; press **Save wedding details** to persist them.
 
 If Supabase was already configured before this version, run the updated `supabase-setup.sql` once in the Supabase SQL Editor. It safely adds the `theme_colors` column (plus the entourage/dress columns if your older database is missing them) without deleting existing records.
+
+
+## Background music
+
+The Admin dashboard now has a **Background music** section. Choose an audio file, enter a title, and click **Upload music**. The public invitation shows a floating vinyl player in the lower-right corner. The site attempts to start the song when a guest clicks **Open invitation**; if the browser blocks playback, the guest can tap the vinyl disc.
+
+When Supabase is enabled, run the updated `supabase-setup.sql` once. It adds `music_settings`, creates a public `wedding-media` Storage bucket (15 MB limit), and restricts upload/update/delete access to users listed in `wedding_admins`. In local mode the audio file is stored in IndexedDB in that browser only.

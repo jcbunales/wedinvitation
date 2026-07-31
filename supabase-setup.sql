@@ -24,6 +24,7 @@ create table if not exists public.wedding_settings (
 alter table public.wedding_settings add column if not exists entourage jsonb not null default '[]'::jsonb;
 alter table public.wedding_settings add column if not exists dress_motif text default '';
 alter table public.wedding_settings add column if not exists theme_colors jsonb not null default '{"olive":"#5f6f3a","burgundy":"#7b2438","cream":"#f5f1e7","gold":"#b08d57"}'::jsonb;
+alter table public.wedding_settings add column if not exists music_settings jsonb not null default '{"enabled":false,"title":"Our Wedding Song","url":"","path":"","fileName":""}'::jsonb;
 
 insert into public.wedding_settings (
   id, partner_one, partner_two, wedding_date, wedding_time, rsvp_deadline,
@@ -91,6 +92,46 @@ $$;
 
 revoke execute on function public.is_wedding_admin() from public, anon;
 grant execute on function public.is_wedding_admin() to authenticated;
+
+-- Public bucket for the wedding background track. Guests can stream files by URL;
+-- only authenticated wedding admins can upload, replace, list, or delete files.
+insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
+values (
+  'wedding-media',
+  'wedding-media',
+  true,
+  15728640,
+  array['audio/mpeg','audio/mp4','audio/ogg','audio/wav','audio/x-m4a','audio/aac']::text[]
+)
+on conflict (id) do update set
+  public = excluded.public,
+  file_size_limit = excluded.file_size_limit,
+  allowed_mime_types = excluded.allowed_mime_types;
+
+drop policy if exists "Wedding admins can read wedding media" on storage.objects;
+create policy "Wedding admins can read wedding media"
+on storage.objects for select
+to authenticated
+using (bucket_id = 'wedding-media' and (select public.is_wedding_admin()));
+
+drop policy if exists "Wedding admins can upload wedding media" on storage.objects;
+create policy "Wedding admins can upload wedding media"
+on storage.objects for insert
+to authenticated
+with check (bucket_id = 'wedding-media' and (select public.is_wedding_admin()));
+
+drop policy if exists "Wedding admins can update wedding media" on storage.objects;
+create policy "Wedding admins can update wedding media"
+on storage.objects for update
+to authenticated
+using (bucket_id = 'wedding-media' and (select public.is_wedding_admin()))
+with check (bucket_id = 'wedding-media' and (select public.is_wedding_admin()));
+
+drop policy if exists "Wedding admins can delete wedding media" on storage.objects;
+create policy "Wedding admins can delete wedding media"
+on storage.objects for delete
+to authenticated
+using (bucket_id = 'wedding-media' and (select public.is_wedding_admin()));
 
 alter table public.wedding_settings enable row level security;
 alter table public.guests enable row level security;

@@ -28,6 +28,13 @@ const defaultState = {
       cream: "#f5f1e7",
       gold: "#b08d57"
     },
+    music: {
+      enabled: false,
+      title: "Our Wedding Song",
+      url: "",
+      path: "",
+      fileName: ""
+    },
     schedule: [
       { time: "3:30 PM", title: "Guest arrival", note: "Please make your way to the garden ceremony area." },
       { time: "4:00 PM", title: "Ceremony", note: "We say “I do” surrounded by our favourite people." },
@@ -63,6 +70,11 @@ let activeGuestId = null;
 let activeGuestRecord = null;
 let toastTimer = null;
 let remotePublicStats = { attending: 0, responses: 0 };
+const MUSIC_BUCKET = "wedding-media";
+const LOCAL_MUSIC_DB = "fernWeddingMusicDb";
+const LOCAL_MUSIC_STORE = "tracks";
+let localMusicObjectUrl = "";
+let currentMusicSource = "";
 
 function clone(value) { return JSON.parse(JSON.stringify(value)); }
 function loadState() {
@@ -98,6 +110,7 @@ function weddingToRow(wedding) {
     entourage: Array.isArray(wedding.entourage) ? wedding.entourage : [],
     dress_motif: wedding.dressMotif || "",
     theme_colors: wedding.themeColors || clone(defaultState.wedding.themeColors),
+    music_settings: wedding.music || clone(defaultState.wedding.music),
     schedule: Array.isArray(wedding.schedule) ? wedding.schedule : []
   };
 }
@@ -122,6 +135,9 @@ function rowToWedding(row) {
     themeColors: row.theme_colors && typeof row.theme_colors === "object"
       ? { ...clone(defaultState.wedding.themeColors), ...row.theme_colors }
       : clone(defaultState.wedding.themeColors),
+    music: row.music_settings && typeof row.music_settings === "object"
+      ? { ...clone(defaultState.wedding.music), ...row.music_settings }
+      : clone(defaultState.wedding.music),
     schedule: Array.isArray(row.schedule) ? row.schedule : clone(defaultState.wedding.schedule),
     passcode: state?.wedding?.passcode || defaultState.wedding.passcode
   };
@@ -326,6 +342,231 @@ function syncThemePicker(theme = state.wedding.themeColors) {
   });
 }
 
+function openLocalMusicDb() {
+  return new Promise((resolve, reject) => {
+    const request = indexedDB.open(LOCAL_MUSIC_DB, 1);
+    request.onupgradeneeded = () => {
+      const db = request.result;
+      if (!db.objectStoreNames.contains(LOCAL_MUSIC_STORE)) db.createObjectStore(LOCAL_MUSIC_STORE);
+    };
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error);
+  });
+}
+
+async function saveLocalMusicFile(file) {
+  const db = await openLocalMusicDb();
+  await new Promise((resolve, reject) => {
+    const tx = db.transaction(LOCAL_MUSIC_STORE, "readwrite");
+    tx.objectStore(LOCAL_MUSIC_STORE).put(file, "backgroundMusic");
+    tx.oncomplete = resolve;
+    tx.onerror = () => reject(tx.error);
+  });
+  db.close();
+}
+
+async function getLocalMusicFile() {
+  const db = await openLocalMusicDb();
+  const result = await new Promise((resolve, reject) => {
+    const tx = db.transaction(LOCAL_MUSIC_STORE, "readonly");
+    const req = tx.objectStore(LOCAL_MUSIC_STORE).get("backgroundMusic");
+    req.onsuccess = () => resolve(req.result || null);
+    req.onerror = () => reject(req.error);
+  });
+  db.close();
+  return result;
+}
+
+async function clearLocalMusicFile() {
+  const db = await openLocalMusicDb();
+  await new Promise((resolve, reject) => {
+    const tx = db.transaction(LOCAL_MUSIC_STORE, "readwrite");
+    tx.objectStore(LOCAL_MUSIC_STORE).delete("backgroundMusic");
+    tx.oncomplete = resolve;
+    tx.onerror = () => reject(tx.error);
+  });
+  db.close();
+}
+
+function musicTitleFromFile(fileName = "") {
+  return fileName.replace(/\.[^.]+$/, "").replace(/[_-]+/g, " ").trim() || "Our Wedding Song";
+}
+
+function safeMusicFileName(fileName = "track.mp3") {
+  const extension = (fileName.match(/\.[A-Za-z0-9]+$/) || [".mp3"])[0].toLowerCase();
+  const baseName = fileName.replace(/\.[^.]+$/, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 55) || "wedding-song";
+  return `${baseName}${extension}`;
+}
+
+async function resolveMusicSource() {
+  const music = state.wedding.music || defaultState.wedding.music;
+  if (SUPABASE_MODE) return music.url || "";
+  try {
+    const file = await getLocalMusicFile();
+    if (!file) return "";
+    if (localMusicObjectUrl) URL.revokeObjectURL(localMusicObjectUrl);
+    localMusicObjectUrl = URL.createObjectURL(file);
+    return localMusicObjectUrl;
+  } catch (error) {
+    console.warn("Local music could not be loaded.", error);
+    return "";
+  }
+}
+
+function updateMusicPlayerState() {
+  const player = byId("musicPlayer");
+  const audio = byId("weddingAudio");
+  const button = byId("musicToggleBtn");
+  const status = byId("musicPlayerStatus");
+  if (!player || !audio || !button) return;
+  const playing = !audio.paused && !audio.ended;
+  player.classList.toggle("is-playing", playing);
+  button.setAttribute("aria-label", playing ? "Pause background music" : "Play background music");
+  if (status) status.textContent = playing ? "Now playing" : "Wedding music";
+}
+
+async function renderMusicPlayer() {
+  const player = byId("musicPlayer");
+  const audio = byId("weddingAudio");
+  const title = byId("musicTitleDisplay");
+  if (!player || !audio || !title) return;
+
+  const music = { ...defaultState.wedding.music, ...(state.wedding.music || {}) };
+  title.textContent = music.title || "Our Wedding Song";
+  if (!music.enabled) {
+    audio.pause();
+    player.classList.add("hidden");
+    updateMusicPlayerState();
+    return;
+  }
+
+  const source = await resolveMusicSource();
+  if (!source) {
+    audio.pause();
+    player.classList.add("hidden");
+    updateMusicPlayerState();
+    return;
+  }
+
+  player.classList.remove("hidden");
+  if (currentMusicSource !== source) {
+    currentMusicSource = source;
+    audio.src = source;
+    audio.load();
+  }
+  updateMusicPlayerState();
+}
+
+function tryStartWeddingMusic() {
+  const audio = byId("weddingAudio");
+  const player = byId("musicPlayer");
+  if (!audio || !player || player.classList.contains("hidden") || !audio.src) return;
+  audio.play().catch(() => updateMusicPlayerState());
+}
+
+async function uploadWeddingMusic() {
+  const fileInput = byId("settingMusicFile");
+  const status = byId("musicUploadStatus");
+  const file = fileInput?.files?.[0];
+  if (!file) {
+    showToast("Choose an audio file first.");
+    return;
+  }
+  if (file.size > 15 * 1024 * 1024) {
+    showToast("Please choose an audio file smaller than 15 MB.");
+    return;
+  }
+  const button = byId("uploadMusicBtn");
+  if (button) button.disabled = true;
+  if (status) status.textContent = "Uploading music…";
+
+  const previousPath = state.wedding.music?.path || "";
+  try {
+    let nextMusic;
+    if (SUPABASE_MODE) {
+      const path = `music/${Date.now()}-${safeMusicFileName(file.name)}`;
+      const { error: uploadError } = await supabaseDb.storage.from(MUSIC_BUCKET).upload(path, file, {
+        cacheControl: "3600",
+        upsert: false,
+        contentType: file.type || undefined
+      });
+      if (uploadError) throw uploadError;
+      const { data: publicData } = supabaseDb.storage.from(MUSIC_BUCKET).getPublicUrl(path);
+      nextMusic = {
+        enabled: true,
+        title: byId("settingMusicTitle")?.value.trim() || musicTitleFromFile(file.name),
+        url: publicData.publicUrl,
+        path,
+        fileName: file.name
+      };
+      state.wedding.music = nextMusic;
+      await saveWeddingRemote();
+      if (previousPath && previousPath !== path) {
+        supabaseDb.storage.from(MUSIC_BUCKET).remove([previousPath]).catch(() => {});
+      }
+    } else {
+      await saveLocalMusicFile(file);
+      nextMusic = {
+        enabled: true,
+        title: byId("settingMusicTitle")?.value.trim() || musicTitleFromFile(file.name),
+        url: "",
+        path: "",
+        fileName: file.name
+      };
+      state.wedding.music = nextMusic;
+      saveState();
+    }
+
+    byId("settingMusicEnabled").checked = true;
+    byId("settingMusicTitle").value = nextMusic.title;
+    if (status) status.textContent = `${file.name} uploaded.`;
+    await renderMusicPlayer();
+    showToast("Background music uploaded.");
+  } catch (error) {
+    console.error(error);
+    if (status) status.textContent = "Upload failed. Check your Supabase Storage setup and permissions.";
+    showToast("Music upload failed.");
+  } finally {
+    if (button) button.disabled = false;
+  }
+}
+
+async function removeWeddingMusic() {
+  const music = { ...defaultState.wedding.music, ...(state.wedding.music || {}) };
+  const status = byId("musicUploadStatus");
+  try {
+    if (SUPABASE_MODE && music.path) {
+      const { error } = await supabaseDb.storage.from(MUSIC_BUCKET).remove([music.path]);
+      if (error) throw error;
+    } else if (!SUPABASE_MODE) {
+      await clearLocalMusicFile();
+    }
+    state.wedding.music = clone(defaultState.wedding.music);
+    if (SUPABASE_MODE) await saveWeddingRemote(); else saveState();
+    currentMusicSource = "";
+    const audio = byId("weddingAudio");
+    if (audio) { audio.pause(); audio.removeAttribute("src"); audio.load(); }
+    if (byId("settingMusicFile")) byId("settingMusicFile").value = "";
+    if (status) status.textContent = "No music uploaded yet.";
+    populateMusicSettings();
+    await renderMusicPlayer();
+    showToast("Background music removed.");
+  } catch (error) {
+    console.error(error);
+    showToast("The music could not be removed.");
+  }
+}
+
+function populateMusicSettings() {
+  const music = { ...defaultState.wedding.music, ...(state.wedding.music || {}) };
+  const enabled = byId("settingMusicEnabled");
+  const title = byId("settingMusicTitle");
+  const status = byId("musicUploadStatus");
+  if (enabled) enabled.checked = Boolean(music.enabled);
+  if (title) title.value = music.title || "Our Wedding Song";
+  if (status) status.textContent = music.fileName ? `Current track: ${music.fileName}` : "No music uploaded yet.";
+}
+
 function byId(id) { return document.getElementById(id); }
 function escapeHtml(value = "") {
   return String(value).replace(/[&<>'"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" }[c]));
@@ -387,6 +628,7 @@ function renderPublic() {
   renderScheduleCards();
   renderPublicStats();
   updateCountdown();
+  renderMusicPlayer().catch(error => console.warn("Music player could not be rendered.", error));
 }
 
 function normaliseEntourageNames(names) {
@@ -789,6 +1031,7 @@ function populateSettingsForm() {
   byId("settingEntourage").value = (w.entourage || []).map(item => `${item.role} | ${normaliseEntourageNames(item.names).join("; ")}`).join("\n");
   byId("settingDressMotif").value = w.dressMotif || "";
   syncThemePicker(w.themeColors);
+  populateMusicSettings();
   renderScheduleEditor();
 }
 function renderScheduleEditor() {
@@ -827,6 +1070,24 @@ if (resetThemeColorsBtn) {
     applyThemeColors(defaults);
     showToast("Default palette previewed. Save wedding details to keep it.");
   });
+}
+
+const uploadMusicBtn = byId("uploadMusicBtn");
+if (uploadMusicBtn) uploadMusicBtn.addEventListener("click", uploadWeddingMusic);
+const removeMusicBtn = byId("removeMusicBtn");
+if (removeMusicBtn) removeMusicBtn.addEventListener("click", removeWeddingMusic);
+const musicToggleBtn = byId("musicToggleBtn");
+if (musicToggleBtn) musicToggleBtn.addEventListener("click", () => {
+  const audio = byId("weddingAudio");
+  if (!audio) return;
+  if (audio.paused) audio.play().catch(() => showToast("Tap again to play the music."));
+  else audio.pause();
+});
+const weddingAudio = byId("weddingAudio");
+if (weddingAudio) {
+  weddingAudio.addEventListener("play", updateMusicPlayerState);
+  weddingAudio.addEventListener("pause", updateMusicPlayerState);
+  weddingAudio.addEventListener("ended", updateMusicPlayerState);
 }
 
 byId("weddingDetailsForm").addEventListener("submit", async e => {
@@ -869,7 +1130,13 @@ byId("weddingDetailsForm").addEventListener("submit", async e => {
     venueNotes: byId("settingVenueNotes").value.trim(),
     entourage,
     dressMotif: byId("settingDressMotif").value.trim(),
-    themeColors: getThemeColors(readThemePickerValues())
+    themeColors: getThemeColors(readThemePickerValues()),
+    music: {
+      ...clone(defaultState.wedding.music),
+      ...(state.wedding.music || {}),
+      enabled: Boolean(byId("settingMusicEnabled")?.checked),
+      title: byId("settingMusicTitle")?.value.trim() || state.wedding.music?.title || "Our Wedding Song"
+    }
   };
 
   const saveButton = e.submitter || e.currentTarget.querySelector('[type="submit"]');
@@ -1065,6 +1332,7 @@ function openInvitationIntro() {
   if (!intro || intro.classList.contains("is-opening")) return;
 
   intro.classList.add("is-opening", "is-breaking");
+  tryStartWeddingMusic();
   const reducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
 
   const flapDelay = reducedMotion ? 5 : 400;
