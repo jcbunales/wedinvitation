@@ -303,19 +303,28 @@ function normaliseEntourageNames(names) {
 
 function renderEntourage() {
   const items = Array.isArray(state.wedding.entourage) ? state.wedding.entourage : [];
-  byId("entourageGrid").innerHTML = items.length ? items.map(item => {
-    const names = normaliseEntourageNames(item.names);
-    const namesMarkup = names.length > 1
-      ? `<div class="entourage-name-grid">${names.map(name => `<span>${escapeHtml(name)}</span>`).join("")}</div>`
-      : `<h3 class="entourage-single-name">${escapeHtml(names[0] || "")}</h3>`;
 
-    return `
-      <article class="entourage-card ${names.length > 1 ? "multi-member" : "single-member"}">
-        <span class="entourage-flourish">✦</span>
-        <p>${escapeHtml(item.role || "Entourage")}</p>
-        ${namesMarkup}
-      </article>`;
-  }).join("") : `<p class="empty-entourage">Entourage details will be announced soon.</p>`;
+  byId("entourageGrid").innerHTML = items.length
+    ? items.map((item, index) => {
+        const names = normaliseEntourageNames(item.names);
+        const accentClass = index % 2 === 0 ? "olive-group" : "burgundy-group";
+
+        return `
+          <article class="entourage-group ${accentClass}">
+            <div class="entourage-group-heading">
+              <span class="entourage-flourish" aria-hidden="true">✦</span>
+              <p>${escapeHtml(item.role || "Entourage")}</p>
+            </div>
+            <div class="entourage-members">
+              ${names.map(name => `
+                <div class="entourage-member">
+                  <span>${escapeHtml(name)}</span>
+                </div>
+              `).join("")}
+            </div>
+          </article>`;
+      }).join("")
+    : `<p class="empty-entourage">Entourage details will be announced soon.</p>`;
 }
 
 function renderScheduleCards() {

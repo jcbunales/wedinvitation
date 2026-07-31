@@ -891,75 +891,87 @@ body.invitation-intro-opened .page-shell { opacity: 1; transform: none; filter: 
 
 .entourage-section { padding-top: 105px; padding-bottom: 105px; }
 .entourage-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0,1fr));
+  display: flex;
+  flex-direction: column;
   gap: 18px;
-  max-width: 980px;
+  width: min(100%, 820px);
   margin: 48px auto 0;
-  align-items: stretch;
 }
-.entourage-card {
+.entourage-group {
   position: relative;
-  min-height: 180px;
-  padding: 34px 28px 30px;
+  width: 100%;
+  padding: 30px 38px 32px;
   text-align: center;
   background: var(--paper);
   border: 1px solid var(--line);
-  box-shadow: 0 14px 35px rgba(63,76,44,.06);
+  box-shadow: 0 14px 34px rgba(63,76,44,.055);
   overflow: hidden;
 }
-.entourage-card::after {
+.entourage-group::before {
   content: "";
   position: absolute;
-  width: 96px;
-  height: 96px;
-  right: -54px;
-  bottom: -54px;
-  border: 1px solid rgba(123,36,56,.24);
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 5px;
+}
+.entourage-group.olive-group::before { background: var(--olive); }
+.entourage-group.burgundy-group::before { background: var(--burgundy); }
+.entourage-group::after {
+  content: "";
+  position: absolute;
+  width: 110px;
+  height: 110px;
+  right: -68px;
+  bottom: -68px;
+  border: 1px solid rgba(176,141,87,.22);
   border-radius: 50%;
   pointer-events: none;
 }
-.entourage-flourish { color: var(--burgundy); font-size: 15px; }
-.entourage-card > p {
-  margin: 12px 0 9px;
+.entourage-group-heading {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.entourage-flourish {
+  color: var(--burgundy);
+  font-size: 14px;
+  line-height: 1;
+}
+.entourage-group.olive-group .entourage-flourish { color: var(--olive-dark); }
+.entourage-group-heading p {
+  margin: 0;
   color: var(--olive-dark);
   text-transform: uppercase;
-  letter-spacing: .16em;
-  font-size: 10px;
+  letter-spacing: .19em;
+  font-size: 11px;
   font-weight: 700;
 }
-.entourage-single-name {
-  margin: 0;
+.entourage-group.burgundy-group .entourage-group-heading p { color: var(--burgundy); }
+.entourage-members {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 600px);
+  margin: 18px auto 0;
+  border-top: 1px solid rgba(63,76,44,.11);
+}
+.entourage-member {
+  padding: 10px 8px;
+  border-bottom: 1px solid rgba(63,76,44,.11);
+}
+.entourage-member span {
+  display: block;
   font-family: "Cormorant Garamond", Georgia, serif;
-  font-size: 28px;
+  font-size: 24px;
   font-weight: 500;
   line-height: 1.18;
   overflow-wrap: anywhere;
 }
-.entourage-card.multi-member { padding-bottom: 32px; }
-.entourage-name-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0 20px;
-  max-width: 620px;
-  margin: 12px auto 0;
-  border-top: 1px solid rgba(63,76,44,.11);
-}
-.entourage-name-grid span {
-  min-width: 0;
-  padding: 10px 6px;
-  border-bottom: 1px solid rgba(63,76,44,.11);
-  font-family: "Cormorant Garamond", Georgia, serif;
-  font-size: 22px;
-  font-weight: 500;
-  line-height: 1.15;
-  overflow-wrap: anywhere;
-}
-.entourage-name-grid span:nth-child(odd):last-child {
-  grid-column: 1 / -1;
-}
 .entourage-format-example { margin-top: 9px; }
-.empty-entourage { grid-column: 1/-1; text-align: center; color: var(--muted); }
+.empty-entourage { text-align: center; color: var(--muted); }
 
 .dress-section { max-width: 1180px; padding-top: 40px; }
 .dress-card {
@@ -1015,17 +1027,10 @@ body.invitation-intro-opened .page-shell { opacity: 1; transform: none; filter: 
 .dress-leaf { position: absolute; right: 34px; top: 26px; font: 90px Georgia,serif; color: rgba(245,241,231,.16); transform: rotate(22deg); }
 
 @media (max-width: 900px) {
-  .entourage-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
   .dress-card { grid-template-columns: 1fr; }
   .dress-art { min-height: 330px; }
 }
 @media (max-width: 620px) {
-  .entourage-grid { grid-template-columns: 1fr; gap: 14px; }
-  .entourage-card { min-height: 150px; padding: 30px 22px 26px; }
-  .entourage-name-grid { grid-template-columns: 1fr; gap: 0; }
-  .entourage-name-grid span { font-size: 21px; padding: 8px 4px; }
-  .entourage-name-grid span:nth-child(odd):last-child { grid-column: auto; }
-  .entourage-single-name { font-size: 26px; }
   .motif-swatches { grid-template-columns: 1fr; }
   .swatch { height: 45px; }
   .dress-copy { padding: 42px 25px; }
@@ -1183,4 +1188,13 @@ body.invitation-intro-opened .page-shell { opacity: 1; transform: none; filter: 
 
 @media (max-width: 900px) {
   .venue-image-caption strong { font-size: 24px; }
+}
+
+@media (max-width: 620px) {
+  .entourage-grid { gap: 14px; margin-top: 36px; }
+  .entourage-group { padding: 26px 20px 28px; }
+  .entourage-group-heading p { font-size: 10px; letter-spacing: .16em; }
+  .entourage-members { margin-top: 15px; }
+  .entourage-member { padding: 9px 4px; }
+  .entourage-member span { font-size: 22px; }
 }
