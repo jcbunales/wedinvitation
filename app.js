@@ -1659,10 +1659,10 @@ function openInvitationIntro() {
   tryStartWeddingMusic();
   const reducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
 
-  const flapDelay = reducedMotion ? 5 : 400;
-  const cardDelay = reducedMotion ? 10 : 1250;
-  const revealDelay = reducedMotion ? 15 : 2150;
-  const finishDelay = reducedMotion ? 25 : 3000;
+  const flapDelay = reducedMotion ? 5 : 380;
+  const cardDelay = reducedMotion ? 10 : 1080;
+  const revealDelay = reducedMotion ? 15 : 1980;
+  const finishDelay = reducedMotion ? 25 : 2820;
 
   window.setTimeout(() => {
     intro.classList.add("flap-open");
@@ -1713,8 +1713,8 @@ function initialiseSectionAnimations() {
       observer.unobserve(entry.target);
     });
   }, {
-    threshold: 0.14,
-    rootMargin: "0px 0px -8% 0px"
+    threshold: 0.12,
+    rootMargin: "0px 0px -6% 0px"
   });
 
   sections.forEach(section => observer.observe(section));
