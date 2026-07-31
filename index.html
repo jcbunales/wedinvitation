@@ -38,22 +38,10 @@
   </div>
 
   <div class="page-shell">
-    <header class="topbar">
-      <a href="#home" class="brand" data-section-target="home" aria-label="Wedding invitation home">
-        <span class="brand-mark">F</span>
-        <span class="brand-text">Forever & Always</span>
-      </a>
-      <nav class="nav-links" aria-label="Wedding sections">
-        <a href="#home" data-section-target="home" class="section-nav-link is-active"><span class="section-nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 10.5 12 3l8.5 7.5"/><path d="M5.5 9.2V21h13V9.2"/><path d="M9.3 21v-6.5h5.4V21"/></svg></span><span>Home</span></a>
-        <a href="#details" data-section-target="details" class="section-nav-link"><span class="section-nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M9.1 9.2c.7-1 1.8-1.6 2.9-1.6s2.2.6 2.9 1.6"/><path d="M8.7 14.7c1.9 1.8 4.7 1.8 6.6 0"/><path d="M12 5.5v13"/></svg></span><span>Details</span></a>
-        <a href="#schedule" data-section-target="schedule" class="section-nav-link"><span class="section-nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5.5" width="16" height="14.5" rx="2"/><path d="M8 3.5v4M16 3.5v4M4 9.5h16"/><path d="M8 13h3M13 13h3M8 16.5h3"/></svg></span><span>Schedule</span></a>
-        <a href="#entourage" data-section-target="entourage" class="section-nav-link"><span class="section-nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="9" r="2.7"/><circle cx="16.2" cy="10" r="2.2"/><path d="M4.5 19c.4-3 2.1-4.8 4.5-4.8s4.1 1.8 4.5 4.8"/><path d="M13.3 15c.7-1 1.7-1.6 3-1.6 2 0 3.3 1.4 3.7 3.8"/></svg></span><span>Entourage</span></a>
-        <a href="#dress" data-section-target="dress" class="section-nav-link"><span class="section-nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.1 4.2c.6 1.5 1.5 2.3 2.9 2.3s2.3-.8 2.9-2.3"/><path d="M10.1 5.7 8.5 10l-3 9.5h13L15.5 10l-1.6-4.3"/><path d="M9 10h6"/></svg></span><span>Attire</span></a>
-        <a href="#venue" data-section-target="venue" class="section-nav-link"><span class="section-nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s6-5.4 6-11a6 6 0 1 0-12 0c0 5.6 6 11 6 11Z"/><circle cx="12" cy="10" r="2.2"/></svg></span><span>Venue</span></a>
-        <a href="#rsvp" data-section-target="rsvp" class="section-nav-link"><span class="section-nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6.5h16v12H4z"/><path d="m4 7 8 6 8-6"/><path d="m8.3 17.2 2.1 2.1 5.1-5.1"/></svg></span><span>RSVP</span></a>
-      </nav>
-      <button class="ghost-btn admin-open" type="button">Admin</button>
-    </header>
+    <button class="floating-admin-btn ghost-btn admin-open" type="button" aria-label="Open admin dashboard">
+      <span class="floating-admin-icon" aria-hidden="true">✦</span>
+      <span>Admin</span>
+    </button>
 
     <main>
       <section id="home" class="hero-section">
@@ -90,7 +78,7 @@
             <div>
               <p class="section-kicker">Explore our day</p>
               <h2>Wedding invitation</h2>
-              <p>Choose a section to open.</p>
+              <p>Tap a card to open each part of our invitation.</p>
             </div>
             <span class="home-launcher-rule" aria-hidden="true"></span>
           </div>
@@ -124,6 +112,11 @@
       </section>
 
       <section id="details" class="content-section split-section">
+        <div class="section-return-wrap">
+          <a href="#home" data-section-target="home" class="section-return-link">
+            <span aria-hidden="true">←</span> Back to menu
+          </a>
+        </div>
         <div class="details-monogram" aria-label="Couple initials">
           <span id="detailsInitialOne">O</span>
           <em>&amp;</em>
@@ -142,6 +135,11 @@
       </section>
 
       <section id="schedule" class="content-section muted-section">
+        <div class="section-return-wrap">
+          <a href="#home" data-section-target="home" class="section-return-link">
+            <span aria-hidden="true">←</span> Back to menu
+          </a>
+        </div>
         <div class="section-heading centered">
           <p class="section-kicker">Order of the day</p>
           <h2>Wedding schedule</h2>
@@ -150,6 +148,11 @@
       </section>
 
       <section id="entourage" class="content-section entourage-section">
+        <div class="section-return-wrap">
+          <a href="#home" data-section-target="home" class="section-return-link">
+            <span aria-hidden="true">←</span> Back to menu
+          </a>
+        </div>
         <div class="section-heading centered">
           <p class="section-kicker">The people beside us</p>
           <h2>Wedding entourage</h2>
@@ -159,6 +162,11 @@
       </section>
 
       <section id="dress" class="content-section dress-section">
+        <div class="section-return-wrap">
+          <a href="#home" data-section-target="home" class="section-return-link">
+            <span aria-hidden="true">←</span> Back to menu
+          </a>
+        </div>
         <div class="dress-card">
           <div class="dress-copy">
             <p class="section-kicker">Attire guide</p>
@@ -202,6 +210,11 @@
       </section>
 
       <section id="venue" class="content-section venue-section">
+        <div class="section-return-wrap">
+          <a href="#home" data-section-target="home" class="section-return-link">
+            <span aria-hidden="true">←</span> Back to menu
+          </a>
+        </div>
         <div class="venue-card">
           <div>
             <p class="section-kicker">Where to find us</p>
@@ -221,6 +234,11 @@
       </section>
 
       <section id="rsvp" class="content-section rsvp-section">
+        <div class="section-return-wrap">
+          <a href="#home" data-section-target="home" class="section-return-link">
+            <span aria-hidden="true">←</span> Back to menu
+          </a>
+        </div>
         <div class="section-heading centered">
           <p class="section-kicker">Please reply</p>
           <h2>RSVP</h2>

@@ -3081,3 +3081,273 @@ body.section-tab-mode main > .content-section {
   main > section.section-panel.is-active-section { animation: none !important; }
   .home-launcher-card, .nav-links .section-nav-link { transition: none !important; }
 }
+
+
+/* === Home launcher redesign: remove nav bar and use large vintage section cards === */
+.topbar { display: none !important; }
+.nav-links { display: none !important; }
+
+.page-shell {
+  position: relative;
+}
+
+.floating-admin-btn {
+  position: fixed;
+  top: 18px;
+  right: 18px;
+  z-index: 80;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(188,163,110,.45);
+  background: rgba(79,81,48,.92);
+  color: #f8f1e4;
+  box-shadow: 0 10px 26px rgba(53,41,34,.15);
+  backdrop-filter: blur(10px);
+}
+.floating-admin-btn:hover {
+  background: rgba(115,51,58,.95);
+  color: #fff7eb;
+}
+.floating-admin-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(188,163,110,.18);
+  color: var(--gold);
+  font-size: 12px;
+}
+
+.home-section-launcher {
+  margin-top: 36px;
+  padding: 34px 28px 30px;
+  border: 1px solid rgba(188,163,110,.28);
+  border-radius: 34px;
+  background:
+    linear-gradient(180deg, rgba(255,250,242,.72), rgba(240,233,219,.88)),
+    radial-gradient(circle at top, rgba(188,163,110,.08), transparent 42%);
+  box-shadow: 0 24px 56px rgba(67,53,42,.10);
+}
+.home-launcher-heading {
+  align-items: center;
+  gap: 22px;
+  margin-bottom: 28px;
+}
+.home-launcher-heading .section-kicker {
+  margin-bottom: 8px;
+}
+.home-launcher-heading h2 {
+  margin: 0;
+  font-size: clamp(40px, 5vw, 56px);
+  color: var(--burgundy);
+}
+.home-launcher-heading p:last-child {
+  margin-top: 8px;
+  font-size: 16px;
+  color: var(--muted);
+}
+.home-launcher-rule {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(188,163,110,.55), transparent);
+}
+.home-launcher-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+.home-launcher-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  padding: 26px 18px 24px;
+  border-radius: 30px;
+  border: 1px solid rgba(188,163,110,.35);
+  background:
+    linear-gradient(180deg, rgba(255,252,246,.98), rgba(243,236,224,.98));
+  box-shadow: 0 18px 40px rgba(75,62,48,.10);
+  text-align: center;
+  overflow: hidden;
+}
+.home-launcher-card::before {
+  content: "";
+  position: absolute;
+  inset: 10px;
+  border: 1px solid rgba(188,163,110,.24);
+  border-radius: 24px;
+  pointer-events: none;
+}
+.home-launcher-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 62%;
+  height: 6px;
+  border-radius: 0 0 999px 999px;
+  background: linear-gradient(90deg, rgba(79,81,48,.8), rgba(188,163,110,.9), rgba(115,51,58,.85));
+  opacity: .9;
+}
+.home-launcher-card:nth-child(odd) {
+  color: var(--olive-dark);
+}
+.home-launcher-card:nth-child(even) {
+  color: var(--burgundy);
+}
+.home-launcher-card:hover,
+.home-launcher-card:focus-visible {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 48px rgba(75,62,48,.15);
+  border-color: rgba(188,163,110,.55);
+}
+.home-launcher-card-accent {
+  background: linear-gradient(180deg, rgba(115,51,58,.95), rgba(88,35,41,.96));
+  color: #fff5e8 !important;
+}
+.home-launcher-card-accent::before {
+  border-color: rgba(255,240,208,.24);
+}
+.home-launcher-card-accent::after {
+  background: linear-gradient(90deg, rgba(255,238,206,.35), rgba(255,238,206,.92), rgba(255,238,206,.35));
+}
+.home-launcher-icon {
+  width: 78px;
+  height: 78px;
+  margin-bottom: 16px;
+  border-radius: 50%;
+  border: 1px solid rgba(188,163,110,.42);
+  background: radial-gradient(circle at 35% 30%, rgba(255,255,255,.95), rgba(246,238,225,.96));
+  box-shadow: inset 0 0 0 8px rgba(188,163,110,.08);
+}
+.home-launcher-card-accent .home-launcher-icon {
+  background: radial-gradient(circle at 35% 30%, rgba(255,255,255,.18), rgba(255,255,255,.08));
+  border-color: rgba(255,238,206,.34);
+  box-shadow: inset 0 0 0 8px rgba(255,238,206,.07);
+}
+.home-launcher-icon svg {
+  width: 32px;
+  height: 32px;
+  stroke-width: 1.6;
+}
+.home-launcher-card strong {
+  font-size: 30px;
+  line-height: 1.05;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 600;
+  letter-spacing: .01em;
+}
+.home-launcher-card small {
+  display: block;
+  margin-top: 8px;
+  font-size: 11px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: currentColor;
+  opacity: .72;
+}
+
+.section-return-wrap {
+  display: flex;
+  justify-content: flex-start;
+  margin: 0 0 18px;
+}
+.section-return-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 38px;
+  padding: 0 15px;
+  border-radius: 999px;
+  text-decoration: none;
+  color: var(--burgundy);
+  background: rgba(255,249,239,.76);
+  border: 1px solid rgba(188,163,110,.34);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.section-return-link:hover,
+.section-return-link:focus-visible {
+  color: #fff7eb;
+  background: var(--burgundy);
+}
+
+body.section-tab-mode main > .content-section {
+  min-height: calc(100vh - 70px);
+}
+
+@media (max-width: 900px) {
+  .home-section-launcher {
+    padding: 28px 18px 24px;
+    border-radius: 26px;
+  }
+  .home-launcher-heading {
+    gap: 14px;
+    margin-bottom: 22px;
+  }
+  .home-launcher-heading h2 {
+    font-size: 42px;
+  }
+  .home-launcher-grid {
+    gap: 14px;
+  }
+  .home-launcher-card {
+    min-height: 180px;
+    padding: 24px 14px 20px;
+    border-radius: 24px;
+  }
+  .home-launcher-card strong {
+    font-size: 27px;
+  }
+}
+
+@media (max-width: 620px) {
+  .floating-admin-btn {
+    top: 12px;
+    right: 12px;
+    padding: 9px 13px;
+  }
+  .home-launcher-heading {
+    display: block;
+    text-align: center;
+  }
+  .home-launcher-rule {
+    display: none;
+  }
+  .home-launcher-heading h2 {
+    font-size: 34px;
+  }
+  .home-launcher-heading p:last-child {
+    font-size: 14px;
+  }
+  .home-launcher-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .home-launcher-card {
+    min-height: 155px;
+  }
+  .home-launcher-icon {
+    width: 66px;
+    height: 66px;
+    margin-bottom: 12px;
+  }
+  .home-launcher-icon svg {
+    width: 28px;
+    height: 28px;
+  }
+  .home-launcher-card strong {
+    font-size: 25px;
+  }
+  .home-launcher-card small {
+    font-size: 10px;
+  }
+}
