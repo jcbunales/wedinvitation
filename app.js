@@ -1676,7 +1676,7 @@ function openInvitationIntro() {
     intro.classList.add("is-revealing");
     document.body.classList.remove("invitation-intro-active");
     document.body.classList.add("invitation-intro-opened", "home-entry-animation");
-    window.setTimeout(() => document.body.classList.remove("home-entry-animation"), reducedMotion ? 40 : 1800);
+    window.setTimeout(() => document.body.classList.remove("home-entry-animation"), reducedMotion ? 40 : 2500);
   }, revealDelay);
 
   window.setTimeout(() => {

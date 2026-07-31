@@ -3812,3 +3812,387 @@ body.home-entry-animation #home .home-launcher-card:nth-child(6) { animation-del
   }
   .home-launcher-card small::after { margin-top: 12px; font-size: 17px; }
 }
+
+
+/* === Refined RSVP stationery layout === */
+.rsvp-section {
+  max-width: 1160px;
+}
+.rsvp-heading {
+  position: relative;
+  margin-inline: auto;
+  max-width: 720px;
+  padding-bottom: 8px;
+}
+.rsvp-heading-medallion {
+  width: 68px;
+  height: 68px;
+  margin: 0 auto 14px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: #efd9a7;
+  background: var(--burgundy);
+  border: 2px solid rgba(var(--gold-rgb), .78);
+  box-shadow:
+    0 10px 24px rgba(81,45,46,.14),
+    inset 0 0 0 6px rgba(255,239,204,.055);
+}
+.rsvp-heading-medallion svg {
+  width: 29px;
+  height: 29px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.rsvp-heading .section-kicker {
+  margin-bottom: 7px;
+  color: var(--olive-dark);
+}
+.rsvp-heading h2 {
+  margin-bottom: 7px;
+  font-size: clamp(48px, 6vw, 70px);
+  color: var(--burgundy) !important;
+}
+.rsvp-heading-rule {
+  width: min(230px, 66%);
+  margin: 0 auto 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--gold);
+  font-size: 8px;
+}
+.rsvp-heading-rule::before,
+.rsvp-heading-rule::after {
+  content: "";
+  height: 1px;
+  flex: 1;
+  background: linear-gradient(90deg, transparent, rgba(var(--gold-rgb), .7));
+}
+.rsvp-heading-rule::after {
+  background: linear-gradient(90deg, rgba(var(--gold-rgb), .7), transparent);
+}
+.rsvp-heading #rsvpDeadlineDisplay {
+  max-width: 520px;
+  margin-inline: auto;
+  color: var(--muted);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 18px;
+  font-style: italic;
+}
+
+.rsvp-stationery-layout {
+  grid-template-columns: minmax(0, 1.42fr) minmax(280px, .58fr);
+  gap: 34px;
+  align-items: stretch;
+  margin-top: 34px;
+}
+.rsvp-invitation-form {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: 580px;
+  padding: clamp(44px, 5vw, 62px) clamp(30px, 5vw, 58px) 48px;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 50% -8%, rgba(255,255,255,.94), transparent 38%),
+    linear-gradient(180deg, #fffaf0 0%, #f3ead8 100%);
+  border: 1px solid rgba(var(--gold-rgb), .58);
+  border-radius: 46% 46% 22px 22px / 16% 16% 22px 22px;
+  outline: 1px solid rgba(var(--gold-rgb), .28);
+  outline-offset: -12px;
+  box-shadow: 0 28px 60px rgba(77,56,42,.13);
+}
+.rsvp-invitation-form::before {
+  content: "";
+  position: absolute;
+  inset: 19px;
+  z-index: -1;
+  pointer-events: none;
+  border: 1px solid rgba(var(--gold-rgb), .18);
+  border-radius: 45% 45% 14px 14px / 15% 15% 14px 14px;
+}
+.rsvp-invitation-form::after {
+  content: "✦";
+  position: absolute;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(var(--gold-rgb), .72);
+  font-size: 14px;
+}
+.rsvp-invitation-form label,
+.rsvp-invitation-form legend {
+  color: var(--burgundy-dark);
+  font-weight: 700;
+}
+.rsvp-invitation-form .form-help {
+  color: var(--muted);
+}
+.rsvp-invitation-form input,
+.rsvp-invitation-form select,
+.rsvp-invitation-form textarea {
+  color: var(--ink);
+  background: rgba(255,253,247,.88);
+  border: 1px solid rgba(var(--gold-rgb), .42);
+  border-radius: 12px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.8);
+}
+.rsvp-invitation-form input::placeholder,
+.rsvp-invitation-form textarea::placeholder {
+  color: rgba(78,68,57,.48);
+}
+.rsvp-invitation-form input:focus,
+.rsvp-invitation-form select:focus,
+.rsvp-invitation-form textarea:focus {
+  border-color: var(--burgundy);
+  box-shadow: 0 0 0 3px rgba(var(--burgundy-rgb), .10);
+}
+.rsvp-invitation-form .lookup-row {
+  align-items: stretch;
+}
+.rsvp-invitation-form .lookup-row .primary-btn {
+  min-width: 155px;
+  border-radius: 12px;
+}
+.rsvp-invitation-form fieldset {
+  margin-top: 26px;
+}
+.rsvp-invitation-form .choice-grid {
+  gap: 12px;
+}
+.rsvp-invitation-form .choice-card span {
+  min-height: 62px;
+  display: grid;
+  place-items: center;
+  padding: 14px 16px;
+  color: var(--burgundy-dark);
+  border: 1px solid rgba(var(--gold-rgb), .42);
+  border-radius: 16px;
+  background: rgba(255,252,245,.78);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 20px;
+  font-weight: 600;
+  transition: transform .22s ease, background .22s ease, border-color .22s ease, box-shadow .22s ease;
+}
+.rsvp-invitation-form .choice-card span:hover {
+  transform: translateY(-2px);
+  border-color: rgba(var(--burgundy-rgb), .42);
+}
+.rsvp-invitation-form .choice-card input:checked + span {
+  color: #fff6e8;
+  border-color: var(--burgundy);
+  background: var(--burgundy);
+  box-shadow: 0 10px 22px rgba(var(--burgundy-rgb), .16);
+}
+.rsvp-invitation-form .guest-found-banner {
+  margin-bottom: 24px;
+  padding: 17px 18px;
+  border-radius: 16px;
+  background: rgba(var(--olive-rgb), .075);
+  border: 1px solid rgba(var(--olive-rgb), .18);
+}
+.rsvp-invitation-form .guest-found-banner span {
+  color: var(--muted);
+}
+.rsvp-invitation-form .guest-found-banner strong {
+  color: var(--olive-dark);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 25px;
+}
+.rsvp-invitation-form .form-actions {
+  margin-top: 28px;
+  padding-top: 22px;
+  border-top: 1px solid rgba(var(--gold-rgb), .20);
+}
+.rsvp-invitation-form .success-panel {
+  min-height: 390px;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  text-align: center;
+}
+.rsvp-invitation-form .success-icon {
+  color: #fff6e8;
+  background: var(--olive);
+  border: 2px solid rgba(var(--gold-rgb), .62);
+}
+.rsvp-invitation-form .success-panel h3 {
+  color: var(--burgundy);
+  font-size: 38px;
+}
+
+.rsvp-companion-card {
+  position: relative;
+  min-height: 100%;
+  padding: 88px 28px 34px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: #f8ebd2;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.03), transparent 18%),
+    var(--olive);
+  border: 1px solid var(--olive-dark);
+  border-radius: 42px 42px 18px 18px / 34px 34px 18px 18px;
+  outline: 1px solid rgba(var(--gold-rgb), .54);
+  outline-offset: -10px;
+  box-shadow: 0 24px 52px rgba(54,57,36,.14);
+}
+.rsvp-note-seal {
+  position: absolute;
+  top: 25px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 50px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: #f6ddb0;
+  background: var(--burgundy);
+  border: 2px solid rgba(var(--gold-rgb), .60);
+  box-shadow: 0 8px 18px rgba(71,36,39,.22), inset 0 0 0 4px rgba(255,239,204,.05);
+}
+.rsvp-note-seal span {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 24px;
+  font-weight: 600;
+}
+.rsvp-note-kicker {
+  margin: 0 0 7px;
+  color: var(--gold) !important;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .20em;
+  text-transform: uppercase;
+}
+.rsvp-companion-card h3 {
+  margin-top: 0;
+  color: #f6e2be;
+  font-size: 30px;
+  line-height: 1.05;
+}
+.rsvp-companion-card p {
+  color: rgba(249,238,215,.76);
+}
+.rsvp-companion-card .mini-stats {
+  margin-top: 28px;
+  padding-top: 22px;
+}
+.rsvp-companion-card .mini-stats div {
+  padding: 10px 0;
+}
+.rsvp-companion-card .mini-stats strong {
+  font-size: 34px;
+}
+
+/* === Stronger reveal for the invitation after the envelope opens === */
+body.home-entry-animation #home {
+  perspective: 1200px;
+}
+body.home-entry-animation #home .invitation-card {
+  transform-origin: 50% 18%;
+  animation: homeInvitationReveal 1.18s cubic-bezier(.15,.86,.18,1) both;
+  will-change: transform, opacity, filter;
+}
+body.home-entry-animation #home .invitation-card::after {
+  animation: invitationMedallionSettle .75s cubic-bezier(.18,.9,.22,1) .46s both;
+}
+body.home-entry-animation #home .invitation-copy > * {
+  opacity: 0;
+  animation: invitationCopyReveal .58s cubic-bezier(.2,.78,.2,1) both;
+}
+body.home-entry-animation #home .invitation-copy > *:nth-child(1) { animation-delay: .42s; }
+body.home-entry-animation #home .invitation-copy > *:nth-child(2) { animation-delay: .50s; }
+body.home-entry-animation #home .invitation-copy > *:nth-child(3) { animation-delay: .58s; }
+body.home-entry-animation #home .invitation-copy > *:nth-child(4) { animation-delay: .66s; }
+body.home-entry-animation #home .invitation-copy > *:nth-child(5) { animation-delay: .74s; }
+body.home-entry-animation #home .invitation-copy > *:nth-child(6) { animation-delay: .82s; }
+body.home-entry-animation #home .invitation-copy > *:nth-child(7) { animation-delay: .90s; }
+
+@keyframes homeInvitationReveal {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 54px, -80px) rotateX(8deg) scale(.92);
+    filter: blur(4px);
+    box-shadow: 0 8px 20px rgba(60,46,36,.06);
+  }
+  56% {
+    opacity: 1;
+    transform: translate3d(0, -8px, 0) rotateX(-1.2deg) scale(1.012);
+    filter: blur(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) rotateX(0) scale(1);
+    filter: none;
+  }
+}
+@keyframes invitationCopyReveal {
+  from { opacity: 0; transform: translate3d(0, 12px, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+@keyframes invitationMedallionSettle {
+  0% { opacity: .45; transform: translateX(-50%) scale(.72) rotate(-7deg); }
+  72% { opacity: 1; transform: translateX(-50%) scale(1.07) rotate(2deg); }
+  100% { opacity: 1; transform: translateX(-50%) scale(1) rotate(0); }
+}
+
+@media (max-width: 900px) {
+  .rsvp-stationery-layout {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+  .rsvp-companion-card {
+    min-height: auto;
+    padding-top: 82px;
+  }
+}
+@media (max-width: 620px) {
+  .rsvp-heading-medallion {
+    width: 58px;
+    height: 58px;
+  }
+  .rsvp-heading h2 {
+    font-size: 48px;
+  }
+  .rsvp-invitation-form {
+    min-height: 0;
+    padding: 54px 18px 30px;
+    border-radius: 42% 42% 18px 18px / 10% 10% 18px 18px;
+    outline-offset: -8px;
+  }
+  .rsvp-invitation-form::before {
+    inset: 12px;
+    border-radius: 40% 40% 12px 12px / 9% 9% 12px 12px;
+  }
+  .rsvp-invitation-form .lookup-row {
+    grid-template-columns: 1fr;
+  }
+  .rsvp-invitation-form .lookup-row .primary-btn {
+    width: 100%;
+  }
+  .rsvp-invitation-form .choice-grid {
+    grid-template-columns: 1fr;
+  }
+  .rsvp-companion-card {
+    padding: 78px 20px 28px;
+  }
+  .rsvp-companion-card h3 {
+    font-size: 27px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  body.home-entry-animation #home .invitation-card,
+  body.home-entry-animation #home .invitation-card::after,
+  body.home-entry-animation #home .invitation-copy > * {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
+}

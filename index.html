@@ -239,14 +239,18 @@
             <span aria-hidden="true">←</span> Back to menu
           </a>
         </div>
-        <div class="section-heading centered">
+        <div class="section-heading centered rsvp-heading">
+          <div class="rsvp-heading-medallion" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M4 6.5h16v12H4z"/><path d="m4 7 8 6 8-6"/><path d="M8.3 17.2 10.4 19l5.2-5.1"/></svg>
+          </div>
           <p class="section-kicker">Please reply</p>
           <h2>RSVP</h2>
+          <div class="rsvp-heading-rule" aria-hidden="true"><span>✦</span></div>
           <p id="rsvpDeadlineDisplay">Kindly respond by 1 July 2026.</p>
         </div>
 
-        <div class="rsvp-layout">
-          <form id="rsvpForm" class="form-card">
+        <div class="rsvp-layout rsvp-stationery-layout">
+          <form id="rsvpForm" class="form-card rsvp-invitation-form">
             <div id="rsvpLookupStep">
               <label for="guestLookup">Your name or email</label>
               <div class="lookup-row">
@@ -315,8 +319,9 @@
             </div>
           </form>
 
-          <aside class="rsvp-note">
-            <span class="botanical-icon">❧</span>
+          <aside class="rsvp-note rsvp-companion-card">
+            <div class="rsvp-note-seal" aria-hidden="true"><span>R</span></div>
+            <p class="rsvp-note-kicker">Your response</p>
             <h3>Need to update your response?</h3>
             <p>Search your invitation again using the same name or email. Your latest response will replace the previous one.</p>
             <div class="mini-stats">
