@@ -419,10 +419,14 @@ function updateMusicPlayerState() {
   const button = byId("musicToggleBtn");
   const status = byId("musicPlayerStatus");
   if (!player || !audio || !button) return;
+
   const playing = !audio.paused && !audio.ended;
   player.classList.toggle("is-playing", playing);
+  button.classList.toggle("is-playing", playing);
   button.setAttribute("aria-label", playing ? "Pause background music" : "Play background music");
-  if (status) status.textContent = playing ? "Now playing" : "Wedding music";
+  button.setAttribute("aria-pressed", playing ? "true" : "false");
+
+  if (status) status.textContent = playing ? "Now playing" : "Paused";
 }
 
 async function renderMusicPlayer() {
