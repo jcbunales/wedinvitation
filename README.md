@@ -58,3 +58,7 @@ If Supabase was already configured before this version, run the updated `supabas
 The Admin dashboard now has a **Background music** section. Choose an audio file, enter a title, and click **Upload music**. The public invitation shows a floating vinyl player in the lower-right corner. The site attempts to start the song when a guest clicks **Open invitation**; if the browser blocks playback, the guest can tap the vinyl disc.
 
 When Supabase is enabled, run the updated `supabase-setup.sql` once. It adds `music_settings`, creates a public `wedding-media` Storage bucket (15 MB limit), and restricts upload/update/delete access to users listed in `wedding_admins`. In local mode the audio file is stored in IndexedDB in that browser only.
+
+
+## Vintage stationery theme
+The public wedding site uses a burgundy, olive, gold and warm-paper stationery treatment inspired by traditional printed invitation suites. Theme colours remain editable from the Admin dashboard.

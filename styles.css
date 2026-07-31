@@ -1,24 +1,24 @@
 :root {
-  --cream: #f5f1e7;
-  --paper: #fffdf8;
-  --paper-2: #f8f5ec;
-  --olive: #5f6f3a;
-  --olive-dark: #3f4c2c;
+  --cream: #ebe6da;
+  --paper: #f5f0e5;
+  --paper-2: #e3ddcf;
+  --olive: #4f5130;
+  --olive-dark: #38391f;
   --olive-soft: #e7eadc;
-  --burgundy: #7b2438;
-  --burgundy-dark: #571827;
+  --burgundy: #73333a;
+  --burgundy-dark: #54232a;
   --burgundy-soft: #efe1e4;
   --sage: var(--olive);
   --sage-dark: var(--olive-dark);
   --sage-soft: var(--olive-soft);
-  --ink: #2b3024;
-  --muted: #716c64;
+  --ink: #332d27;
+  --muted: #756c61;
   --line: rgba(63, 76, 44, .18);
-  --gold: #b08d57;
-  --olive-rgb: 95, 111, 58;
-  --burgundy-rgb: 123, 36, 56;
-  --cream-rgb: 245, 241, 231;
-  --gold-rgb: 176, 141, 87;
+  --gold: #bca36e;
+  --olive-rgb: 79, 81, 48;
+  --burgundy-rgb: 115, 51, 58;
+  --cream-rgb: 235, 230, 218;
+  --gold-rgb: 188, 163, 110;
   --olive-envelope-light: #6f8048;
   --olive-envelope-dark: #536536;
   --burgundy-envelope-light: #8b2c44;
@@ -319,6 +319,13 @@ footer { max-width: 1180px; margin: 0 auto; padding: 34px 40px 45px; border-top:
 .status-pill.Declined { background: #f0dfdc; color: #8b4f47; }
 .status-pill.Pending { background: #f1eddb; color: #7c7249; }
 .toolbar { display: grid; grid-template-columns: 1fr 180px; gap: 10px; margin-bottom: 15px; }
+.admin-title-actions { display: flex; align-items: center; justify-content: flex-end; flex-wrap: wrap; gap: 9px; }
+.guest-csv-import { display: inline-flex; align-items: center; justify-content: center; cursor: pointer; font-size: 13px; font-weight: 600; white-space: nowrap; }
+.guest-csv-import input { display: none; }
+.guest-import-status { min-height: 17px; margin: -5px 0 15px; }
+.guest-import-status.is-working { color: var(--olive-dark); font-weight: 600; }
+.guest-import-status.is-success { color: var(--olive-dark); font-weight: 600; }
+.guest-import-status.is-error { color: var(--danger); font-weight: 600; }
 .table-wrap { overflow: auto; background: #fff; border: 1px solid var(--line); border-radius: 13px; }
 table { width: 100%; border-collapse: collapse; min-width: 760px; }
 th, td { text-align: left; padding: 14px 16px; border-bottom: 1px solid var(--line); font-size: 12px; vertical-align: middle; }
@@ -449,6 +456,8 @@ tbody tr:last-child td { border-bottom: 0; }
   .admin-title-row { align-items: flex-start; flex-direction: column; }
   .admin-title-row h2 { font-size: 39px; }
   .toolbar { grid-template-columns: 1fr; }
+  .admin-title-actions { width: 100%; justify-content: flex-start; }
+  .admin-title-actions .ghost-btn, .admin-title-actions .primary-btn, .admin-title-actions .guest-csv-import { flex: 1 1 auto; }
   .confirmation-card { grid-template-columns: 1fr; }
   .schedule-editor-row { grid-template-columns: 1fr; padding-bottom: 18px; }
   .remove-schedule { width: 100%; }
@@ -1528,4 +1537,473 @@ body.invitation-intro-opened .page-shell { opacity: 1; transform: none; filter: 
 }
 @media (prefers-reduced-motion: reduce) {
   .music-player.is-playing .vinyl-disc { animation-duration: 5s; }
+}
+
+
+/* ==========================================================
+   Vintage Burgundy + Olive Stationery Theme
+   Inspired by layered letterpress wedding stationery.
+   Keeps all admin, RSVP, Supabase, CSV and music behaviour.
+   ========================================================== */
+
+body {
+  background:
+    radial-gradient(circle at 18% 20%, rgba(var(--gold-rgb), .06), transparent 28%),
+    radial-gradient(circle at 82% 65%, rgba(var(--burgundy-rgb), .045), transparent 32%),
+    repeating-linear-gradient(0deg, rgba(61, 52, 43, .018) 0 1px, transparent 1px 4px),
+    var(--cream);
+  color: var(--ink);
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  opacity: .22;
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(255,255,255,.85) 0 1px, transparent 1.2px),
+    radial-gradient(circle at 70% 65%, rgba(76,64,49,.16) 0 .7px, transparent .9px);
+  background-size: 13px 13px, 17px 17px;
+  mix-blend-mode: soft-light;
+}
+
+.topbar {
+  padding-top: 14px;
+  padding-bottom: 14px;
+  color: #f5ead0;
+  background: rgba(var(--olive-rgb), .97);
+  border-bottom: 1px solid rgba(var(--gold-rgb), .42);
+  box-shadow: 0 10px 30px rgba(55,48,35,.12);
+}
+.topbar .brand-mark {
+  border-color: rgba(var(--gold-rgb), .72);
+  color: var(--gold);
+}
+.topbar .brand-text,
+.topbar .nav-links a { color: rgba(250,241,219,.88); }
+.topbar .nav-links a:hover { color: #fff7e5; }
+.topbar .ghost-btn {
+  border-color: rgba(var(--gold-rgb), .52);
+  color: #fff6df;
+  background: rgba(255,255,255,.025);
+}
+.topbar .ghost-btn:hover { background: rgba(255,255,255,.08); }
+
+.primary-btn {
+  border: 1px solid rgba(var(--gold-rgb), .58);
+  border-radius: 4px;
+  background: var(--burgundy);
+  color: #f8ead0;
+  box-shadow: 0 9px 22px rgba(var(--burgundy-rgb), .18);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 17px;
+  letter-spacing: .055em;
+}
+.primary-btn:hover {
+  background: var(--burgundy-dark);
+  box-shadow: 0 12px 26px rgba(var(--burgundy-rgb), .24);
+}
+.ghost-btn {
+  border-color: rgba(var(--gold-rgb), .42);
+  border-radius: 4px;
+}
+
+/* Main invitation becomes the tall burgundy stationery card. */
+.hero-section {
+  padding-top: clamp(48px, 7vw, 90px);
+}
+.paper-card.invitation-card {
+  max-width: 720px;
+  min-height: 810px;
+  color: #f2dfbd;
+  background:
+    linear-gradient(rgba(var(--burgundy-rgb), .965), rgba(var(--burgundy-rgb), .965)),
+    repeating-linear-gradient(90deg, rgba(255,255,255,.025) 0 1px, transparent 1px 5px);
+  border: 2px solid var(--burgundy-dark);
+  border-radius: 170px 170px 24px 24px / 92px 92px 24px 24px;
+  box-shadow: 0 32px 70px rgba(73,47,42,.24);
+}
+.paper-card.invitation-card::before {
+  inset: 15px;
+  border: 1px solid rgba(var(--gold-rgb), .76);
+  border-radius: 155px 155px 16px 16px / 82px 82px 16px 16px;
+}
+.paper-card.invitation-card::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 24px;
+  width: 76px;
+  height: 76px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  border: 1px solid rgba(var(--gold-rgb), .55);
+  box-shadow: inset 0 0 0 6px rgba(var(--burgundy-rgb), .72);
+  background:
+    radial-gradient(circle, rgba(var(--gold-rgb), .18), transparent 64%);
+  pointer-events: none;
+}
+.invitation-copy {
+  min-height: 810px;
+  padding: 120px 60px 92px;
+}
+.invitation-copy .eyebrow {
+  color: rgba(248,233,201,.76);
+}
+.invitation-copy h1 {
+  color: #f1d6ac;
+  text-shadow: 0 1px 0 rgba(65,30,30,.25);
+  font-size: clamp(70px, 10vw, 112px);
+  letter-spacing: -.045em;
+}
+.invitation-copy .ampersand { color: var(--gold); }
+.invitation-copy .invite-line,
+.invitation-copy .venue-address { color: rgba(248,233,201,.74); }
+.invitation-copy .date-block,
+.invitation-copy .venue-name { color: #f5e2c1; }
+.invitation-card .divider { color: var(--gold); }
+.invitation-card .divider::before,
+.invitation-card .divider::after { background: rgba(var(--gold-rgb), .62); }
+.invitation-card .fern {
+  color: rgba(var(--gold-rgb), .33);
+  filter: sepia(.2);
+}
+.invitation-card .primary-btn {
+  background: transparent;
+  border-color: rgba(var(--gold-rgb), .78);
+  color: #f3ddba;
+}
+.invitation-card .primary-btn:hover {
+  background: rgba(var(--gold-rgb), .09);
+}
+
+/* Olive oval countdown card, echoing the stationery suite. */
+.countdown-panel {
+  max-width: 610px;
+  margin-top: 34px;
+  padding: 34px 38px 30px;
+  color: #f4e4c6;
+  background: var(--olive);
+  border: 2px solid var(--burgundy);
+  border-radius: 50% / 18%;
+  outline: 1px solid rgba(var(--gold-rgb), .72);
+  outline-offset: -10px;
+  box-shadow: 0 22px 46px rgba(58,54,37,.15);
+}
+.countdown-panel > p { color: rgba(248,236,208,.74); }
+.countdown-grid { margin-top: 15px; }
+.countdown-grid div { border-right-color: rgba(var(--gold-rgb), .34); }
+.countdown-grid strong { color: #f5dfb7; }
+.countdown-grid span { color: rgba(248,236,208,.68); }
+
+.content-section { position: relative; }
+.content-section h2 {
+  color: var(--burgundy);
+  font-size: clamp(45px, 6vw, 70px);
+}
+.section-kicker {
+  color: var(--olive-dark);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 13px;
+  letter-spacing: .22em;
+}
+
+/* Details: olive card with a fine gold frame. */
+#details.split-section {
+  max-width: 1020px;
+  margin-top: 100px;
+  margin-bottom: 45px;
+  padding: clamp(55px, 7vw, 84px);
+  color: #f7ead0;
+  background: var(--olive);
+  border: 2px solid var(--burgundy);
+  border-radius: 34px;
+  outline: 1px solid rgba(var(--gold-rgb), .66);
+  outline-offset: -14px;
+  box-shadow: 0 26px 58px rgba(66,59,43,.15);
+}
+#details h2 { color: #f2d9ae; }
+#details .section-kicker { color: var(--gold); }
+#details .body-copy { color: rgba(250,240,217,.78); }
+#details .small-note { border-top-color: rgba(var(--gold-rgb), .34); }
+
+/* Schedule cards alternate like individual burgundy/olive stationery pieces. */
+.muted-section {
+  background: transparent;
+}
+#schedule { padding-top: 85px; }
+.schedule-grid { gap: 18px; }
+.schedule-card {
+  min-height: 225px;
+  padding: 40px 28px 34px;
+  text-align: center;
+  border: 2px solid var(--burgundy-dark);
+  border-radius: 46px 46px 18px 18px / 34px 34px 18px 18px;
+  outline: 1px solid rgba(var(--gold-rgb), .66);
+  outline-offset: -10px;
+  color: #f4dfba;
+  background: var(--burgundy);
+  box-shadow: 0 17px 34px rgba(87,44,48,.12);
+}
+.schedule-card:nth-child(even) {
+  border-color: var(--olive-dark);
+  background: var(--olive);
+}
+.schedule-card time { color: var(--gold); }
+.schedule-card h3 { color: #f4dfba; }
+.schedule-card p { color: rgba(250,238,213,.70); }
+
+/* Vertical entourage groups become a coordinated stationery stack. */
+.entourage-grid {
+  width: min(100%, 760px);
+  gap: 22px;
+}
+.entourage-group {
+  padding: 38px 44px 40px;
+  border: 2px solid var(--burgundy-dark);
+  border-radius: 52px 52px 18px 18px / 34px 34px 18px 18px;
+  outline: 1px solid rgba(var(--gold-rgb), .62);
+  outline-offset: -11px;
+  color: #f5e5c6;
+  background: var(--burgundy);
+  box-shadow: 0 18px 38px rgba(75,52,45,.11);
+}
+.entourage-group.olive-group {
+  border-color: var(--olive-dark);
+  background: var(--olive);
+}
+.entourage-group::before { display: none; }
+.entourage-group::after {
+  width: 86px;
+  height: 86px;
+  right: 12px;
+  bottom: 10px;
+  border-color: rgba(var(--gold-rgb), .20);
+}
+.entourage-flourish,
+.entourage-group.olive-group .entourage-flourish,
+.entourage-group-heading p,
+.entourage-group.burgundy-group .entourage-group-heading p {
+  color: var(--gold);
+}
+.entourage-members { border-top-color: rgba(var(--gold-rgb), .28); }
+.entourage-member { border-bottom-color: rgba(var(--gold-rgb), .20); }
+.entourage-member span { color: #f5e5c6; font-size: 27px; }
+.section-intro { color: var(--muted); }
+
+/* Attire resembles the olive envelope + burgundy insert. */
+.dress-card {
+  border: 2px solid var(--burgundy-dark);
+  border-radius: 28px;
+  outline: 1px solid rgba(var(--gold-rgb), .62);
+  outline-offset: -12px;
+  box-shadow: 0 26px 58px rgba(65,54,42,.16);
+}
+.dress-copy { background: var(--olive); }
+.dress-art { background: var(--burgundy); }
+.dress-copy .section-kicker,
+.dress-monogram em { color: var(--gold); }
+.attire-guide-card,
+.motif-swatch,
+.dress-visual-card {
+  border-color: rgba(var(--gold-rgb), .34);
+  background: rgba(255,247,226,.045);
+}
+.attire-pill {
+  border-color: rgba(var(--gold-rgb), .42);
+  color: #f5dfba;
+}
+
+/* Venue becomes an olive landscape stationery card. */
+.venue-card {
+  overflow: hidden;
+  border: 2px solid var(--olive-dark);
+  border-radius: 26px;
+  outline: 1px solid rgba(var(--gold-rgb), .62);
+  outline-offset: -12px;
+  background: var(--olive);
+  box-shadow: 0 27px 58px rgba(61,56,41,.15);
+}
+.venue-card > div:first-child {
+  color: #f5e3bf;
+  background: var(--olive);
+}
+.venue-card .section-kicker { color: var(--gold); }
+.venue-card h2 { color: #f3ddba; }
+.venue-card p { color: rgba(248,237,212,.74); }
+.venue-image-card {
+  border: 0;
+  border-left: 1px solid rgba(var(--gold-rgb), .38);
+  background: #e8e1d1;
+  box-shadow: none;
+}
+.venue-image { filter: sepia(.16) contrast(.92) saturate(.76); }
+.venue-image-caption {
+  border-top-color: rgba(var(--gold-rgb), .32);
+  background: var(--burgundy);
+}
+.venue-image-kicker { color: var(--gold); }
+.venue-image-caption strong { color: #f3ddba; }
+
+/* RSVP: ornate burgundy card + olive side note. */
+.rsvp-section { max-width: 1080px; }
+.rsvp-section > .section-heading h2 { color: var(--burgundy); }
+.form-card {
+  color: #f6e7ca;
+  background: var(--burgundy);
+  border: 2px solid var(--burgundy-dark);
+  border-radius: 44px 44px 18px 18px / 30px 30px 18px 18px;
+  outline: 1px solid rgba(var(--gold-rgb), .62);
+  outline-offset: -11px;
+  box-shadow: 0 24px 52px rgba(87,45,49,.16);
+}
+.form-card label,
+.form-card legend { color: #f2dfbe; }
+.form-card .form-help { color: rgba(249,237,214,.68); }
+.form-card input,
+.form-card select,
+.form-card textarea {
+  color: var(--ink);
+  background: #f2ecdf;
+  border-color: rgba(var(--gold-rgb), .48);
+  border-radius: 3px;
+}
+.form-card input:focus,
+.form-card select:focus,
+.form-card textarea:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(var(--gold-rgb), .18);
+}
+.form-card .choice-card span {
+  color: #f4dfbb;
+  border-color: rgba(var(--gold-rgb), .42);
+  border-radius: 3px;
+  background: rgba(255,255,255,.025);
+}
+.form-card .choice-card input:checked + span {
+  color: #382e27;
+  border-color: var(--gold);
+  background: #e6d6b7;
+}
+.form-card .guest-found-banner {
+  background: rgba(var(--gold-rgb), .10);
+  border: 1px solid rgba(var(--gold-rgb), .30);
+  border-radius: 3px;
+}
+.form-card .guest-found-banner span { color: rgba(249,237,214,.62); }
+.rsvp-note {
+  color: #f5e5c7;
+  background: var(--olive);
+  border: 2px solid var(--olive-dark);
+  border-radius: 50% / 10%;
+  outline: 1px solid rgba(var(--gold-rgb), .62);
+  outline-offset: -10px;
+  box-shadow: 0 22px 46px rgba(61,58,41,.13);
+}
+.rsvp-note h3 { color: #f3ddba; }
+.rsvp-note p { color: rgba(249,238,215,.72); }
+.botanical-icon { color: var(--gold); }
+.mini-stats { border-top-color: rgba(var(--gold-rgb), .28); }
+.mini-stats strong { color: #f4dfba; }
+.mini-stats span { color: rgba(249,238,215,.62); }
+
+footer {
+  border-top-color: rgba(var(--gold-rgb), .28);
+  color: var(--muted);
+}
+
+/* Opening envelope recoloured and softened to match the suite. */
+.invitation-intro {
+  background:
+    radial-gradient(circle at center, rgba(var(--gold-rgb), .11), transparent 38%),
+    repeating-linear-gradient(0deg, rgba(67,57,46,.02) 0 1px, transparent 1px 4px),
+    var(--cream);
+}
+.intro-kicker { color: var(--burgundy); }
+.envelope-back,
+.envelope-pocket { filter: saturate(.78) brightness(.93); }
+.envelope-flap { filter: saturate(.88) brightness(.92); }
+.intro-card-preview {
+  background: #f3ecdf;
+  border-color: rgba(var(--gold-rgb), .54);
+}
+.open-invitation-btn {
+  border-radius: 4px;
+  background: var(--burgundy) !important;
+  border-color: rgba(var(--gold-rgb), .58);
+  color: #f6e6c7;
+}
+.open-invitation-btn:hover { background: var(--burgundy-dark) !important; }
+
+/* Vinyl player: olive sleeve, burgundy label, gold trim. */
+.music-player {
+  color: #f5e3bf;
+  background: rgba(var(--olive-rgb), .96);
+  border-color: rgba(var(--gold-rgb), .56);
+  box-shadow: 0 16px 38px rgba(49,46,31,.24);
+}
+.music-player-copy span { color: rgba(247,234,204,.64); }
+.music-player-copy strong { color: #f6e3bd; }
+.vinyl-label { background: var(--burgundy); }
+
+/* Admin remains practical but adopts the same palette. */
+.admin-sidebar { background: var(--olive-dark); }
+.admin-sidebar nav button.active,
+.admin-sidebar nav button:hover { background: rgba(var(--gold-rgb), .13); }
+.admin-login { background: var(--cream); }
+.admin-login-card,
+.stat-grid article,
+.admin-card,
+.settings-section,
+.table-wrap,
+.confirmation-card,
+.mini-modal-card {
+  border-color: rgba(var(--gold-rgb), .26);
+}
+.admin-title-row h2,
+.admin-login-card h2 { color: var(--burgundy); }
+.progress-fill { background: var(--burgundy); }
+
+@media (max-width: 900px) {
+  .paper-card.invitation-card { border-radius: 128px 128px 20px 20px / 72px 72px 20px 20px; }
+  .paper-card.invitation-card::before { border-radius: 116px 116px 13px 13px / 64px 64px 13px 13px; }
+  .schedule-grid { gap: 14px; }
+  .venue-image-card { border-left: 0; border-top: 1px solid rgba(var(--gold-rgb), .38); }
+}
+
+@media (max-width: 620px) {
+  .hero-section { padding-inline: 14px; }
+  .paper-card.invitation-card {
+    min-height: 690px;
+    border-radius: 88px 88px 16px 16px / 52px 52px 16px 16px;
+  }
+  .paper-card.invitation-card::before {
+    inset: 10px;
+    border-radius: 78px 78px 11px 11px / 45px 45px 11px 11px;
+  }
+  .paper-card.invitation-card::after { width: 54px; height: 54px; top: 19px; }
+  .invitation-copy { min-height: 690px; padding: 96px 28px 72px; }
+  .invitation-copy h1 { font-size: clamp(61px, 20vw, 78px); }
+  .countdown-panel {
+    width: calc(100% - 18px);
+    padding: 30px 14px 27px;
+    border-radius: 34px;
+  }
+  #details.split-section {
+    margin-top: 70px;
+    padding: 52px 30px;
+    border-radius: 24px;
+  }
+  .schedule-card { min-height: 0; border-radius: 34px 34px 14px 14px / 26px 26px 14px 14px; }
+  .entourage-group {
+    padding: 34px 25px 35px;
+    border-radius: 38px 38px 14px 14px / 28px 28px 14px 14px;
+  }
+  .entourage-member span { font-size: 24px; }
+  .dress-card,
+  .venue-card { border-radius: 18px; }
+  .form-card { border-radius: 32px 32px 14px 14px / 24px 24px 14px 14px; }
+  .rsvp-note { border-radius: 28px; }
 }

@@ -421,9 +421,16 @@
           </div>
 
           <div id="adminTab-guests" class="admin-tab">
-            <div class="admin-title-row">
+            <div class="admin-title-row guest-list-title-row">
               <div><p class="section-kicker">Invitations</p><h2>Guest list</h2></div>
-              <button id="addGuestBtn" class="primary-btn" type="button">+ Add guest</button>
+              <div class="admin-title-actions">
+                <button id="downloadGuestCsvTemplateBtn" class="ghost-btn" type="button">CSV template</button>
+                <label class="ghost-btn guest-csv-import" for="importGuestCsvInput">
+                  <span>Import CSV</span>
+                  <input id="importGuestCsvInput" type="file" accept=".csv,text/csv,application/csv" />
+                </label>
+                <button id="addGuestBtn" class="primary-btn" type="button">+ Add guest</button>
+              </div>
             </div>
             <div class="toolbar">
               <input id="guestSearch" type="search" placeholder="Search guests…" />
@@ -434,6 +441,7 @@
                 <option value="Declined">Declined</option>
               </select>
             </div>
+            <p id="guestCsvImportStatus" class="guest-import-status form-help" aria-live="polite">Import a CSV to add guests in bulk. Existing guests are matched by email first, then exact household name.</p>
             <div class="table-wrap">
               <table>
                 <thead><tr><th>Guest / household</th><th>Contact</th><th>Invited</th><th>Status</th><th>Attending</th><th></th></tr></thead>

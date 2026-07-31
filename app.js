@@ -23,10 +23,10 @@ const defaultState = {
     ],
     dressMotif: "We would love our guests to dress in elegant earth tones inspired by our wedding palette. Olive green, burgundy, warm neutrals, and soft cream accents are especially welcome.",
     themeColors: {
-      olive: "#5f6f3a",
-      burgundy: "#7b2438",
-      cream: "#f5f1e7",
-      gold: "#b08d57"
+      olive: "#4f5130",
+      burgundy: "#73333a",
+      cream: "#ebe6da",
+      gold: "#bca36e"
     },
     music: {
       enabled: false,
@@ -1263,6 +1263,309 @@ function downloadFile(filename, content, type) {
   a.remove();
   URL.revokeObjectURL(url);
 }
+
+
+function parseCsvText(text) {
+  const source = String(text || "").replace(/^\uFEFF/, "");
+  const rows = [];
+  let row = [];
+  let cell = "";
+  let quoted = false;
+
+  for (let i = 0; i < source.length; i += 1) {
+    const char = source[i];
+
+    if (char === '"') {
+      if (quoted && source[i + 1] === '"') {
+        cell += '"';
+        i += 1;
+      } else {
+        quoted = !quoted;
+      }
+      continue;
+    }
+
+    if (char === "," && !quoted) {
+      row.push(cell);
+      cell = "";
+      continue;
+    }
+
+    if ((char === "\n" || char === "\r") && !quoted) {
+      if (char === "\r" && source[i + 1] === "\n") i += 1;
+      row.push(cell);
+      if (row.some(value => String(value).trim() !== "")) rows.push(row);
+      row = [];
+      cell = "";
+      continue;
+    }
+
+    cell += char;
+  }
+
+  if (quoted) throw new Error("The CSV contains an unfinished quoted field.");
+  row.push(cell);
+  if (row.some(value => String(value).trim() !== "")) rows.push(row);
+  return rows;
+}
+
+function normaliseCsvHeader(value) {
+  return String(value || "")
+    .replace(/^\uFEFF/, "")
+    .trim()
+    .toLowerCase()
+    .replace(/[\/_-]+/g, " ")
+    .replace(/[^a-z0-9 ]+/g, "")
+    .replace(/\s+/g, " ");
+}
+
+const GUEST_CSV_HEADER_ALIASES = {
+  name: ["guest household", "guest name", "household", "name", "guest"],
+  email: ["email", "email address", "e mail"],
+  phone: ["phone", "phone number", "mobile", "mobile number"],
+  partySize: ["invited", "party size", "invited party size", "party", "number invited", "guests invited"],
+  group: ["group", "guest group", "category"],
+  adminNotes: ["admin notes", "admin note", "private notes", "private note"],
+  status: ["status", "rsvp status", "attendance status"],
+  attendingCount: ["attending", "attending count", "guests attending", "number attending"],
+  mealChoice: ["meal", "meal choice", "menu", "food choice"],
+  plusOneName: ["plus one", "plus one name", "guest plus one", "guest name plus one"],
+  dietaryNotes: ["dietary message", "dietary notes", "dietary", "message", "guest message"],
+  respondedAt: ["responded at", "response date", "responded", "response time"]
+};
+
+function buildGuestCsvColumnMap(headerRow) {
+  const aliasLookup = new Map();
+  Object.entries(GUEST_CSV_HEADER_ALIASES).forEach(([field, aliases]) => {
+    aliases.forEach(alias => aliasLookup.set(normaliseCsvHeader(alias), field));
+  });
+
+  const columns = {};
+  headerRow.forEach((header, index) => {
+    const field = aliasLookup.get(normaliseCsvHeader(header));
+    if (field && columns[field] === undefined) columns[field] = index;
+  });
+  return columns;
+}
+
+function csvValue(row, columns, field) {
+  const index = columns[field];
+  return index === undefined ? undefined : String(row[index] ?? "").trim();
+}
+
+function normaliseImportedStatus(value) {
+  const status = String(value || "").trim().toLowerCase();
+  if (!status) return "";
+  if (["attending", "accepted", "accept", "yes", "y", "going"].includes(status)) return "Attending";
+  if (["declined", "decline", "no", "n", "not attending", "not going"].includes(status)) return "Declined";
+  if (["pending", "no response", "unanswered", "awaiting"].includes(status)) return "Pending";
+  return "";
+}
+
+function parseGuestCsvRows(text) {
+  const rows = parseCsvText(text);
+  if (rows.length < 2) throw new Error("The CSV needs a header row and at least one guest row.");
+
+  const columns = buildGuestCsvColumnMap(rows[0]);
+  if (columns.name === undefined) {
+    throw new Error('The CSV needs a "Guest/Household" or "Name" column.');
+  }
+
+  const guests = [];
+  let skipped = 0;
+
+  rows.slice(1).forEach((row, rowIndex) => {
+    const name = csvValue(row, columns, "name");
+    if (!name) {
+      skipped += 1;
+      return;
+    }
+
+    const partySizeRaw = csvValue(row, columns, "partySize");
+    const attendingRaw = csvValue(row, columns, "attendingCount");
+    const statusRaw = csvValue(row, columns, "status");
+    const parsedPartySize = partySizeRaw === undefined || partySizeRaw === "" ? undefined : Number.parseInt(partySizeRaw, 10);
+    const parsedAttending = attendingRaw === undefined || attendingRaw === "" ? undefined : Number.parseInt(attendingRaw, 10);
+
+    guests.push({
+      sourceRow: rowIndex + 2,
+      name,
+      email: csvValue(row, columns, "email"),
+      phone: csvValue(row, columns, "phone"),
+      partySize: Number.isFinite(parsedPartySize) ? Math.min(20, Math.max(1, parsedPartySize)) : undefined,
+      group: csvValue(row, columns, "group"),
+      adminNotes: csvValue(row, columns, "adminNotes"),
+      status: statusRaw === undefined ? undefined : normaliseImportedStatus(statusRaw),
+      attendingCount: Number.isFinite(parsedAttending) ? Math.max(0, parsedAttending) : undefined,
+      mealChoice: csvValue(row, columns, "mealChoice"),
+      plusOneName: csvValue(row, columns, "plusOneName"),
+      dietaryNotes: csvValue(row, columns, "dietaryNotes"),
+      respondedAt: csvValue(row, columns, "respondedAt")
+    });
+  });
+
+  if (!guests.length) throw new Error("No guest names were found in the CSV.");
+  return { guests, skipped };
+}
+
+function normaliseGuestMatchValue(value) {
+  return String(value || "").trim().toLowerCase().replace(/\s+/g, " ");
+}
+
+function findGuestForCsvImport(importedGuest, guests = state.guests) {
+  const email = normaliseGuestMatchValue(importedGuest.email);
+  if (email) {
+    const emailMatch = guests.find(guest => normaliseGuestMatchValue(guest.email) === email);
+    if (emailMatch) return emailMatch;
+  }
+  const name = normaliseGuestMatchValue(importedGuest.name);
+  return guests.find(guest => normaliseGuestMatchValue(guest.name) === name) || null;
+}
+
+function mergeImportedGuest(existing, imported) {
+  const isNew = !existing;
+  const record = existing ? { ...existing } : {
+    id: uid(),
+    name: imported.name,
+    email: "",
+    phone: "",
+    partySize: 1,
+    group: "",
+    adminNotes: "",
+    status: "Pending",
+    attendingCount: 0,
+    mealChoice: "",
+    plusOneName: "",
+    dietaryNotes: "",
+    respondedAt: null
+  };
+
+  record.name = imported.name || record.name;
+
+  ["email", "phone", "group", "adminNotes", "mealChoice", "plusOneName", "dietaryNotes"].forEach(field => {
+    if (imported[field] !== undefined && imported[field] !== "") record[field] = imported[field];
+  });
+
+  if (imported.partySize !== undefined) record.partySize = imported.partySize;
+  if (imported.status) record.status = imported.status;
+  if (imported.respondedAt !== undefined && imported.respondedAt !== "") record.respondedAt = imported.respondedAt;
+  if (imported.attendingCount !== undefined) record.attendingCount = imported.attendingCount;
+
+  record.partySize = Math.min(20, Math.max(1, Number(record.partySize || 1)));
+  if (record.status === "Attending") {
+    const fallbackAttending = isNew && imported.attendingCount === undefined ? 1 : Number(record.attendingCount || 0);
+    record.attendingCount = Math.min(record.partySize, Math.max(1, fallbackAttending));
+  } else {
+    record.attendingCount = 0;
+    if (record.status === "Declined" && imported.mealChoice === undefined) record.mealChoice = "";
+  }
+
+  if (!["Pending", "Attending", "Declined"].includes(record.status)) record.status = "Pending";
+  return record;
+}
+
+async function saveGuestCsvImport(records) {
+  if (!SUPABASE_MODE) {
+    records.forEach(record => {
+      const index = state.guests.findIndex(guest => guest.id === record.id);
+      if (index >= 0) state.guests[index] = record;
+      else state.guests.push(record);
+    });
+    saveState();
+    return;
+  }
+
+  const existingRows = records
+    .filter(record => /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(record.id || ""))
+    .map(record => guestToRow(record, true));
+  const newRows = records
+    .filter(record => !/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(record.id || ""))
+    .map(record => guestToRow(record, false));
+
+  if (existingRows.length) {
+    const { error } = await supabaseDb.from("guests").upsert(existingRows, { onConflict: "id" });
+    if (error) throw error;
+  }
+  if (newRows.length) {
+    const { error } = await supabaseDb.from("guests").insert(newRows);
+    if (error) throw error;
+  }
+
+  await loadRemoteAdminData();
+  await refreshRemoteStats();
+}
+
+function setGuestCsvImportStatus(message, stateClass = "") {
+  const status = byId("guestCsvImportStatus");
+  if (!status) return;
+  status.className = `guest-import-status form-help${stateClass ? ` ${stateClass}` : ""}`;
+  status.textContent = message;
+}
+
+byId("downloadGuestCsvTemplateBtn").addEventListener("click", () => {
+  const rows = [
+    ["Guest/Household", "Email", "Phone", "Invited", "Group", "Admin Notes", "Status", "Attending", "Meal", "Plus One", "Dietary/Message", "Responded At"],
+    ["Alex Morgan", "alex@example.com", "0412 345 678", "2", "Friends", "", "Pending", "0", "", "", "", ""]
+  ];
+  const csv = rows.map(row => row.map(value => `"${String(value ?? "").replace(/"/g, '""')}"`).join(",")).join("\n");
+  downloadFile("wedding-guest-list-template.csv", `\uFEFF${csv}`, "text/csv;charset=utf-8");
+});
+
+byId("importGuestCsvInput").addEventListener("change", async event => {
+  const input = event.currentTarget;
+  const file = input.files?.[0];
+  if (!file) return;
+
+  setGuestCsvImportStatus(`Reading ${file.name}…`, "is-working");
+  input.disabled = true;
+
+  try {
+    const text = await file.text();
+    const { guests: importedGuests, skipped } = parseGuestCsvRows(text);
+    const workingGuests = state.guests.map(guest => ({ ...guest }));
+    const plannedRecords = [];
+    const plannedById = new Map();
+    let added = 0;
+    let updated = 0;
+
+    importedGuests.forEach(importedGuest => {
+      let existing = findGuestForCsvImport(importedGuest, workingGuests);
+      if (existing && plannedById.has(existing.id)) existing = plannedById.get(existing.id);
+      const merged = mergeImportedGuest(existing, importedGuest);
+
+      if (existing) {
+        const index = workingGuests.findIndex(guest => guest.id === existing.id);
+        if (index >= 0) workingGuests[index] = merged;
+        updated += 1;
+      } else {
+        workingGuests.push(merged);
+        added += 1;
+      }
+
+      plannedById.set(merged.id, merged);
+    });
+
+    plannedById.forEach(record => plannedRecords.push(record));
+    setGuestCsvImportStatus(`Saving ${plannedRecords.length} guest record${plannedRecords.length === 1 ? "" : "s"}…`, "is-working");
+    await saveGuestCsvImport(plannedRecords);
+
+    if (!SUPABASE_MODE) state.guests = workingGuests;
+    renderAllAdmin();
+    renderPublicStats();
+
+    const skippedText = skipped ? ` ${skipped} row${skipped === 1 ? " was" : "s were"} skipped because the guest name was blank.` : "";
+    const result = `CSV imported: ${added} added, ${updated} updated.${skippedText}`;
+    setGuestCsvImportStatus(result, "is-success");
+    showToast(`Guest CSV imported — ${added} added, ${updated} updated.`);
+  } catch (error) {
+    console.error(error);
+    setGuestCsvImportStatus(error?.message || "The guest CSV could not be imported.", "is-error");
+    showToast("Guest CSV could not be imported.");
+  } finally {
+    input.disabled = false;
+    input.value = "";
+  }
+});
 byId("exportRsvpCsvBtn").addEventListener("click", () => {
   const rows = [["Guest/Household","Email","Phone","Invited","Status","Attending","Meal","Plus One","Dietary/Message","Responded At"]];
   state.guests.forEach(g => rows.push([g.name,g.email,g.phone,g.partySize,g.status,g.attendingCount,g.mealChoice,g.plusOneName,g.dietaryNotes,g.respondedAt || ""]));
