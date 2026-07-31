@@ -14,12 +14,12 @@ const defaultState = {
     welcomeMessage: "We are so excited to celebrate this chapter with you. Join us for a garden ceremony, dinner, drinks, dancing, and a night to remember.",
     passcode: "wedding2026",
     entourage: [
-      { role: "Parents of the Bride", names: "Maria & Antonio Santos" },
-      { role: "Parents of the Groom", names: "Grace & Michael Reyes" },
-      { role: "Maid of Honour", names: "Sofia Santos" },
-      { role: "Best Man", names: "Daniel Reyes" },
-      { role: "Bridesmaids", names: "Isabella Cruz · Mia Chen · Ava Wilson" },
-      { role: "Groomsmen", names: "Noah Lee · Liam Carter · Ethan Tan" }
+      { role: "Parents of the Bride", names: ["Maria & Antonio Santos"] },
+      { role: "Parents of the Groom", names: ["Grace & Michael Reyes"] },
+      { role: "Maid of Honour", names: ["Sofia Santos"] },
+      { role: "Best Man", names: ["Daniel Reyes"] },
+      { role: "Bridesmaids", names: ["Isabella Cruz", "Mia Chen", "Ava Wilson"] },
+      { role: "Groomsmen", names: ["Noah Lee", "Liam Carter", "Ethan Tan"] }
     ],
     dressMotif: "We would love our guests to dress in elegant earth tones inspired by our wedding palette. Olive green, burgundy, warm neutrals, and soft cream accents are especially welcome.",
     schedule: [
@@ -289,15 +289,33 @@ function renderPublic() {
   updateCountdown();
 }
 
+function normaliseEntourageNames(names) {
+  if (Array.isArray(names)) {
+    return names.map(name => String(name).trim()).filter(Boolean);
+  }
+  if (!names) return [];
+  // Backward compatibility for older saved entries that used a middle dot.
+  return String(names)
+    .split(/\s*[;·]\s*/)
+    .map(name => name.trim())
+    .filter(Boolean);
+}
+
 function renderEntourage() {
   const items = Array.isArray(state.wedding.entourage) ? state.wedding.entourage : [];
-  byId("entourageGrid").innerHTML = items.length ? items.map(item => `
-    <article class="entourage-card">
-      <span class="entourage-flourish">✦</span>
-      <p>${escapeHtml(item.role || "Entourage")}</p>
-      <h3>${escapeHtml(item.names || "")}</h3>
-    </article>
-  `).join("") : `<p class="empty-entourage">Entourage details will be announced soon.</p>`;
+  byId("entourageGrid").innerHTML = items.length ? items.map(item => {
+    const names = normaliseEntourageNames(item.names);
+    const namesMarkup = names.length > 1
+      ? `<div class="entourage-name-grid">${names.map(name => `<span>${escapeHtml(name)}</span>`).join("")}</div>`
+      : `<h3 class="entourage-single-name">${escapeHtml(names[0] || "")}</h3>`;
+
+    return `
+      <article class="entourage-card ${names.length > 1 ? "multi-member" : "single-member"}">
+        <span class="entourage-flourish">✦</span>
+        <p>${escapeHtml(item.role || "Entourage")}</p>
+        ${namesMarkup}
+      </article>`;
+  }).join("") : `<p class="empty-entourage">Entourage details will be announced soon.</p>`;
 }
 
 function renderScheduleCards() {
@@ -659,7 +677,7 @@ function populateSettingsForm() {
   byId("settingVenueAddress").value = w.venueAddress;
   byId("settingMapLink").value = w.mapLink;
   byId("settingVenueNotes").value = w.venueNotes;
-  byId("settingEntourage").value = (w.entourage || []).map(item => `${item.role} | ${item.names}`).join("\n");
+  byId("settingEntourage").value = (w.entourage || []).map(item => `${item.role} | ${normaliseEntourageNames(item.names).join("; ")}`).join("\n");
   byId("settingDressMotif").value = w.dressMotif || "";
   renderScheduleEditor();
 }
@@ -692,10 +710,20 @@ byId("weddingDetailsForm").addEventListener("submit", async e => {
       note: row.querySelector('[data-field="note"]').value.trim()
     };
   });
-  const entourage = byId("settingEntourage").value.split(/\r?\n/).map(line => line.trim()).filter(Boolean).map(line => {
-    const [role, ...nameParts] = line.split("|");
-    return { role: (role || "Entourage").trim(), names: nameParts.join("|").trim() };
-  }).filter(item => item.names);
+  const entourage = byId("settingEntourage").value
+    .split(/\r?\n/)
+    .map(line => line.trim())
+    .filter(Boolean)
+    .map(line => {
+      const [role, ...nameParts] = line.split("|");
+      const names = nameParts
+        .join("|")
+        .split(";")
+        .map(name => name.trim())
+        .filter(Boolean);
+      return { role: (role || "Entourage").trim(), names };
+    })
+    .filter(item => item.names.length);
 
   state.wedding = {
     ...state.wedding,

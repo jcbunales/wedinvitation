@@ -32,3 +32,15 @@ For a public production wedding site, connect the interface to a real database/b
 
 ## Opening animation
 The website now begins with an animated wedding envelope. Guests click **Open invitation** to lift the card from the envelope and reveal the full website. The names and wedding date on the animated card stay in sync with the Wedding Admin settings.
+
+
+## Multiple entourage members
+
+In **Admin → Wedding details → Entourage**, enter one role per line. Use a semicolon (`;`) between multiple people in the same role. Example:
+
+```text
+Bridesmaids | Anna Cruz; Maria Santos; Grace Lee; Julia Reyes
+Groomsmen | James Lee; Noah Smith; Ethan Reyes; Lucas Chen
+```
+
+The public entourage section automatically renders group members in a responsive grid and stacks them vertically on small screens. Existing older entries using `·` separators remain supported.

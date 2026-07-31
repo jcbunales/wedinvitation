@@ -892,14 +892,16 @@ body.invitation-intro-opened .page-shell { opacity: 1; transform: none; filter: 
 .entourage-section { padding-top: 105px; padding-bottom: 105px; }
 .entourage-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0,1fr));
-  gap: 16px;
-  margin-top: 48px;
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  gap: 18px;
+  max-width: 980px;
+  margin: 48px auto 0;
+  align-items: stretch;
 }
 .entourage-card {
   position: relative;
   min-height: 180px;
-  padding: 34px 26px 28px;
+  padding: 34px 28px 30px;
   text-align: center;
   background: var(--paper);
   border: 1px solid var(--line);
@@ -915,23 +917,48 @@ body.invitation-intro-opened .page-shell { opacity: 1; transform: none; filter: 
   bottom: -54px;
   border: 1px solid rgba(123,36,56,.24);
   border-radius: 50%;
+  pointer-events: none;
 }
 .entourage-flourish { color: var(--burgundy); font-size: 15px; }
-.entourage-card p {
-  margin: 12px 0 7px;
+.entourage-card > p {
+  margin: 12px 0 9px;
   color: var(--olive-dark);
   text-transform: uppercase;
   letter-spacing: .16em;
   font-size: 10px;
   font-weight: 700;
 }
-.entourage-card h3 {
+.entourage-single-name {
   margin: 0;
   font-family: "Cormorant Garamond", Georgia, serif;
-  font-size: 27px;
+  font-size: 28px;
+  font-weight: 500;
+  line-height: 1.18;
+  overflow-wrap: anywhere;
+}
+.entourage-card.multi-member { padding-bottom: 32px; }
+.entourage-name-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 20px;
+  max-width: 620px;
+  margin: 12px auto 0;
+  border-top: 1px solid rgba(63,76,44,.11);
+}
+.entourage-name-grid span {
+  min-width: 0;
+  padding: 10px 6px;
+  border-bottom: 1px solid rgba(63,76,44,.11);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 22px;
   font-weight: 500;
   line-height: 1.15;
+  overflow-wrap: anywhere;
 }
+.entourage-name-grid span:nth-child(odd):last-child {
+  grid-column: 1 / -1;
+}
+.entourage-format-example { margin-top: 9px; }
 .empty-entourage { grid-column: 1/-1; text-align: center; color: var(--muted); }
 
 .dress-section { max-width: 1180px; padding-top: 40px; }
@@ -993,8 +1020,12 @@ body.invitation-intro-opened .page-shell { opacity: 1; transform: none; filter: 
   .dress-art { min-height: 330px; }
 }
 @media (max-width: 620px) {
-  .entourage-grid { grid-template-columns: 1fr; }
-  .entourage-card { min-height: 150px; }
+  .entourage-grid { grid-template-columns: 1fr; gap: 14px; }
+  .entourage-card { min-height: 150px; padding: 30px 22px 26px; }
+  .entourage-name-grid { grid-template-columns: 1fr; gap: 0; }
+  .entourage-name-grid span { font-size: 21px; padding: 8px 4px; }
+  .entourage-name-grid span:nth-child(odd):last-child { grid-column: auto; }
+  .entourage-single-name { font-size: 26px; }
   .motif-swatches { grid-template-columns: 1fr; }
   .swatch { height: 45px; }
   .dress-copy { padding: 42px 25px; }
