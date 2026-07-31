@@ -1292,11 +1292,12 @@ body.invitation-intro-opened .page-shell { opacity: 1; transform: none; filter: 
   transition: transform .25s ease, opacity .25s ease, box-shadow .25s ease;
 }
 .music-player:hover { box-shadow: 0 18px 44px rgba(35,41,29,.23); }
+
 .vinyl-button {
   position: relative;
   flex: 0 0 auto;
-  width: 60px;
-  height: 60px;
+  width: 62px;
+  height: 62px;
   padding: 0;
   border: 0;
   border-radius: 50%;
@@ -1304,80 +1305,150 @@ body.invitation-intro-opened .page-shell { opacity: 1; transform: none; filter: 
   cursor: pointer;
   display: grid;
   place-items: center;
+  isolation: isolate;
 }
-.vinyl-button:focus-visible { outline: 3px solid rgba(var(--gold-rgb, 176,141,87), .34); outline-offset: 3px; }
+.vinyl-button:focus-visible {
+  outline: 3px solid rgba(var(--gold-rgb, 176,141,87), .42);
+  outline-offset: 3px;
+}
+
+/* The entire record rotates. The control icon is a separate layer and stays still. */
 .vinyl-disc {
   position: absolute;
   inset: 3px;
-  display: grid;
-  place-items: center;
+  display: block;
   border-radius: 50%;
+  overflow: hidden;
   background:
-    repeating-radial-gradient(circle at center, rgba(255,255,255,.065) 0 1px, transparent 1px 4px),
-    conic-gradient(from 18deg, rgba(255,255,255,.08), transparent 18%, rgba(255,255,255,.035) 31%, transparent 43%, rgba(255,255,255,.07) 63%, transparent 78%),
-    radial-gradient(circle at center, #2d3029 0 10%, #171915 11% 66%, #292c25 67% 100%);
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,.08), 0 7px 16px rgba(26,29,23,.28);
-  transform: translateZ(0) rotate(0deg);
+    repeating-radial-gradient(circle at center,
+      rgba(255,255,255,.055) 0 1px,
+      transparent 1px 4px),
+    radial-gradient(circle at center,
+      #33372f 0 8%,
+      #171a16 9% 69%,
+      #282c25 70% 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.08),
+    inset 0 0 12px rgba(0,0,0,.34),
+    0 8px 17px rgba(26,29,23,.28);
+  transform: rotate(0deg) translateZ(0);
+  transform-origin: 50% 50%;
   will-change: transform;
+  backface-visibility: hidden;
 }
 .vinyl-disc::before {
   content: "";
   position: absolute;
   inset: 5px;
-  border: 1px solid rgba(var(--gold-rgb, 176,141,87), .24);
+  border: 1px solid rgba(var(--gold-rgb, 176,141,87), .20);
   border-radius: 50%;
 }
 .vinyl-disc::after {
   content: "";
   position: absolute;
-  width: 5px;
-  height: 5px;
-  top: 8px;
-  left: 50%;
-  margin-left: -2.5px;
+  inset: 1px;
   border-radius: 50%;
-  background: rgba(var(--gold-rgb, 176,141,87), .9);
-  box-shadow: 0 0 7px rgba(var(--gold-rgb, 176,141,87), .45);
+  background: conic-gradient(
+    from 18deg,
+    transparent 0deg 42deg,
+    rgba(255,255,255,.12) 47deg,
+    transparent 58deg 176deg,
+    rgba(var(--gold-rgb,176,141,87),.10) 184deg,
+    transparent 197deg 360deg
+  );
+  pointer-events: none;
 }
-.vinyl-groove { position: absolute; border-radius: 50%; border: 1px solid rgba(255,255,255,.055); }
-.vinyl-groove-one { inset: 11px; }
-.vinyl-groove-two { inset: 17px; }
+
+.vinyl-groove {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,.055);
+}
+.vinyl-groove-one { inset: 10px; }
+.vinyl-groove-two { inset: 16px; }
+.vinyl-groove-three { inset: 22px; }
+
+/* Asymmetrical details make the rotation visibly obvious. */
+.vinyl-spin-marker {
+  position: absolute;
+  left: 50%;
+  top: 5px;
+  width: 6px;
+  height: 6px;
+  margin-left: -3px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 0 2px rgba(255,255,255,.12), 0 0 8px rgba(var(--gold-rgb,176,141,87),.45);
+}
+.vinyl-sheen {
+  position: absolute;
+  top: 8px;
+  right: 9px;
+  width: 16px;
+  height: 28px;
+  border-radius: 50%;
+  transform: rotate(28deg);
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.14), transparent);
+  opacity: .8;
+}
 .vinyl-label {
-  position: relative;
+  position: absolute;
   z-index: 2;
-  width: 20px;
-  height: 20px;
+  left: 50%;
+  top: 50%;
+  width: 22px;
+  height: 22px;
+  transform: translate(-50%, -50%);
   display: grid;
   place-items: center;
   border-radius: 50%;
-  color: rgba(255,255,255,.28);
-  font-size: 8px;
-  background: radial-gradient(circle, var(--burgundy) 0 52%, var(--burgundy-dark) 53% 100%);
-  box-shadow: 0 0 0 2px rgba(var(--gold-rgb,176,141,87), .45);
+  background:
+    radial-gradient(circle at center,
+      var(--cream) 0 7%,
+      var(--burgundy) 8% 56%,
+      var(--burgundy-dark) 57% 100%);
+  box-shadow: 0 0 0 2px rgba(var(--gold-rgb,176,141,87), .48);
 }
+.vinyl-spindle {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #11130f;
+}
+
+/* A fixed central control sits above the spinning vinyl. */
 .vinyl-control-icon {
   position: relative;
-  z-index: 4;
-  width: 29px;
-  height: 29px;
+  z-index: 5;
+  width: 30px;
+  height: 30px;
   display: grid;
   place-items: center;
   border-radius: 50%;
-  background: rgba(245,241,231,.94);
-  border: 1px solid rgba(var(--gold-rgb,176,141,87), .65);
-  box-shadow: 0 3px 10px rgba(0,0,0,.22);
+  color: #fff;
+  background: rgba(17,19,15,.72);
+  border: 1px solid rgba(255,255,255,.26);
+  box-shadow: 0 3px 10px rgba(0,0,0,.25);
   pointer-events: none;
-  transition: transform .2s ease, background .2s ease;
+  transition: transform .18s ease, background .18s ease;
 }
-.vinyl-button:hover .vinyl-control-icon { transform: scale(1.06); }
+.vinyl-button:hover .vinyl-control-icon {
+  transform: scale(1.08);
+  background: rgba(17,19,15,.86);
+}
+
+/* Play triangle */
 .vinyl-play-icon {
+  display: block;
   width: 0;
   height: 0;
-  margin-left: 2px;
-  border-top: 6px solid transparent;
-  border-bottom: 6px solid transparent;
-  border-left: 10px solid var(--burgundy);
+  margin-left: 3px;
+  border-top: 7px solid transparent;
+  border-bottom: 7px solid transparent;
+  border-left: 11px solid #fff;
 }
+
+/* Pause bars */
 .vinyl-pause-icon {
   display: none;
   align-items: center;
@@ -1387,14 +1458,28 @@ body.invitation-intro-opened .page-shell { opacity: 1; transform: none; filter: 
 .vinyl-pause-icon i {
   display: block;
   width: 4px;
-  height: 13px;
-  border-radius: 2px;
-  background: var(--burgundy);
+  height: 14px;
+  border-radius: 1px;
+  background: #fff;
 }
-.music-player.is-playing .vinyl-disc { animation: vinylSpin 2.8s linear infinite; }
+
+/* Spin continuously only while the audio element is playing. */
+.music-player.is-playing .vinyl-disc {
+  animation: vinylSpin 1.9s linear infinite;
+  animation-play-state: running;
+}
+.music-player:not(.is-playing) .vinyl-disc {
+  animation: none;
+}
 .music-player.is-playing .vinyl-play-icon { display: none; }
 .music-player.is-playing .vinyl-pause-icon { display: flex; }
-.music-player-copy { min-width: 0; display: flex; flex-direction: column; line-height: 1.15; }
+
+.music-player-copy {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+}
 .music-player-copy span {
   color: var(--burgundy);
   font-size: 9px;
@@ -1413,7 +1498,11 @@ body.invitation-intro-opened .page-shell { opacity: 1; transform: none; filter: 
   font-size: 18px;
   font-weight: 600;
 }
-@keyframes vinylSpin { to { transform: rotate(360deg); } }
+
+@keyframes vinylSpin {
+  from { transform: rotate(0deg) translateZ(0); }
+  to { transform: rotate(360deg) translateZ(0); }
+}
 
 /* Admin music controls */
 .music-enabled-toggle {
@@ -1431,12 +1520,12 @@ body.invitation-intro-opened .page-shell { opacity: 1; transform: none; filter: 
 
 @media (max-width: 620px) {
   .music-player { right: 12px; bottom: 12px; padding: 7px; gap: 0; }
-  .vinyl-button { width: 54px; height: 54px; }
-  .vinyl-disc { inset: 2px; }
-  .vinyl-control-icon { width: 27px; height: 27px; }
+  .vinyl-button { width: 58px; height: 58px; }
+  .vinyl-disc { inset: 3px; }
+  .vinyl-control-icon { width: 28px; height: 28px; }
   .music-player-copy { display: none; }
   .music-admin-grid { grid-template-columns: 1fr; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .music-player.is-playing .vinyl-disc { animation: none; }
+  .music-player.is-playing .vinyl-disc { animation-duration: 5s; }
 }

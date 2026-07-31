@@ -420,7 +420,8 @@ function updateMusicPlayerState() {
   const status = byId("musicPlayerStatus");
   if (!player || !audio || !button) return;
 
-  const playing = !audio.paused && !audio.ended;
+  const playing = !audio.paused && !audio.ended && audio.readyState > 0;
+
   player.classList.toggle("is-playing", playing);
   button.classList.toggle("is-playing", playing);
   button.setAttribute("aria-label", playing ? "Pause background music" : "Play background music");
@@ -1081,11 +1082,19 @@ if (uploadMusicBtn) uploadMusicBtn.addEventListener("click", uploadWeddingMusic)
 const removeMusicBtn = byId("removeMusicBtn");
 if (removeMusicBtn) removeMusicBtn.addEventListener("click", removeWeddingMusic);
 const musicToggleBtn = byId("musicToggleBtn");
-if (musicToggleBtn) musicToggleBtn.addEventListener("click", () => {
+if (musicToggleBtn) musicToggleBtn.addEventListener("click", async () => {
   const audio = byId("weddingAudio");
   if (!audio) return;
-  if (audio.paused) audio.play().catch(() => showToast("Tap again to play the music."));
-  else audio.pause();
+
+  try {
+    if (audio.paused || audio.ended) await audio.play();
+    else audio.pause();
+  } catch (error) {
+    console.warn("Music playback was blocked by the browser.", error);
+    showToast("Tap the vinyl again to play the music.");
+  } finally {
+    updateMusicPlayerState();
+  }
 });
 const weddingAudio = byId("weddingAudio");
 if (weddingAudio) {
