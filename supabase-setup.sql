@@ -20,6 +20,11 @@ create table if not exists public.wedding_settings (
   updated_at timestamptz not null default now()
 );
 
+-- Safe upgrades for existing projects. Re-running this file will not delete data.
+alter table public.wedding_settings add column if not exists entourage jsonb not null default '[]'::jsonb;
+alter table public.wedding_settings add column if not exists dress_motif text default '';
+alter table public.wedding_settings add column if not exists theme_colors jsonb not null default '{"olive":"#5f6f3a","burgundy":"#7b2438","cream":"#f5f1e7","gold":"#b08d57"}'::jsonb;
+
 insert into public.wedding_settings (
   id, partner_one, partner_two, wedding_date, wedding_time, rsvp_deadline,
   venue_name, venue_address, map_link, venue_notes, welcome_message, schedule

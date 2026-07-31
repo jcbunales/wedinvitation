@@ -22,6 +22,12 @@ const defaultState = {
       { role: "Groomsmen", names: ["Noah Lee", "Liam Carter", "Ethan Tan"] }
     ],
     dressMotif: "We would love our guests to dress in elegant earth tones inspired by our wedding palette. Olive green, burgundy, warm neutrals, and soft cream accents are especially welcome.",
+    themeColors: {
+      olive: "#5f6f3a",
+      burgundy: "#7b2438",
+      cream: "#f5f1e7",
+      gold: "#b08d57"
+    },
     schedule: [
       { time: "3:30 PM", title: "Guest arrival", note: "Please make your way to the garden ceremony area." },
       { time: "4:00 PM", title: "Ceremony", note: "We say “I do” surrounded by our favourite people." },
@@ -91,6 +97,7 @@ function weddingToRow(wedding) {
     welcome_message: wedding.welcomeMessage || "",
     entourage: Array.isArray(wedding.entourage) ? wedding.entourage : [],
     dress_motif: wedding.dressMotif || "",
+    theme_colors: wedding.themeColors || clone(defaultState.wedding.themeColors),
     schedule: Array.isArray(wedding.schedule) ? wedding.schedule : []
   };
 }
@@ -112,6 +119,9 @@ function rowToWedding(row) {
     welcomeMessage: row.welcome_message ?? "",
     entourage: Array.isArray(row.entourage) ? row.entourage : clone(defaultState.wedding.entourage),
     dressMotif: row.dress_motif ?? defaultState.wedding.dressMotif,
+    themeColors: row.theme_colors && typeof row.theme_colors === "object"
+      ? { ...clone(defaultState.wedding.themeColors), ...row.theme_colors }
+      : clone(defaultState.wedding.themeColors),
     schedule: Array.isArray(row.schedule) ? row.schedule : clone(defaultState.wedding.schedule),
     passcode: state?.wedding?.passcode || defaultState.wedding.passcode
   };
@@ -227,6 +237,95 @@ async function replaceRemoteState(nextState) {
   await refreshRemoteStats();
 }
 
+function normaliseHexColor(value, fallback) {
+  const raw = String(value || "").trim();
+  const short = /^#([0-9a-f]{3})$/i.exec(raw);
+  if (short) return `#${short[1].split("").map(c => c + c).join("")}`.toLowerCase();
+  return /^#[0-9a-f]{6}$/i.test(raw) ? raw.toLowerCase() : fallback;
+}
+
+function mixHexColors(colorA, colorB, weight = 0.5) {
+  const a = normaliseHexColor(colorA, "#000000").slice(1);
+  const b = normaliseHexColor(colorB, "#ffffff").slice(1);
+  const amount = Math.max(0, Math.min(1, Number(weight)));
+  const channels = [0, 2, 4].map(i => {
+    const av = parseInt(a.slice(i, i + 2), 16);
+    const bv = parseInt(b.slice(i, i + 2), 16);
+    return Math.round(av + (bv - av) * amount).toString(16).padStart(2, "0");
+  });
+  return `#${channels.join("")}`;
+}
+
+function hexToRgbString(hex) {
+  const clean = normaliseHexColor(hex, "#000000").slice(1);
+  return `${parseInt(clean.slice(0,2),16)}, ${parseInt(clean.slice(2,4),16)}, ${parseInt(clean.slice(4,6),16)}`;
+}
+
+function getThemeColors(theme = state.wedding.themeColors) {
+  const defaults = defaultState.wedding.themeColors;
+  return {
+    olive: normaliseHexColor(theme?.olive, defaults.olive),
+    burgundy: normaliseHexColor(theme?.burgundy, defaults.burgundy),
+    cream: normaliseHexColor(theme?.cream, defaults.cream),
+    gold: normaliseHexColor(theme?.gold, defaults.gold)
+  };
+}
+
+function applyThemeColors(theme = state.wedding.themeColors) {
+  const colors = getThemeColors(theme);
+  const root = document.documentElement;
+  root.style.setProperty("--olive", colors.olive);
+  root.style.setProperty("--olive-dark", mixHexColors(colors.olive, "#000000", .32));
+  root.style.setProperty("--olive-soft", mixHexColors(colors.olive, "#ffffff", .82));
+  root.style.setProperty("--burgundy", colors.burgundy);
+  root.style.setProperty("--burgundy-dark", mixHexColors(colors.burgundy, "#000000", .30));
+  root.style.setProperty("--burgundy-soft", mixHexColors(colors.burgundy, "#ffffff", .84));
+  root.style.setProperty("--cream", colors.cream);
+  root.style.setProperty("--paper-2", mixHexColors(colors.cream, "#ffffff", .48));
+  root.style.setProperty("--gold", colors.gold);
+  root.style.setProperty("--olive-rgb", hexToRgbString(colors.olive));
+  root.style.setProperty("--burgundy-rgb", hexToRgbString(colors.burgundy));
+  root.style.setProperty("--cream-rgb", hexToRgbString(colors.cream));
+  root.style.setProperty("--gold-rgb", hexToRgbString(colors.gold));
+  root.style.setProperty("--olive-envelope-light", mixHexColors(colors.olive, "#ffffff", .12));
+  root.style.setProperty("--olive-envelope-dark", mixHexColors(colors.olive, "#000000", .14));
+  root.style.setProperty("--burgundy-envelope-light", mixHexColors(colors.burgundy, "#ffffff", .08));
+  root.style.setProperty("--burgundy-envelope-dark", mixHexColors(colors.burgundy, "#000000", .18));
+  root.style.setProperty("--gold-light", mixHexColors(colors.gold, "#ffffff", .68));
+  root.style.setProperty("--gold-mid", mixHexColors(colors.gold, "#ffffff", .38));
+  root.style.setProperty("--gold-dark", mixHexColors(colors.gold, "#000000", .10));
+  return colors;
+}
+
+function readThemePickerValues() {
+  return {
+    olive: byId("settingThemeOlive")?.value || defaultState.wedding.themeColors.olive,
+    burgundy: byId("settingThemeBurgundy")?.value || defaultState.wedding.themeColors.burgundy,
+    cream: byId("settingThemeCream")?.value || defaultState.wedding.themeColors.cream,
+    gold: byId("settingThemeGold")?.value || defaultState.wedding.themeColors.gold
+  };
+}
+
+function syncThemePicker(theme = state.wedding.themeColors) {
+  const colors = getThemeColors(theme);
+  const pairs = [
+    ["settingThemeOlive", "settingThemeOliveHex", colors.olive],
+    ["settingThemeBurgundy", "settingThemeBurgundyHex", colors.burgundy],
+    ["settingThemeCream", "settingThemeCreamHex", colors.cream],
+    ["settingThemeGold", "settingThemeGoldHex", colors.gold]
+  ];
+  pairs.forEach(([inputId, outputId, value]) => {
+    const input = byId(inputId);
+    const output = byId(outputId);
+    if (input) input.value = value;
+    if (output) output.textContent = value.toUpperCase();
+  });
+  document.querySelectorAll("[data-theme-preview]").forEach(el => {
+    const key = el.dataset.themePreview;
+    if (colors[key]) el.style.background = colors[key];
+  });
+}
+
 function byId(id) { return document.getElementById(id); }
 function escapeHtml(value = "") {
   return String(value).replace(/[&<>'"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" }[c]));
@@ -264,6 +363,7 @@ function uid() { return `g_${Date.now().toString(36)}_${Math.random().toString(3
 
 function renderPublic() {
   const w = state.wedding;
+  applyThemeColors(w.themeColors);
   const date = new Date(`${w.weddingDate}T00:00:00`);
   byId("partnerOneDisplay").textContent = w.partnerOne;
   byId("partnerTwoDisplay").textContent = w.partnerTwo;
@@ -688,6 +788,7 @@ function populateSettingsForm() {
   byId("settingVenueNotes").value = w.venueNotes;
   byId("settingEntourage").value = (w.entourage || []).map(item => `${item.role} | ${normaliseEntourageNames(item.names).join("; ")}`).join("\n");
   byId("settingDressMotif").value = w.dressMotif || "";
+  syncThemePicker(w.themeColors);
   renderScheduleEditor();
 }
 function renderScheduleEditor() {
@@ -709,6 +810,25 @@ byId("scheduleEditor").addEventListener("click", e => {
   state.wedding.schedule.splice(Number(btn.dataset.removeSchedule), 1);
   renderScheduleEditor();
 });
+["settingThemeOlive", "settingThemeBurgundy", "settingThemeCream", "settingThemeGold"].forEach(inputId => {
+  const input = byId(inputId);
+  if (!input) return;
+  input.addEventListener("input", () => {
+    const colors = readThemePickerValues();
+    syncThemePicker(colors);
+    applyThemeColors(colors);
+  });
+});
+const resetThemeColorsBtn = byId("resetThemeColorsBtn");
+if (resetThemeColorsBtn) {
+  resetThemeColorsBtn.addEventListener("click", () => {
+    const defaults = clone(defaultState.wedding.themeColors);
+    syncThemePicker(defaults);
+    applyThemeColors(defaults);
+    showToast("Default palette previewed. Save wedding details to keep it.");
+  });
+}
+
 byId("weddingDetailsForm").addEventListener("submit", async e => {
   e.preventDefault();
   document.querySelectorAll(".schedule-editor-row").forEach(row => {
@@ -748,7 +868,8 @@ byId("weddingDetailsForm").addEventListener("submit", async e => {
     mapLink: byId("settingMapLink").value.trim(),
     venueNotes: byId("settingVenueNotes").value.trim(),
     entourage,
-    dressMotif: byId("settingDressMotif").value.trim()
+    dressMotif: byId("settingDressMotif").value.trim(),
+    themeColors: getThemeColors(readThemePickerValues())
   };
 
   const saveButton = e.submitter || e.currentTarget.querySelector('[type="submit"]');

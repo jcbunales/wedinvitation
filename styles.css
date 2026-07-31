@@ -15,6 +15,17 @@
   --muted: #716c64;
   --line: rgba(63, 76, 44, .18);
   --gold: #b08d57;
+  --olive-rgb: 95, 111, 58;
+  --burgundy-rgb: 123, 36, 56;
+  --cream-rgb: 245, 241, 231;
+  --gold-rgb: 176, 141, 87;
+  --olive-envelope-light: #6f8048;
+  --olive-envelope-dark: #536536;
+  --burgundy-envelope-light: #8b2c44;
+  --burgundy-envelope-dark: #591927;
+  --gold-light: #fff4ce;
+  --gold-mid: #ead9a5;
+  --gold-dark: #c8a967;
   --danger: var(--burgundy);
   --shadow: 0 28px 60px rgba(53, 66, 51, .14);
 }
@@ -42,7 +53,7 @@ a { color: inherit; }
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
   padding: 17px clamp(22px, 5vw, 74px);
-  background: rgba(245, 241, 231, .9);
+  background: rgba(var(--cream-rgb), .90);
   backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--line);
 }
@@ -326,6 +337,68 @@ tbody tr:last-child td { border-bottom: 0; }
 .settings-section { background: #fff; border: 1px solid var(--line); border-radius: 13px; padding: 24px; }
 .settings-section h3 { margin: 0 0 17px; font-size: 15px; }
 .settings-section label { margin-top: 13px; }
+.theme-settings-section .card-title-row { align-items: flex-start; gap: 18px; }
+.theme-settings-section .card-title-row h3 { margin-bottom: 4px; }
+.theme-settings-section .form-help { margin: 0; }
+.theme-color-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 20px;
+}
+.theme-color-field {
+  margin: 0 !important;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  background: var(--paper-2);
+}
+.theme-color-field > span:first-child {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 12px;
+  font-weight: 700;
+}
+.color-control {
+  display: grid;
+  grid-template-columns: 58px 1fr;
+  gap: 10px;
+  align-items: center;
+}
+.color-control input[type="color"] {
+  width: 58px;
+  height: 44px;
+  padding: 3px;
+  border-radius: 9px;
+  cursor: pointer;
+  background: #fff;
+}
+.color-control output {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: #fff;
+  font: 600 12px "Inter", Arial, sans-serif;
+  letter-spacing: .07em;
+}
+.theme-preview {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  height: 42px;
+  margin-top: 16px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  box-shadow: inset 0 0 0 3px rgba(255,255,255,.55);
+}
+.theme-preview span { min-width: 0; }
+@media (max-width: 620px) {
+  .theme-color-grid { grid-template-columns: 1fr; }
+  .theme-settings-section .card-title-row { flex-direction: column; }
+}
 .schedule-editor-row { display: grid; grid-template-columns: 130px 1fr 1.4fr auto; gap: 9px; align-items: end; padding: 10px 0; border-top: 1px solid var(--line); }
 .schedule-editor-row:first-child { border-top: 0; }
 .remove-schedule { width: 40px; height: 42px; border-radius: 9px; border: 1px solid var(--line); background: #fff; color: var(--danger); cursor: pointer; }
@@ -461,7 +534,7 @@ body.invitation-intro-active { overflow: hidden; }
   border: 1px solid rgba(63,76,44,.3);
   background:
     radial-gradient(circle at 18% 16%, rgba(255,255,255,.26), transparent 34%),
-    linear-gradient(180deg, #6f8048 0%, #536536 100%);
+    linear-gradient(180deg, var(--olive-envelope-light) 0%, var(--olive-envelope-dark) 100%);
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,.19),
     inset 0 -14px 24px rgba(40,50,27,.16);
@@ -482,7 +555,7 @@ body.invitation-intro-active { overflow: hidden; }
   height: 58%;
   clip-path: polygon(0 0, 100% 0, 50% 92%);
   background:
-    linear-gradient(180deg, #fff4ce 0%, #ead9a5 54%, #c8a967 100%);
+    linear-gradient(180deg, var(--gold-light) 0%, var(--gold-mid) 54%, var(--gold-dark) 100%);
   box-shadow: inset 0 0 0 1px rgba(139,105,45,.22);
 }
 
@@ -621,7 +694,7 @@ body.invitation-intro-active { overflow: hidden; }
   background:
     linear-gradient(145deg, rgba(255,255,255,.08) 0 49.5%, transparent 50%),
     linear-gradient(215deg, rgba(255,255,255,.06) 0 49.5%, transparent 50%),
-    linear-gradient(180deg, #6b7c45 0%, #4f6034 100%);
+    linear-gradient(180deg, var(--olive-envelope-light) 0%, var(--olive-envelope-dark) 100%);
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,.13),
     inset 0 -12px 20px rgba(38,47,26,.17);
@@ -659,7 +732,7 @@ body.invitation-intro-active { overflow: hidden; }
   clip-path: polygon(0 0, 100% 0, 50% 100%);
   border: 1px solid rgba(87,24,39,.46);
   background:
-    linear-gradient(180deg, #8b2c44 0%, #6f2134 56%, #591927 100%);
+    linear-gradient(180deg, var(--burgundy-envelope-light) 0%, var(--burgundy) 56%, var(--burgundy-envelope-dark) 100%);
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,.12),
     inset 0 -9px 18px rgba(54,13,24,.16);
@@ -699,7 +772,7 @@ body.invitation-intro-active { overflow: hidden; }
   font-family: "Cormorant Garamond", Georgia, serif;
   font-size: 25px;
   font-weight: 600;
-  background: radial-gradient(circle at 35% 30%, #ad405b, #842940 62%, #631e30 100%) !important;
+  background: radial-gradient(circle at 35% 30%, var(--burgundy-envelope-light), var(--burgundy) 62%, var(--burgundy-envelope-dark) 100%) !important;
   border: 4px double rgba(242,217,162,.4);
   box-shadow: 0 10px 18px rgba(87,24,39,.3), inset 0 0 0 2px rgba(79,18,34,.18) !important;
   transition: opacity .25s ease, transform .4s cubic-bezier(.22,.8,.2,1), filter .25s ease;
@@ -999,9 +1072,9 @@ body.invitation-intro-opened .page-shell { opacity: 1; transform: none; filter: 
   background: rgba(255,255,255,.06);
 }
 .swatch { display: block; width: 100%; height: 62px; margin-bottom: 10px; border: 1px solid rgba(255,255,255,.18); }
-.swatch.olive { background: #5f6f3a; }
-.swatch.burgundy { background: #7b2438; }
-.swatch.cream { background: #f5f1e7; }
+.swatch.olive { background: var(--olive); }
+.swatch.burgundy { background: var(--burgundy); }
+.swatch.cream { background: var(--cream); }
 .motif-swatch strong { display: block; font-family: "Cormorant Garamond",Georgia,serif; font-size: 18px; }
 .motif-swatch small { color: rgba(255,255,255,.58); font-size: 10px; letter-spacing: .08em; }
 .dress-note { margin: 0; padding-top: 18px; border-top: 1px solid rgba(255,255,255,.16); color: rgba(255,255,255,.72); font-size: 15px; }
@@ -1068,7 +1141,7 @@ body.invitation-intro-opened .page-shell { opacity: 1; transform: none; filter: 
   border-radius: 999px;
   border: 1px solid rgba(245,241,231,.2);
   background: rgba(245,241,231,.11);
-  color: #f5f1e7;
+  color: var(--cream);
   font-size: 9px;
   font-weight: 700;
   letter-spacing: .14em;

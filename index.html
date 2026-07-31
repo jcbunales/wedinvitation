@@ -469,6 +469,39 @@
                 <label for="settingDressMotif">Attire guidance text</label>
                 <textarea id="settingDressMotif" rows="4" placeholder="Olive green, burgundy, warm neutrals, and soft cream accents are welcome."></textarea>
               </div>
+              <div class="settings-section theme-settings-section">
+                <div class="card-title-row">
+                  <div>
+                    <h3>Theme colors</h3>
+                    <p class="form-help">Choose your wedding palette here. Changes preview instantly; click Save wedding details to keep them.</p>
+                  </div>
+                  <button id="resetThemeColorsBtn" class="text-btn" type="button">Restore defaults</button>
+                </div>
+                <div class="theme-color-grid">
+                  <label class="theme-color-field" for="settingThemeOlive">
+                    <span>Primary / Olive</span>
+                    <span class="color-control"><input id="settingThemeOlive" type="color" value="#5f6f3a" /><output id="settingThemeOliveHex">#5F6F3A</output></span>
+                  </label>
+                  <label class="theme-color-field" for="settingThemeBurgundy">
+                    <span>Accent / Burgundy</span>
+                    <span class="color-control"><input id="settingThemeBurgundy" type="color" value="#7b2438" /><output id="settingThemeBurgundyHex">#7B2438</output></span>
+                  </label>
+                  <label class="theme-color-field" for="settingThemeCream">
+                    <span>Background / Cream</span>
+                    <span class="color-control"><input id="settingThemeCream" type="color" value="#f5f1e7" /><output id="settingThemeCreamHex">#F5F1E7</output></span>
+                  </label>
+                  <label class="theme-color-field" for="settingThemeGold">
+                    <span>Detail / Gold</span>
+                    <span class="color-control"><input id="settingThemeGold" type="color" value="#b08d57" /><output id="settingThemeGoldHex">#B08D57</output></span>
+                  </label>
+                </div>
+                <div class="theme-preview" aria-label="Current wedding palette preview">
+                  <span data-theme-preview="olive"></span>
+                  <span data-theme-preview="burgundy"></span>
+                  <span data-theme-preview="cream"></span>
+                  <span data-theme-preview="gold"></span>
+                </div>
+              </div>
               <div class="settings-section">
                 <div class="card-title-row"><h3>Schedule</h3><button id="addScheduleItemBtn" class="text-btn" type="button">+ Add item</button></div>
                 <div id="scheduleEditor"></div>
