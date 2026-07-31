@@ -1720,12 +1720,86 @@ function initialiseSectionAnimations() {
   sections.forEach(section => observer.observe(section));
 }
 
+
+// Icon-based section navigation: Home acts as a section launcher and each tab opens one panel.
+const PUBLIC_SECTION_IDS = ["home", "details", "schedule", "entourage", "dress", "venue", "rsvp"];
+
+function openPublicSection(sectionId, options = {}) {
+  const { updateHash = true, focusSection = true } = options;
+  const targetId = PUBLIC_SECTION_IDS.includes(sectionId) ? sectionId : "home";
+
+  document.body.classList.add("section-tab-mode");
+
+  PUBLIC_SECTION_IDS.forEach(id => {
+    const section = byId(id);
+    if (!section) return;
+    section.classList.add("section-panel");
+    const active = id === targetId;
+    section.hidden = !active;
+    section.classList.toggle("is-active-section", active);
+    section.setAttribute("aria-hidden", active ? "false" : "true");
+    if (active) section.classList.add("is-visible");
+  });
+
+  document.querySelectorAll("[data-section-target]").forEach(control => {
+    const active = control.dataset.sectionTarget === targetId;
+    if (control.classList.contains("section-nav-link")) {
+      control.classList.toggle("is-active", active);
+      if (active) control.setAttribute("aria-current", "page");
+      else control.removeAttribute("aria-current");
+    }
+  });
+
+  if (updateHash) {
+    const nextHash = `#${targetId}`;
+    if (location.hash !== nextHash) history.pushState({ section: targetId }, "", nextHash);
+  }
+
+  window.scrollTo({ top: 0, behavior: window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+
+  if (focusSection) {
+    const target = byId(targetId);
+    if (target) {
+      target.setAttribute("tabindex", "-1");
+      window.setTimeout(() => target.focus({ preventScroll: true }), 80);
+    }
+  }
+}
+
+function initialiseSectionNavigation() {
+  PUBLIC_SECTION_IDS.forEach(id => {
+    const section = byId(id);
+    if (section) section.classList.add("section-panel");
+  });
+
+  document.addEventListener("click", event => {
+    const trigger = event.target.closest("[data-section-target], a[href^='#']");
+    if (!trigger) return;
+    const explicit = trigger.dataset.sectionTarget;
+    const href = trigger.getAttribute("href") || "";
+    const hashTarget = href.startsWith("#") ? href.slice(1) : "";
+    const targetId = explicit || hashTarget;
+    if (!PUBLIC_SECTION_IDS.includes(targetId)) return;
+    event.preventDefault();
+    openPublicSection(targetId);
+  });
+
+  window.addEventListener("popstate", () => {
+    const target = location.hash.replace("#", "");
+    openPublicSection(PUBLIC_SECTION_IDS.includes(target) ? target : "home", { updateHash: false, focusSection: false });
+  });
+
+  const initialTarget = location.hash.replace("#", "");
+  openPublicSection(PUBLIC_SECTION_IDS.includes(initialTarget) ? initialTarget : "home", { updateHash: false, focusSection: false });
+}
+
 async function initialiseWeddingSite() {
   configureDataModeUI();
   renderPublic();
   populateSettingsForm();
   syncInvitationIntro();
   initialiseSectionAnimations();
+  initialiseSectionNavigation();
 
   if (!SUPABASE_MODE) return;
   try {
