@@ -628,6 +628,10 @@ function renderPublic() {
   byId("footerYear").textContent = new Date(w.weddingDate).getFullYear();
   byId("dressInitialOne").textContent = (w.partnerOne || "O").trim().charAt(0).toUpperCase();
   byId("dressInitialTwo").textContent = (w.partnerTwo || "E").trim().charAt(0).toUpperCase();
+  const detailsInitialOne = byId("detailsInitialOne");
+  const detailsInitialTwo = byId("detailsInitialTwo");
+  if (detailsInitialOne) detailsInitialOne.textContent = (w.partnerOne || "O").trim().charAt(0).toUpperCase();
+  if (detailsInitialTwo) detailsInitialTwo.textContent = (w.partnerTwo || "E").trim().charAt(0).toUpperCase();
   byId("dressMotifMessage").textContent = w.dressMotif || defaultState.wedding.dressMotif;
   renderEntourage();
   renderScheduleCards();
@@ -1684,11 +1688,40 @@ if (openInvitationButton) {
   openInvitationButton.focus({ preventScroll: true });
 }
 
+function initialiseSectionAnimations() {
+  const reducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+  const sections = [...document.querySelectorAll("main > section, footer")];
+
+  sections.forEach((section, sectionIndex) => {
+    section.classList.add("section-reveal");
+    section.style.setProperty("--section-order", sectionIndex);
+  });
+
+  if (reducedMotion || !("IntersectionObserver" in window)) {
+    sections.forEach(section => section.classList.add("is-visible"));
+    return;
+  }
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add("is-visible");
+      observer.unobserve(entry.target);
+    });
+  }, {
+    threshold: 0.14,
+    rootMargin: "0px 0px -8% 0px"
+  });
+
+  sections.forEach(section => observer.observe(section));
+}
+
 async function initialiseWeddingSite() {
   configureDataModeUI();
   renderPublic();
   populateSettingsForm();
   syncInvitationIntro();
+  initialiseSectionAnimations();
 
   if (!SUPABASE_MODE) return;
   try {

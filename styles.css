@@ -1729,6 +1729,166 @@ body::before {
 #details .body-copy { color: rgba(250,240,217,.78); }
 #details .small-note { border-top-color: rgba(var(--gold-rgb), .34); }
 
+
+/* Details stationery emblem + botanical flower. Both inherit the active theme palette. */
+#details .details-heading-copy,
+#details .body-copy {
+  position: relative;
+  z-index: 3;
+}
+.details-monogram {
+  position: absolute;
+  z-index: 4;
+  top: -47px;
+  left: clamp(34px, 6vw, 70px);
+  width: 98px;
+  height: 98px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  color: #f4dfba;
+  background: var(--burgundy);
+  border: 2px solid var(--burgundy-dark);
+  border-radius: 50%;
+  outline: 1px solid rgba(var(--gold-rgb), .82);
+  outline-offset: -8px;
+  box-shadow: 0 15px 28px rgba(40, 32, 25, .22);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 36px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -.06em;
+}
+.details-monogram em {
+  color: var(--gold);
+  font-family: "Parisienne", "Brush Script MT", cursive;
+  font-size: .58em;
+  font-weight: 400;
+  transform: translateY(2px);
+}
+.details-flower {
+  position: absolute;
+  z-index: 2;
+  right: -42px;
+  bottom: -58px;
+  width: clamp(180px, 25vw, 270px);
+  height: auto;
+  color: rgba(var(--gold-rgb), .76);
+  filter: drop-shadow(0 12px 15px rgba(40, 32, 25, .08));
+  transform: rotate(-12deg);
+  pointer-events: none;
+}
+.details-flower-bloom {
+  stroke: currentColor;
+}
+#details::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  right: 34px;
+  bottom: 24px;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(var(--burgundy-rgb), .15), transparent 68%);
+  pointer-events: none;
+}
+
+/* Scroll reveal animations across every public section. */
+.section-reveal {
+  --reveal-y: 38px;
+}
+.section-reveal > * {
+  opacity: 0;
+  transform: translate3d(0, var(--reveal-y), 0) scale(.985);
+  transition:
+    opacity .78s cubic-bezier(.2,.7,.2,1),
+    transform .9s cubic-bezier(.16,.82,.2,1);
+  will-change: opacity, transform;
+}
+.section-reveal.is-visible > * {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+}
+.section-reveal.is-visible > *:nth-child(2) { transition-delay: .08s; }
+.section-reveal.is-visible > *:nth-child(3) { transition-delay: .16s; }
+.section-reveal.is-visible > *:nth-child(4) { transition-delay: .24s; }
+
+/* Generated cards animate individually once their section becomes visible. */
+.section-reveal .schedule-card,
+.section-reveal .entourage-group,
+.section-reveal .attire-guide-card,
+.section-reveal .motif-swatch,
+.section-reveal .confirmation-card {
+  opacity: 0;
+  transform: translateY(24px) scale(.97);
+  transition:
+    opacity .62s ease,
+    transform .72s cubic-bezier(.16,.82,.2,1),
+    box-shadow .3s ease;
+}
+.section-reveal.is-visible .schedule-card,
+.section-reveal.is-visible .entourage-group,
+.section-reveal.is-visible .attire-guide-card,
+.section-reveal.is-visible .motif-swatch,
+.section-reveal.is-visible .confirmation-card {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+.section-reveal.is-visible .schedule-card:nth-child(1),
+.section-reveal.is-visible .entourage-group:nth-child(1),
+.section-reveal.is-visible .motif-swatch:nth-child(1) { transition-delay: .12s; }
+.section-reveal.is-visible .schedule-card:nth-child(2),
+.section-reveal.is-visible .entourage-group:nth-child(2),
+.section-reveal.is-visible .motif-swatch:nth-child(2) { transition-delay: .20s; }
+.section-reveal.is-visible .schedule-card:nth-child(3),
+.section-reveal.is-visible .entourage-group:nth-child(3),
+.section-reveal.is-visible .motif-swatch:nth-child(3) { transition-delay: .28s; }
+.section-reveal.is-visible .schedule-card:nth-child(4),
+.section-reveal.is-visible .entourage-group:nth-child(4) { transition-delay: .36s; }
+.section-reveal.is-visible .entourage-group:nth-child(5) { transition-delay: .44s; }
+.section-reveal.is-visible .entourage-group:nth-child(6) { transition-delay: .52s; }
+
+/* Details logo and flower have their own elegant entrance. */
+.section-reveal #detailsInitialOne,
+.section-reveal #detailsInitialTwo { transition: none; }
+#details.section-reveal .details-monogram {
+  opacity: 0;
+  transform: translateY(-18px) rotate(-10deg) scale(.72);
+}
+#details.section-reveal.is-visible .details-monogram {
+  opacity: 1;
+  transform: translateY(0) rotate(0) scale(1);
+  transition: opacity .55s ease .18s, transform .82s cubic-bezier(.2,.9,.22,1.2) .18s;
+}
+#details.section-reveal .details-flower {
+  opacity: 0;
+  transform: translate(26px, 28px) rotate(3deg) scale(.82);
+}
+#details.section-reveal.is-visible .details-flower {
+  opacity: .94;
+  transform: translate(0, 0) rotate(-12deg) scale(1);
+  transition: opacity .8s ease .32s, transform 1.05s cubic-bezier(.16,.82,.2,1) .32s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .section-reveal > *,
+  .section-reveal .schedule-card,
+  .section-reveal .entourage-group,
+  .section-reveal .attire-guide-card,
+  .section-reveal .motif-swatch,
+  .section-reveal .confirmation-card,
+  #details.section-reveal .details-monogram,
+  #details.section-reveal .details-flower {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+    animation: none !important;
+  }
+  #details.section-reveal .details-flower { transform: rotate(-12deg) !important; }
+}
+
 /* Schedule cards alternate like individual burgundy/olive stationery pieces. */
 .muted-section {
   background: transparent;
@@ -1992,9 +2152,30 @@ footer {
     border-radius: 34px;
   }
   #details.split-section {
-    margin-top: 70px;
-    padding: 52px 30px;
+    margin-top: 82px;
+    padding: 72px 30px 58px;
     border-radius: 24px;
+  }
+  .details-monogram {
+    top: -43px;
+    left: 50%;
+    width: 86px;
+    height: 86px;
+    font-size: 31px;
+    transform-origin: center;
+    margin-left: -43px;
+  }
+  .details-flower {
+    right: -54px;
+    bottom: -45px;
+    width: 180px;
+    opacity: .72;
+  }
+  #details::after {
+    right: -10px;
+    bottom: 2px;
+    width: 125px;
+    height: 125px;
   }
   .schedule-card { min-height: 0; border-radius: 34px 34px 14px 14px / 26px 26px 14px 14px; }
   .entourage-group {
