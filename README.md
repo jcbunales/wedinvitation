@@ -91,3 +91,6 @@ V7 update: Floating admin button made translucent, admin emblem removed, guest l
 
 
 V8 update: Details section redesigned to better match the other wedding sections with a formal cream invitation-card layout, refined typography, a cleaner monogram, and improved mobile/desktop responsiveness.
+
+
+V9 update: Details section restyled to look more like a classic invitation card, with a narrower centered paper layout, classic invitation wording, centered typography, and mobile/desktop refinements.
