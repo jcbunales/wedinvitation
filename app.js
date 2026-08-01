@@ -1790,14 +1790,6 @@ function openPublicSection(sectionId, options = {}) {
     window.scrollTo({ top: 0, behavior: scrollBehavior });
   }
 
-  const activeTarget = byId(targetId);
-  if (activeTarget && fromVintageCard) {
-    activeTarget.classList.remove("card-open-arrival");
-    void activeTarget.offsetWidth;
-    activeTarget.classList.add("card-open-arrival");
-    window.setTimeout(() => activeTarget.classList.remove("card-open-arrival"), 950);
-  }
-
   if (focusSection && !scrollToMenu) {
     const target = byId(targetId);
     if (target) {
@@ -1940,14 +1932,14 @@ function animateVintageCardOpen(card, targetId) {
 
   window.setTimeout(() => {
     openPublicSection(targetId, { fromVintageCard: true });
-  }, 980);
+  }, 1380);
 
   window.setTimeout(() => {
     document.body.classList.remove("vintage-card-transition");
     card.classList.remove("is-opening-vintage-card");
     card.removeAttribute("aria-expanded");
     document.querySelectorAll(".home-launcher-card.is-card-dimmed").forEach(item => item.classList.remove("is-card-dimmed"));
-  }, 1380);
+  }, 1900);
 }
 
 function initialiseSectionNavigation() {
