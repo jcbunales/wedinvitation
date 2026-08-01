@@ -117,20 +117,21 @@
             <span aria-hidden="true">←</span> Back to menu
           </a>
         </div>
-        <div class="details-monogram" aria-label="Couple initials">
-          <span id="detailsInitialOne">O</span>
-          <em>&amp;</em>
-          <span id="detailsInitialTwo">E</span>
-        </div>
+        <div class="details-panel section-float-panel float-delay-0">
+          <div class="details-monogram" aria-label="Couple initials">
+            <span id="detailsInitialOne">O</span>
+            <em>&amp;</em>
+            <span id="detailsInitialTwo">E</span>
+          </div>
 
-
-        <div class="details-heading-copy">
-          <p class="section-kicker">Our celebration</p>
-          <h2>A day surrounded by the people we love.</h2>
-        </div>
-        <div class="body-copy">
-          <p id="welcomeMessageDisplay">We are so excited to celebrate this chapter with you. Join us for a garden ceremony, dinner, drinks, dancing, and a night to remember.</p>
-          <p class="small-note">Please submit one RSVP per invited household. If your invitation includes a guest, you can confirm their attendance in the form below.</p>
+          <div class="details-heading-copy">
+            <p class="section-kicker">Our celebration</p>
+            <h2>A day surrounded by the people we love.</h2>
+          </div>
+          <div class="body-copy">
+            <p id="welcomeMessageDisplay">We are so excited to celebrate this chapter with you. Join us for a garden ceremony, dinner, drinks, dancing, and a night to remember.</p>
+            <p class="small-note">Please submit one RSVP per invited household. If your invitation includes a guest, you can confirm their attendance in the form below.</p>
+          </div>
         </div>
       </section>
 
@@ -144,7 +145,7 @@
           <p class="section-kicker">Order of the day</p>
           <h2>Wedding schedule</h2>
         </div>
-        <div id="scheduleCards" class="schedule-grid"></div>
+        <div id="scheduleCards" class="schedule-grid section-float-panel float-delay-1"></div>
       </section>
 
       <section id="entourage" class="content-section entourage-section">
@@ -158,7 +159,7 @@
           <h2>Wedding entourage</h2>
           <p class="section-intro">With love and gratitude, we celebrate the family and friends who will stand with us on our wedding day.</p>
         </div>
-        <div id="entourageGrid" class="entourage-grid"></div>
+        <div id="entourageGrid" class="entourage-grid section-float-panel float-delay-2"></div>
       </section>
 
       <section id="dress" class="content-section dress-section">
@@ -167,7 +168,7 @@
             <span aria-hidden="true">←</span> Back to menu
           </a>
         </div>
-        <div class="dress-card">
+        <div class="dress-card section-float-panel float-delay-3">
           <div class="dress-copy">
             <p class="section-kicker">Attire guide</p>
             <h2>Olive green &amp; burgundy motif</h2>
@@ -215,19 +216,44 @@
             <span aria-hidden="true">←</span> Back to menu
           </a>
         </div>
-        <div class="venue-card">
-          <div>
-            <p class="section-kicker">Where to find us</p>
-            <h2 id="venueHeadingDisplay">The Garden Estate</h2>
-            <p id="venueFullAddressDisplay">123 Bloomfield Road, Sydney NSW</p>
-            <p id="venueNotesDisplay">Complimentary parking is available on site. Please arrive 20–30 minutes before the ceremony begins.</p>
-            <a id="mapLinkDisplay" class="primary-btn" href="https://maps.google.com" target="_blank" rel="noreferrer">Open in Maps</a>
-          </div>
-          <div class="venue-image-card">
-            <img src="assets/church-venue-sketch.png" alt="Sketch illustration of the church venue" class="venue-image" />
-            <div class="venue-image-caption">
-              <span class="venue-image-kicker">Ceremony venue</span>
-              <strong>Church illustration</strong>
+        <div class="section-heading centered venue-heading">
+          <p class="section-kicker">Where to find us</p>
+          <h2>Ceremony venue</h2>
+          <p class="section-intro">All the location details you need for the celebration.</p>
+        </div>
+        <div class="venue-shell section-float-panel float-delay-4">
+          <div class="venue-card venue-card-polished">
+            <div class="venue-copy-panel">
+              <span class="venue-badge">Wedding location</span>
+              <h3 id="venueHeadingDisplay">The Garden Estate</h3>
+              <p id="venueFullAddressDisplay" class="venue-address-line">123 Bloomfield Road, Sydney NSW</p>
+
+              <div class="venue-meta-list">
+                <div class="venue-meta-item">
+                  <span class="venue-meta-label">Arrival</span>
+                  <strong>Please arrive 20–30 minutes early</strong>
+                </div>
+                <div class="venue-meta-item">
+                  <span class="venue-meta-label">Guest note</span>
+                  <p id="venueNotesDisplay">Complimentary parking is available on site. Please arrive 20–30 minutes before the ceremony begins.</p>
+                </div>
+              </div>
+
+              <div class="venue-actions">
+                <a id="mapLinkDisplay" class="primary-btn" href="https://maps.google.com" target="_blank" rel="noreferrer">Open in Maps</a>
+                <span class="venue-helper">Use your preferred maps app for directions on the day.</span>
+              </div>
+            </div>
+
+            <div class="venue-image-panel">
+              <div class="venue-image-card">
+                <img src="assets/church-venue-sketch.png" alt="Sketch illustration of the church venue" class="venue-image" />
+                <div class="venue-image-caption">
+                  <span class="venue-image-kicker">Ceremony venue</span>
+                  <strong>Church illustration</strong>
+                  <small>A vintage sketch preview of the place where we will say “I do”.</small>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -249,7 +275,7 @@
           <p id="rsvpDeadlineDisplay">Kindly respond by 1 July 2026.</p>
         </div>
 
-        <div class="rsvp-layout rsvp-stationery-layout">
+        <div class="rsvp-layout rsvp-stationery-layout section-float-panel float-delay-5">
           <form id="rsvpForm" class="form-card rsvp-invitation-form">
             <div id="rsvpLookupStep">
               <label for="guestLookup">Your name or email</label>
