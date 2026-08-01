@@ -94,3 +94,6 @@ V8 update: Details section redesigned to better match the other wedding sections
 
 
 V9 update: Details section restyled to look more like a classic invitation card, with a narrower centered paper layout, classic invitation wording, centered typography, and mobile/desktop refinements.
+
+
+V10 update: Details section made more ornate and vintage with richer decorative flourishes and refined paper styling. The Add Guest modal is now properly centered within the viewport.
