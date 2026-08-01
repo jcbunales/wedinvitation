@@ -4548,6 +4548,131 @@ body.home-entry-animation #home .invitation-copy > *:nth-child(7) { animation-de
 .home-launcher-card > small {
   transition: opacity .26s ease, transform .45s cubic-bezier(.16,.82,.22,1);
 }
+.vintage-card-inner-preview {
+  position: absolute;
+  inset: 18px 16px 16px;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding: 28px 18px 22px;
+  border-radius: 26px 26px 18px 18px;
+  background: linear-gradient(180deg, rgba(255,251,242,.96), rgba(244,236,219,.98));
+  border: 1px solid rgba(176,141,87,.18);
+  box-shadow: inset 0 0 0 1px rgba(255,248,234,.78);
+  color: var(--burgundy);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(16px) scale(.975);
+  filter: blur(2px);
+  pointer-events: none;
+}
+.vintage-card-preview-kicker {
+  color: rgba(110,95,72,.78);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+.vintage-card-preview-title {
+  color: var(--burgundy);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 1;
+}
+.vintage-card-preview-rule {
+  width: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: var(--gold);
+  font-size: 11px;
+}
+.vintage-card-preview-rule::before,
+.vintage-card-preview-rule::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(176,141,87,.7), transparent);
+}
+.vintage-card-preview-body {
+  width: min(100%, 228px);
+  color: #655948;
+}
+.vintage-card-mini-list {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  width: 100%;
+}
+.vintage-card-mini-row {
+  display: grid;
+  grid-template-columns: minmax(0, 74px) minmax(0, 1fr);
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(176,141,87,.18);
+}
+.vintage-card-mini-row:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+.vintage-card-mini-label {
+  color: rgba(110,95,72,.82);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  text-align: left;
+}
+.vintage-card-mini-value {
+  font-size: 12px;
+  line-height: 1.35;
+  text-align: left;
+}
+.vintage-card-preview-swatches {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.vintage-card-swatch-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 28px;
+  padding: 0 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(176,141,87,.22);
+  background: rgba(255,248,234,.72);
+  color: #5f5446;
+  font-size: 11px;
+  font-weight: 600;
+}
+.vintage-card-swatch-chip i {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  box-shadow: 0 0 0 1px rgba(0,0,0,.08) inset;
+}
+.vintage-card-preview-note {
+  display: block;
+  font-size: 12px;
+  line-height: 1.5;
+  text-align: center;
+}
+.home-launcher-card:nth-child(odd) .vintage-card-inner-preview {
+  color: var(--olive-dark);
+}
+.home-launcher-card:nth-child(odd) .vintage-card-preview-title {
+  color: var(--olive-dark);
+}
 .vintage-card-cover {
   position: absolute;
   z-index: 12;
@@ -4650,12 +4775,16 @@ body.vintage-card-transition .home-launcher-card {
 .home-launcher-card.is-opening-vintage-card .vintage-card-cover {
   visibility: visible;
   opacity: 1;
-  animation: vintageCardCoverOpen .76s cubic-bezier(.2,.78,.18,1) both;
+  animation: vintageCardCoverOpen .98s cubic-bezier(.2,.78,.18,1) both;
+}
+.home-launcher-card.is-opening-vintage-card .vintage-card-inner-preview {
+  visibility: visible;
+  animation: vintageCardPreviewGlimpse .98s cubic-bezier(.18,.82,.2,1) both;
 }
 .home-launcher-card.is-opening-vintage-card > .home-launcher-icon,
 .home-launcher-card.is-opening-vintage-card > strong,
 .home-launcher-card.is-opening-vintage-card > small {
-  animation: vintageCardInsideReveal .76s ease both;
+  animation: vintageCardInsideReveal .98s ease both;
 }
 
 main > section.section-panel.card-open-arrival {
@@ -4667,19 +4796,28 @@ main > section.section-panel.card-open-arrival > * {
 
 @keyframes vintageCardLift {
   0%   { transform: translateY(0) rotateX(0deg) scale(1); }
-  34%  { transform: translateY(-18px) rotateX(2deg) scale(1.025); }
-  72%  { transform: translateY(-12px) rotateX(0deg) scale(1.045); }
+  28%  { transform: translateY(-18px) rotateX(2deg) scale(1.025); }
+  66%  { transform: translateY(-12px) rotateX(0deg) scale(1.045); }
   100% { transform: translateY(-8px) rotateX(0deg) scale(1.035); opacity: .98; }
 }
 @keyframes vintageCardCoverOpen {
   0%, 12% { transform: rotateY(0deg) translateZ(2px); filter: brightness(1); }
-  52% { transform: rotateY(-74deg) translateZ(8px); filter: brightness(1.04); }
+  48% { transform: rotateY(-74deg) translateZ(8px); filter: brightness(1.04); }
+  72% { transform: rotateY(-94deg) translateZ(10px); filter: brightness(.98); }
   100% { transform: rotateY(-112deg) translateZ(12px); filter: brightness(.92); }
 }
 @keyframes vintageCardInsideReveal {
   0%, 24% { opacity: .12; transform: translateX(7px) scale(.985); }
   72%, 100% { opacity: 1; transform: translateX(0) scale(1); }
 }
+@keyframes vintageCardPreviewGlimpse {
+  0%, 20% { opacity: 0; visibility: hidden; transform: translateX(16px) scale(.975); filter: blur(2px); }
+  42% { opacity: .22; visibility: visible; transform: translateX(10px) scale(.985); filter: blur(1.5px); }
+  62% { opacity: .9; visibility: visible; transform: translateX(0) scale(1); filter: blur(0); }
+  82% { opacity: .88; visibility: visible; transform: translateX(-2px) scale(1.01); filter: blur(0); }
+  100% { opacity: .94; visibility: visible; transform: translateX(0) scale(1); filter: blur(0); }
+}
+
 @keyframes sectionFromVintageCard {
   0% { opacity: 0; transform: translateY(34px) scale(.975); filter: blur(5px); }
   62% { opacity: 1; transform: translateY(-3px) scale(1.004); filter: blur(0); }
@@ -4691,6 +4829,33 @@ main > section.section-panel.card-open-arrival > * {
 }
 
 @media (max-width: 620px) {
+  .vintage-card-inner-preview {
+    inset: 14px 12px 12px;
+    padding: 22px 12px 18px;
+    border-radius: 22px 22px 16px 16px;
+  }
+  .vintage-card-preview-kicker {
+    font-size: 8px;
+  }
+  .vintage-card-preview-title {
+    font-size: 22px;
+  }
+  .vintage-card-preview-body {
+    width: min(100%, 190px);
+  }
+  .vintage-card-mini-row {
+    grid-template-columns: 68px minmax(0, 1fr);
+    gap: 6px;
+    padding-bottom: 5px;
+  }
+  .vintage-card-mini-label {
+    font-size: 8px;
+  }
+  .vintage-card-mini-value,
+  .vintage-card-preview-note,
+  .vintage-card-swatch-chip {
+    font-size: 10px;
+  }
   .vintage-card-cover {
     padding: 42px 10px 22px;
   }
@@ -4714,6 +4879,7 @@ main > section.section-panel.card-open-arrival > * {
 @media (prefers-reduced-motion: reduce) {
   .home-launcher-card.is-opening-vintage-card,
   .home-launcher-card.is-opening-vintage-card .vintage-card-cover,
+  .home-launcher-card.is-opening-vintage-card .vintage-card-inner-preview,
   .home-launcher-card.is-opening-vintage-card > .home-launcher-icon,
   .home-launcher-card.is-opening-vintage-card > strong,
   .home-launcher-card.is-opening-vintage-card > small,

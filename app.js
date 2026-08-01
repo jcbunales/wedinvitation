@@ -636,6 +636,7 @@ function renderPublic() {
   renderEntourage();
   renderScheduleCards();
   renderPublicStats();
+  updateVintageCardPreviews();
   updateCountdown();
   renderMusicPlayer().catch(error => console.warn("Music player could not be rendered.", error));
 }
@@ -692,12 +693,14 @@ function renderPublicStats() {
   if (SUPABASE_MODE) {
     byId("publicResponsesCount").textContent = remotePublicStats.responses;
     byId("publicAttendingCount").textContent = remotePublicStats.attending;
+    updateVintageCardPreviews();
     return;
   }
   const answered = state.guests.filter(g => g.status !== "Pending").length;
   const attending = state.guests.reduce((sum, g) => sum + (g.status === "Attending" ? Number(g.attendingCount || 0) : 0), 0);
   byId("publicResponsesCount").textContent = answered;
   byId("publicAttendingCount").textContent = attending;
+  updateVintageCardPreviews();
 }
 
 function updateCountdown() {
@@ -1804,9 +1807,104 @@ function openPublicSection(sectionId, options = {}) {
   }
 }
 
+function trimPreviewText(value = "", max = 32) {
+  const text = String(value || "").trim();
+  return text.length > max ? `${text.slice(0, max - 1).trim()}…` : text;
+}
+
+function vintagePreviewRowsMarkup(rows = []) {
+  return rows.map(row => `
+    <span class="vintage-card-mini-row">
+      <span class="vintage-card-mini-label">${escapeHtml(row.label || "")}</span>
+      <span class="vintage-card-mini-value">${escapeHtml(row.value || "")}</span>
+    </span>
+  `).join("");
+}
+
+function buildVintageCardPreviewMarkup(targetId) {
+  const w = state.wedding || {};
+  const schedule = Array.isArray(w.schedule) ? w.schedule : [];
+  const entourage = Array.isArray(w.entourage) ? w.entourage : [];
+  const responseCount = SUPABASE_MODE ? Number(remotePublicStats.responses || 0) : state.guests.filter(g => g.status !== "Pending").length;
+  const attendingCount = SUPABASE_MODE ? Number(remotePublicStats.attending || 0) : state.guests.reduce((sum, g) => sum + (g.status === "Attending" ? Number(g.attendingCount || 0) : 0), 0);
+
+  const map = {
+    details: {
+      title: "Wedding details",
+      body: `<span class="vintage-card-mini-list">${vintagePreviewRowsMarkup([
+        { label: "Date", value: formatShortDate(w.weddingDate) },
+        { label: "Time", value: formatTime(w.weddingTime) },
+        { label: "Venue", value: trimPreviewText(w.venueName, 24) }
+      ])}</span>`
+    },
+    schedule: {
+      title: "Celebration timeline",
+      body: `<span class="vintage-card-mini-list">${vintagePreviewRowsMarkup((schedule.length ? schedule : [{ time: "4:00 PM", title: "Ceremony" }, { time: "6:00 PM", title: "Reception" }]).slice(0, 2).map(item => ({ label: item.time, value: trimPreviewText(item.title, 22) })))}</span>`
+    },
+    entourage: {
+      title: "Our wedding party",
+      body: `<span class="vintage-card-mini-list">${vintagePreviewRowsMarkup((entourage.length ? entourage : [{ role: "Bridesmaids", names: ["Friends"] }, { role: "Groomsmen", names: ["Friends"] }]).slice(0, 2).map(item => {
+        const count = normaliseEntourageNames(item.names).length;
+        return { label: trimPreviewText(item.role, 18), value: `${count || 1} ${count === 1 ? "member" : "members"}` };
+      }))}</span>`
+    },
+    dress: {
+      title: "Attire guide",
+      body: `
+        <span class="vintage-card-preview-swatches">
+          <span class="vintage-card-swatch-chip"><i style="background: var(--olive);"></i>Olive green</span>
+          <span class="vintage-card-swatch-chip"><i style="background: var(--burgundy);"></i>Burgundy</span>
+        </span>
+        <span class="vintage-card-preview-note">Formal attire with elegant earth-toned accents.</span>
+      `
+    },
+    venue: {
+      title: "Venue details",
+      body: `<span class="vintage-card-mini-list">${vintagePreviewRowsMarkup([
+        { label: "Place", value: trimPreviewText(w.venueName, 22) },
+        { label: "Address", value: trimPreviewText(w.venueAddress, 26) },
+        { label: "Note", value: trimPreviewText(w.venueNotes || "Directions available", 24) }
+      ])}</span>`
+    },
+    rsvp: {
+      title: "Reply card",
+      body: `<span class="vintage-card-mini-list">${vintagePreviewRowsMarkup([
+        { label: "Reply by", value: formatShortDate(w.rsvpDeadline) },
+        { label: "Responses", value: `${responseCount}` },
+        { label: "Attending", value: `${attendingCount}` }
+      ])}</span>`
+    }
+  };
+
+  const preview = map[targetId] || map.details;
+  return `
+    <span class="vintage-card-preview-kicker">A glimpse inside</span>
+    <span class="vintage-card-preview-title">${escapeHtml(preview.title)}</span>
+    <span class="vintage-card-preview-rule"><span>✦</span></span>
+    <span class="vintage-card-preview-body">${preview.body}</span>
+  `;
+}
+
+function updateVintageCardPreviews() {
+  document.querySelectorAll('.home-launcher-card').forEach(card => {
+    const targetId = card.dataset.sectionTarget || 'details';
+    const inner = card.querySelector('.vintage-card-inner-preview');
+    if (!inner) return;
+    inner.innerHTML = buildVintageCardPreviewMarkup(targetId);
+  });
+}
+
 function prepareVintageCardCovers() {
   document.querySelectorAll(".home-launcher-card").forEach(card => {
     if (card.querySelector(".vintage-card-cover")) return;
+    const targetId = card.dataset.sectionTarget || "home";
+
+    const inner = document.createElement("span");
+    inner.className = "vintage-card-inner-preview";
+    inner.setAttribute("aria-hidden", "true");
+    inner.innerHTML = buildVintageCardPreviewMarkup(targetId);
+    card.appendChild(inner);
+
     const cover = document.createElement("span");
     cover.className = "vintage-card-cover";
     cover.setAttribute("aria-hidden", "true");
@@ -1819,6 +1917,8 @@ function prepareVintageCardCovers() {
     `;
     card.appendChild(cover);
   });
+
+  updateVintageCardPreviews();
 }
 
 function animateVintageCardOpen(card, targetId) {
@@ -1840,14 +1940,14 @@ function animateVintageCardOpen(card, targetId) {
 
   window.setTimeout(() => {
     openPublicSection(targetId, { fromVintageCard: true });
-  }, 760);
+  }, 980);
 
   window.setTimeout(() => {
     document.body.classList.remove("vintage-card-transition");
     card.classList.remove("is-opening-vintage-card");
     card.removeAttribute("aria-expanded");
     document.querySelectorAll(".home-launcher-card.is-card-dimmed").forEach(item => item.classList.remove("is-card-dimmed"));
-  }, 1120);
+  }, 1380);
 }
 
 function initialiseSectionNavigation() {
