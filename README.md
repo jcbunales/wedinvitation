@@ -82,3 +82,6 @@ Update: Details section redesigned to better match the theme, and hidden-section
 
 
 V5 update: Details section restyled with a more formal luxury invitation look. Admin dashboard redesigned to match the wedding theme with a refined olive, burgundy, cream, and gold palette, plus improved responsive layouts for mobile and desktop.
+
+
+V6 update: Fixed admin OE logo styling, guest CSV import button layout, schedule delete button layout, changed Details section accent cards to a cream palette, and refined the Details monogram.
