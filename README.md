@@ -70,3 +70,9 @@ The Home section uses arched vintage invitation cards. Back to menu returns dire
 
 ## RSVP layout fix
 The RSVP interface now uses a flexible lookup card. When a guest is found, the main form expands to a full-width response layout so attendance choices, guest counts, meal preference, plus-one, dietary notes, and actions do not become cramped. The companion card collapses into a horizontal summary on desktop and a stacked card on mobile.
+
+
+## Venue + Details V3
+- Redesigned Details as a cream stationery card with a centred floating monogram and separated content panels.
+- Restored the Church illustration label as a translucent image overlay.
+- Uses cache-busting asset names: styles-venue-details-v3.css and app-venue-details-v3.js.
