@@ -4600,10 +4600,9 @@ body.home-entry-animation #home .invitation-copy > *:nth-child(7) { animation-de
   transform-style: preserve-3d;
   isolation: isolate;
   transition:
-    transform .42s cubic-bezier(.16,.82,.22,1),
-    opacity .32s ease,
-    filter .32s ease,
-    box-shadow .42s ease;
+    transform .36s cubic-bezier(.2,.8,.2,1),
+    opacity .28s ease;
+  will-change: transform, opacity;
 }
 .home-launcher-card > .home-launcher-icon,
 .home-launcher-card > strong,
@@ -4623,13 +4622,14 @@ body.home-entry-animation #home .invitation-copy > *:nth-child(7) { animation-de
   border-radius: 26px 26px 18px 18px;
   background: linear-gradient(180deg, rgba(255,252,246,.995), rgba(245,238,224,.995));
   border: 1px solid rgba(176,141,87,.22);
-  box-shadow: 0 12px 24px rgba(66,47,35,.10), inset 0 0 0 1px rgba(255,248,234,.88);
+  box-shadow: 0 16px 28px rgba(66,47,35,.12), inset 0 0 0 1px rgba(255,248,234,.88);
   color: var(--burgundy);
   opacity: 0;
   visibility: hidden;
-  transform: translate3d(0, 22px, 0) scale(.94);
-  filter: blur(1.8px);
+  transform: translate3d(0, 18px, 0) scale(.965);
   pointer-events: none;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
 }
 .vintage-card-preview-kicker {
   color: rgba(110,95,72,.78);
@@ -4746,13 +4746,7 @@ body.home-entry-animation #home .invitation-copy > *:nth-child(7) { animation-de
   pointer-events: none;
 }
 .home-launcher-card.is-opening-vintage-card .vintage-card-inner-preview::after {
-  animation: vintagePaperSheen 1.36s .26s ease-out both;
-}
-@keyframes vintagePaperSheen {
-  0% { transform: translateX(-125%); opacity: 0; }
-  32% { opacity: .5; }
-  72% { opacity: .18; }
-  100% { transform: translateX(125%); opacity: 0; }
+  opacity: .18;
 }
 .vintage-card-cover {
   position: absolute;
@@ -4864,70 +4858,70 @@ body.vintage-card-transition .home-section-launcher::after {
 .home-launcher-card,
 .home-launcher-card .vintage-card-cover,
 .home-launcher-card .vintage-card-inner-preview {
-  transition: opacity .34s ease, transform .72s cubic-bezier(.2,.82,.2,1), filter .34s ease, box-shadow .34s ease;
+  transition: opacity .28s ease, transform .56s cubic-bezier(.2,.8,.2,1);
 }
 .home-launcher-card.is-card-dimmed {
-  opacity: .44;
-  filter: blur(.45px) saturate(.84) brightness(.96);
-  transform: scale(.978) translateY(4px);
+  opacity: .56;
+  transform: scale(.988) translateY(2px);
 }
 .home-launcher-card.is-opening-vintage-card {
   z-index: 30;
-  animation: vintageCardLift 1.36s cubic-bezier(.18,.82,.18,1) both;
-  box-shadow: 0 42px 90px rgba(61,42,31,.34);
+  transform: translateZ(0);
 }
 .home-launcher-card.is-opening-vintage-card .vintage-card-cover {
   visibility: visible;
-  opacity: 1;
-  animation: vintageCardCoverOpen 1.36s cubic-bezier(.18,.8,.18,1) both;
+  opacity: .10;
+  transform: translate3d(0, 8px, 0) scale(.985);
 }
 .home-launcher-card.is-opening-vintage-card .vintage-card-inner-preview {
   visibility: visible;
-  animation: vintageCardPreviewGlimpse 1.36s cubic-bezier(.18,.82,.18,1) both;
+  animation: floatingLetterSmooth 1.04s cubic-bezier(.22,.78,.2,1) both;
 }
 .home-launcher-card.is-opening-vintage-card > .home-launcher-icon,
 .home-launcher-card.is-opening-vintage-card > strong,
 .home-launcher-card.is-opening-vintage-card > small {
-  animation: vintageCardInsideReveal 1.36s cubic-bezier(.18,.82,.18,1) both;
+  opacity: 0;
+  transform: translateY(6px) scale(.985);
 }
 
-@keyframes vintageCardLift {
-  0%   { transform: translateY(0) rotateX(0deg) rotateZ(0deg) scale(1); opacity: 1; }
-  22%  { transform: translateY(-8px) rotateX(1.6deg) rotateZ(-.25deg) scale(1.025); opacity: 1; }
-  58%  { transform: translateY(-24px) rotateX(.8deg) rotateZ(.18deg) scale(1.065); opacity: 1; }
-  82%  { transform: translateY(-20px) rotateX(.15deg) rotateZ(0deg) scale(1.078); opacity: .995; }
-  100% { transform: translateY(-18px) rotateX(0deg) rotateZ(0deg) scale(1.07); opacity: .99; }
-}
-@keyframes vintageCardCoverOpen {
-  0%, 12% { transform: rotateY(0deg) translateZ(2px); filter: brightness(1); box-shadow: inset 0 0 0 9px rgba(255,250,240,.78), inset 0 0 0 10px rgba(176,141,87,.32); }
-  34% { transform: rotateY(-28deg) translateZ(8px); filter: brightness(1.035); }
-  62% { transform: rotateY(-66deg) translateZ(15px); filter: brightness(1.02); }
-  84% { transform: rotateY(-84deg) translateZ(19px); filter: brightness(.98); }
-  100% { transform: rotateY(-88deg) translateZ(21px); filter: brightness(.94); box-shadow: 18px 10px 28px rgba(54,35,26,.22); }
-}
-@keyframes vintageCardInsideReveal {
-  0%, 18% { opacity: 1; transform: translateX(0) scale(1); }
-  48% { opacity: .34; transform: translateX(-3px) scale(.992); }
-  100% { opacity: 0; transform: translateX(-8px) scale(.978); }
-}
-@keyframes vintageCardPreviewGlimpse {
-  0%, 24% { opacity: 0; visibility: hidden; transform: translate3d(18px, 24px, -4px) scale(.955); filter: blur(2.5px); }
-  46% { opacity: .2; visibility: visible; transform: translate3d(12px, 14px, 0) scale(.972); filter: blur(1.4px); }
-  68% { opacity: .82; visibility: visible; transform: translate3d(2px, -7px, 6px) scale(1.012); filter: blur(.2px); }
-  86% { opacity: .96; visibility: visible; transform: translate3d(-1px, -17px, 10px) scale(1.04); filter: blur(0); }
-  100% { opacity: 1; visibility: visible; transform: translate3d(0, -20px, 12px) scale(1.045); filter: blur(0); }
+@keyframes floatingLetterSmooth {
+  0% {
+    opacity: 0;
+    visibility: hidden;
+    transform: translate3d(0, 18px, 0) scale(.965) rotate(-.18deg);
+  }
+  38% {
+    opacity: .82;
+    visibility: visible;
+    transform: translate3d(0, -6px, 0) scale(1.008) rotate(.34deg);
+  }
+  64% {
+    opacity: 1;
+    visibility: visible;
+    transform: translate3d(-1px, -16px, 0) scale(1.026) rotate(-.24deg);
+  }
+  82% {
+    opacity: 1;
+    visibility: visible;
+    transform: translate3d(1px, -14px, 0) scale(1.022) rotate(.16deg);
+  }
+  100% {
+    opacity: 1;
+    visibility: visible;
+    transform: translate3d(0, -15px, 0) scale(1.022) rotate(0deg);
+  }
 }
 
 @media (max-width: 620px) {
   .home-launcher-card.is-opening-vintage-card .vintage-card-inner-preview {
-    animation-name: floatingInvitationLetterFloatMobile;
+    animation-name: floatingLetterSmoothMobile;
   }
-  @keyframes floatingInvitationLetterFloatMobile {
-    0%, 18% { opacity: 0; visibility: hidden; transform: translate3d(0, 20px, 0) scale(.94) rotate(-.15deg); filter: blur(1.8px); }
-    42% { opacity: .42; visibility: visible; transform: translate3d(0, 8px, 0) scale(.972) rotate(.1deg); filter: blur(1px); }
-    70% { opacity: 1; visibility: visible; transform: translate3d(-1px, -13px, 0) scale(1.012) rotate(.4deg); filter: blur(0); }
-    86% { opacity: 1; visibility: visible; transform: translate3d(1px, -11px, 0) scale(1.01) rotate(-.3deg); filter: blur(0); }
-    100% { opacity: 1; visibility: visible; transform: translate3d(0, -12px, 0) scale(1.008) rotate(.14deg); filter: blur(0); }
+  @keyframes floatingLetterSmoothMobile {
+    0% { opacity: 0; visibility: hidden; transform: translate3d(0, 14px, 0) scale(.972) rotate(-.12deg); }
+    38% { opacity: .86; visibility: visible; transform: translate3d(0, -4px, 0) scale(1.005) rotate(.24deg); }
+    66% { opacity: 1; visibility: visible; transform: translate3d(-1px, -10px, 0) scale(1.012) rotate(-.18deg); }
+    84% { opacity: 1; visibility: visible; transform: translate3d(1px, -9px, 0) scale(1.01) rotate(.12deg); }
+    100% { opacity: 1; visibility: visible; transform: translate3d(0, -10px, 0) scale(1.01) rotate(0deg); }
   }
   .vintage-card-inner-preview {
     inset: 14px 12px 12px;

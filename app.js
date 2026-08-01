@@ -1932,14 +1932,14 @@ function animateVintageCardOpen(card, targetId) {
 
   window.setTimeout(() => {
     openPublicSection(targetId, { fromVintageCard: true });
-  }, 1340);
+  }, 1040);
 
   window.setTimeout(() => {
     document.body.classList.remove("vintage-card-transition");
     card.classList.remove("is-opening-vintage-card");
     card.removeAttribute("aria-expanded");
     document.querySelectorAll(".home-launcher-card.is-card-dimmed").forEach(item => item.classList.remove("is-card-dimmed"));
-  }, 1740);
+  }, 1320);
 }
 
 function initialiseSectionNavigation() {
