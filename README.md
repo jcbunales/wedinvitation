@@ -88,3 +88,6 @@ V6 update: Fixed admin OE logo styling, guest CSV import button layout, schedule
 
 
 V7 update: Floating admin button made translucent, admin emblem removed, guest list action buttons aligned, guest import button matched to other buttons, guest editor modal layout improved, and the Details section cards were forced back to a cream palette.
+
+
+V8 update: Details section redesigned to better match the other wedding sections with a formal cream invitation-card layout, refined typography, a cleaner monogram, and improved mobile/desktop responsiveness.
