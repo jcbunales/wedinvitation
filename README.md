@@ -97,3 +97,6 @@ V9 update: Details section restyled to look more like a classic invitation card,
 
 
 V10 update: Details section made more ornate and vintage with richer decorative flourishes and refined paper styling. The Add Guest modal is now properly centered within the viewport.
+
+
+V11 update: Added a smooth drop-down entrance animation for the envelope when the website first loads. The envelope falls from above, settles with a soft bounce, then reveals the Open Invitation controls.
