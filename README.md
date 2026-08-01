@@ -103,3 +103,12 @@ V11 update: Added a smooth drop-down entrance animation for the envelope when th
 
 
 V12 update: Redesigned the intro envelope with a classier vintage treatment: richer olive tones, antique gold lining, refined flap/pocket styling, a more elegant OE wax seal, and a coordinated cream invitation insert.
+
+
+V13 update: The intro letter/invitation card colors now match the home page invitation card, using the same burgundy stationery background with cream and gold typography.
+
+
+V14 update: Fixed the intro letter text alignment by centering and balancing the preview typography more cleanly, and updated the envelope wax seal to show both celebrants' initials.
+
+
+V15 update: Fixed the opening-letter monogram overlap by reserving dedicated space and resizing it responsively. Added scroll-triggered home-page reveals for the countdown, countdown values, menu heading, and vintage section cards.
