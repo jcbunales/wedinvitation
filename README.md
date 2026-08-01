@@ -79,3 +79,6 @@ The RSVP interface now uses a flexible lookup card. When a guest is found, the m
 
 
 Update: Details section redesigned to better match the theme, and hidden-section CSS fixed so the Details section no longer remains visible when other sections are opened.
+
+
+V5 update: Details section restyled with a more formal luxury invitation look. Admin dashboard redesigned to match the wedding theme with a refined olive, burgundy, cream, and gold palette, plus improved responsive layouts for mobile and desktop.
