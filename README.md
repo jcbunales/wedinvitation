@@ -76,3 +76,6 @@ The RSVP interface now uses a flexible lookup card. When a guest is found, the m
 - Redesigned Details as a cream stationery card with a centred floating monogram and separated content panels.
 - Restored the Church illustration label as a translucent image overlay.
 - Uses cache-busting asset names: styles-venue-details-v3.css and app-venue-details-v3.js.
+
+
+Update: Details section redesigned to better match the theme, and hidden-section CSS fixed so the Details section no longer remains visible when other sections are opened.
