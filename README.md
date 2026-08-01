@@ -100,3 +100,6 @@ V10 update: Details section made more ornate and vintage with richer decorative 
 
 
 V11 update: Added a smooth drop-down entrance animation for the envelope when the website first loads. The envelope falls from above, settles with a soft bounce, then reveals the Open Invitation controls.
+
+
+V12 update: Redesigned the intro envelope with a classier vintage treatment: richer olive tones, antique gold lining, refined flap/pocket styling, a more elegant OE wax seal, and a coordinated cream invitation insert.
