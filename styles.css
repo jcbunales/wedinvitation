@@ -5280,3 +5280,156 @@ body.vintage-card-transition .home-section-launcher::after {
     transform: none !important;
   }
 }
+
+
+/* === Details and venue readability correction === */
+#details.split-section {
+  display: block;
+  width: min(1180px, calc(100% - 32px));
+  margin-inline: auto;
+}
+.details-panel {
+  grid-column: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  width: min(100%, 940px);
+  margin-inline: auto;
+  padding: clamp(34px, 5vw, 62px) clamp(24px, 6vw, 72px);
+  text-align: center;
+  border-radius: 34px;
+}
+.details-panel .details-monogram {
+  grid-row: auto;
+  flex: 0 0 auto;
+  margin: 0 auto;
+}
+.details-copy-stack {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 720px);
+  margin-inline: auto;
+}
+.details-panel .details-heading-copy,
+.details-panel .body-copy {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  text-align: center;
+}
+.details-panel .details-heading-copy h2 {
+  margin: 8px auto 0;
+  max-width: 680px;
+  color: #f7e6c6 !important;
+  font-size: clamp(38px, 5.2vw, 58px);
+  line-height: 1.02;
+}
+.details-panel .details-heading-copy .section-kicker {
+  color: var(--gold) !important;
+}
+.details-panel .body-copy {
+  margin-top: 22px;
+  color: rgba(255,246,226,.88) !important;
+  font-size: 17px;
+  line-height: 1.75;
+}
+.details-panel .body-copy > p {
+  max-width: 680px;
+  margin-inline: auto;
+}
+.details-panel .body-copy .small-note {
+  margin-top: 18px;
+  padding: 16px 18px;
+  color: rgba(255,244,222,.82) !important;
+  background: rgba(255,255,255,.055);
+  border: 1px solid rgba(var(--gold-rgb), .22);
+  border-radius: 16px;
+}
+
+.venue-heading .section-kicker {
+  color: var(--burgundy) !important;
+}
+.venue-heading h2 {
+  color: var(--burgundy-dark) !important;
+}
+.venue-heading .section-intro {
+  color: #655b50 !important;
+}
+.venue-card.venue-card-polished,
+.venue-copy-panel {
+  color: #302b26 !important;
+}
+.venue-copy-panel h3 {
+  color: #642f36 !important;
+}
+.venue-address-line {
+  color: #3f4a2a !important;
+}
+.venue-meta-item,
+.venue-meta-item p,
+.venue-helper {
+  color: #5a5147 !important;
+}
+.venue-meta-label {
+  color: #7a6d5e !important;
+}
+.venue-meta-item strong {
+  color: #3f4a2a !important;
+}
+.venue-badge {
+  color: #642f36 !important;
+  background: rgba(255,252,245,.92) !important;
+}
+.venue-image-panel {
+  padding: 18px;
+}
+.venue-image-card {
+  padding: 0;
+  border: 0;
+  min-height: 460px;
+}
+.venue-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 460px;
+  object-fit: cover;
+  border-radius: 24px;
+  border: 1px solid rgba(var(--gold-rgb), .38);
+  background: #f5efe2;
+}
+
+@media (max-width: 900px) {
+  .details-panel {
+    gap: 20px;
+  }
+  .venue-image-panel {
+    padding: 14px;
+  }
+  .venue-image-card,
+  .venue-image {
+    min-height: 360px;
+  }
+}
+
+@media (max-width: 620px) {
+  #details.split-section {
+    width: min(100%, calc(100% - 20px));
+  }
+  .details-panel {
+    padding: 30px 18px;
+    border-radius: 26px;
+  }
+  .details-panel .details-heading-copy h2 {
+    font-size: 38px;
+  }
+  .details-panel .body-copy {
+    font-size: 15px;
+    line-height: 1.65;
+  }
+  .venue-image-card,
+  .venue-image {
+    min-height: 290px;
+  }
+}
