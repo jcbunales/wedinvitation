@@ -85,3 +85,6 @@ V5 update: Details section restyled with a more formal luxury invitation look. A
 
 
 V6 update: Fixed admin OE logo styling, guest CSV import button layout, schedule delete button layout, changed Details section accent cards to a cream palette, and refined the Details monogram.
+
+
+V7 update: Floating admin button made translucent, admin emblem removed, guest list action buttons aligned, guest import button matched to other buttons, guest editor modal layout improved, and the Details section cards were forced back to a cream palette.
