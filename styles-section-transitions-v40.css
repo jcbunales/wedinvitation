@@ -1,0 +1,122 @@
+/* =========================================================
+   V40 — Public section transitions
+   Smooth fade + directional slide between invitation sections.
+   ========================================================= */
+
+:root {
+  --section-transition-enter: 460ms;
+  --section-transition-exit: 190ms;
+  --section-transition-ease: cubic-bezier(.22, .78, .24, 1);
+}
+
+body.is-section-switching {
+  cursor: default;
+}
+
+body.is-section-switching main > .section-panel {
+  pointer-events: none;
+}
+
+/* Keep the underlying layout untouched; animation only affects the
+   currently visible section while it enters or leaves. */
+main > section.section-panel.section-transition-enter {
+  animation: sectionEnterV40 var(--section-transition-enter) var(--section-transition-ease) both !important;
+  will-change: opacity, transform, filter;
+}
+
+main > section.section-panel.section-transition-leave {
+  animation: sectionLeaveV40 var(--section-transition-exit) ease both !important;
+  will-change: opacity, transform, filter;
+}
+
+body.section-direction-forward main > section.section-panel.section-transition-enter {
+  --section-enter-x: 28px;
+}
+
+body.section-direction-backward main > section.section-panel.section-transition-enter {
+  --section-enter-x: -28px;
+}
+
+body.section-direction-forward main > section.section-panel.section-transition-leave {
+  --section-leave-x: -15px;
+}
+
+body.section-direction-backward main > section.section-panel.section-transition-leave {
+  --section-leave-x: 15px;
+}
+
+@keyframes sectionEnterV40 {
+  0% {
+    opacity: 0;
+    transform: translate3d(var(--section-enter-x, 0), 14px, 0) scale(.992);
+    filter: blur(2px);
+  }
+  58% {
+    opacity: 1;
+    filter: blur(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes sectionLeaveV40 {
+  from {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    filter: blur(0);
+  }
+  to {
+    opacity: 0;
+    transform: translate3d(var(--section-leave-x, 0), -5px, 0) scale(.996);
+    filter: blur(1px);
+  }
+}
+
+/* Give the first content block a tiny secondary reveal for a more
+   polished invitation feel without animating every child individually. */
+main > section.section-panel.section-transition-enter > .section-heading,
+main > section.section-panel.section-transition-enter > .section-return-wrap,
+main > section.section-panel.section-transition-enter > .section-float-panel,
+main > section.section-panel.section-transition-enter > .details-layout,
+main > section.section-panel.section-transition-enter > .schedule-grid,
+main > section.section-panel.section-transition-enter > .entourage-program,
+main > section.section-panel.section-transition-enter > .dress-card,
+main > section.section-panel.section-transition-enter > .venue-shell,
+main > section.section-panel.section-transition-enter > .rsvp-shell {
+  animation: sectionInnerRevealV40 520ms cubic-bezier(.2,.8,.25,1) 70ms both;
+}
+
+@keyframes sectionInnerRevealV40 {
+  from {
+    opacity: .25;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 640px) {
+  body.section-direction-forward main > section.section-panel.section-transition-enter {
+    --section-enter-x: 18px;
+  }
+  body.section-direction-backward main > section.section-panel.section-transition-enter {
+    --section-enter-x: -18px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  main > section.section-panel.section-transition-enter,
+  main > section.section-panel.section-transition-leave,
+  main > section.section-panel.section-transition-enter > * {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
+}

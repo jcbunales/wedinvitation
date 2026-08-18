@@ -1,0 +1,1094 @@
+/* =========================================================
+   V32 — Entourage program
+   A formal emerald-and-gold program inspired by traditional
+   printed wedding entourage cards, while remaining responsive.
+   ========================================================= */
+
+#entourage.entourage-section {
+  width: min(100%, 1180px);
+  padding-top: clamp(84px, 9vw, 116px);
+  padding-bottom: clamp(68px, 8vw, 110px);
+  overflow: visible;
+}
+
+#entourage .section-return-wrap {
+  width: min(100%, 980px);
+  margin-inline: auto;
+  margin-bottom: 18px;
+}
+
+#entourage .section-return-link {
+  color: #1c5a43;
+}
+
+#entourage .section-return-link:hover,
+#entourage .section-return-link:focus-visible {
+  color: #0b3d2d;
+}
+
+#entourage .entourage-program {
+  position: relative !important;
+  width: min(100%, 980px);
+  height: auto !important;
+  min-height: 0 !important;
+  margin: 0 auto !important;
+  padding: clamp(44px, 6vw, 74px) clamp(22px, 5.5vw, 62px) clamp(48px, 6vw, 76px);
+  overflow: hidden;
+  isolation: isolate;
+  color: #efd796;
+  background:
+    radial-gradient(circle at 50% -10%, rgba(255,255,255,.055), transparent 32%),
+    linear-gradient(145deg, #123f2e 0%, #0c3426 52%, #092d21 100%);
+  border: 1px solid rgba(205, 167, 83, .74);
+  border-radius: 5px;
+  box-shadow: 0 24px 58px rgba(23, 50, 39, .18);
+  outline: 1px solid rgba(205, 167, 83, .26);
+  outline-offset: -10px;
+  transform: none !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+#entourage .entourage-program::before,
+#entourage .entourage-program::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  width: 170px;
+  height: 170px;
+  border: 1px solid rgba(218, 180, 93, .12);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+#entourage .entourage-program::before {
+  top: -108px;
+  left: -92px;
+}
+
+#entourage .entourage-program::after {
+  right: -94px;
+  bottom: -110px;
+}
+
+#entourage .entourage-program-ornament {
+  position: absolute;
+  top: 22px;
+  color: rgba(223, 185, 95, .72);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(24px, 3vw, 38px);
+  line-height: 1;
+  pointer-events: none;
+}
+
+#entourage .entourage-program-ornament-left {
+  left: clamp(20px, 4vw, 44px);
+  transform: rotate(-32deg);
+}
+
+#entourage .entourage-program-ornament-right {
+  right: clamp(20px, 4vw, 44px);
+  transform: scaleX(-1) rotate(-32deg);
+}
+
+#entourage .entourage-program-heading {
+  position: relative;
+  z-index: 1;
+  max-width: 690px;
+  margin: 0 auto clamp(34px, 5vw, 54px);
+}
+
+#entourage .entourage-program-heading::after {
+  content: "✦";
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: min(100%, 420px);
+  margin: 24px auto 0;
+  color: #d6ad55;
+  font-size: 11px;
+  letter-spacing: 0;
+  background:
+    linear-gradient(rgba(215, 175, 88, .42), rgba(215, 175, 88, .42)) left center / calc(50% - 18px) 1px no-repeat,
+    linear-gradient(rgba(215, 175, 88, .42), rgba(215, 175, 88, .42)) right center / calc(50% - 18px) 1px no-repeat;
+}
+
+#entourage .entourage-program-heading .section-kicker {
+  margin: 0 0 2px;
+  color: #d9b767;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(13px, 1.8vw, 16px);
+  font-weight: 500;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+#entourage .entourage-program-heading h2 {
+  margin: 0;
+  color: #efc85f;
+  font-family: "Parisienne", cursive;
+  font-size: clamp(58px, 9vw, 96px);
+  font-weight: 400;
+  line-height: .98;
+  letter-spacing: .01em;
+  text-shadow: 0 2px 10px rgba(0,0,0,.12);
+}
+
+#entourage .entourage-program-heading .section-intro {
+  max-width: 620px;
+  margin: 12px auto 0;
+  color: rgba(244, 226, 177, .78);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(16px, 2vw, 19px);
+  line-height: 1.5;
+}
+
+body.section-tab-mode #entourage.is-active-section .entourage-grid,
+#entourage .entourage-grid {
+  position: relative !important;
+  z-index: 1;
+  display: grid !important;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  align-items: start;
+  width: 100% !important;
+  max-width: none !important;
+  height: auto !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  gap: clamp(28px, 4vw, 42px) clamp(14px, 2.4vw, 28px);
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
+}
+
+#entourage .entourage-group,
+body.section-tab-mode #entourage.is-active-section .entourage-group {
+  position: relative !important;
+  grid-column: span 4;
+  display: block;
+  width: auto;
+  height: auto !important;
+  min-height: 0 !important;
+  margin: 0;
+  padding: 0 clamp(4px, 1vw, 10px);
+  overflow: visible;
+  color: #f1d88d;
+  text-align: center;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
+}
+
+#entourage .entourage-group::before,
+#entourage .entourage-group::after {
+  display: none !important;
+}
+
+#entourage .entourage-role-parents {
+  grid-column: span 6;
+}
+
+#entourage .entourage-role-principal,
+#entourage .entourage-role-secondary,
+#entourage .entourage-role-flower {
+  grid-column: span 12;
+}
+
+#entourage .entourage-role-honour,
+#entourage .entourage-role-symbolic,
+#entourage .entourage-role-bearer {
+  grid-column: span 4;
+}
+
+#entourage .entourage-role-attendants {
+  grid-column: span 6;
+}
+
+#entourage .entourage-role-standard {
+  grid-column: span 4;
+}
+
+#entourage .entourage-group-heading {
+  display: block;
+  margin: 0 0 10px;
+}
+
+#entourage .entourage-group-heading p,
+#entourage .entourage-group.olive-group .entourage-group-heading p,
+#entourage .entourage-group.burgundy-group .entourage-group-heading p {
+  margin: 0;
+  color: #e3be63 !important;
+  font-family: "Parisienne", cursive;
+  font-size: clamp(24px, 3.2vw, 34px);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: .01em;
+  text-transform: none;
+}
+
+#entourage .entourage-members {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3px;
+  margin: 0;
+  padding: 0;
+  border: 0 !important;
+}
+
+#entourage .entourage-role-principal .entourage-members,
+#entourage .entourage-role-secondary .entourage-members,
+#entourage .entourage-role-flower .entourage-members {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: clamp(18px, 4vw, 54px);
+}
+
+#entourage .entourage-member {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0 !important;
+}
+
+#entourage .entourage-member span,
+#entourage .entourage-group .entourage-member span {
+  display: block;
+  color: #f0d991 !important;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(13px, 1.6vw, 16px) !important;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: .055em;
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+}
+
+#entourage .empty-entourage {
+  grid-column: 1 / -1;
+  margin: 18px 0 0;
+  color: rgba(244, 226, 177, .82);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 19px;
+  text-align: center;
+}
+
+@media (max-width: 760px) {
+  #entourage.entourage-section {
+    padding-top: 78px;
+    padding-bottom: 74px;
+  }
+
+  #entourage .entourage-program {
+    width: calc(100% - 8px);
+    padding: 46px 18px 54px;
+    outline-offset: -7px;
+  }
+
+  #entourage .entourage-program-ornament {
+    top: 18px;
+    font-size: 24px;
+  }
+
+  #entourage .entourage-program-heading {
+    margin-bottom: 38px;
+  }
+
+  #entourage .entourage-program-heading h2 {
+    font-size: clamp(54px, 18vw, 78px);
+  }
+
+  body.section-tab-mode #entourage.is-active-section .entourage-grid,
+  #entourage .entourage-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 34px 12px;
+  }
+
+  #entourage .entourage-group,
+  #entourage .entourage-role-parents,
+  #entourage .entourage-role-honour,
+  #entourage .entourage-role-symbolic,
+  #entourage .entourage-role-bearer,
+  #entourage .entourage-role-attendants,
+  #entourage .entourage-role-standard {
+    grid-column: span 1;
+  }
+
+  #entourage .entourage-role-principal,
+  #entourage .entourage-role-secondary,
+  #entourage .entourage-role-flower {
+    grid-column: 1 / -1;
+  }
+
+  #entourage .entourage-role-principal .entourage-members,
+  #entourage .entourage-role-secondary .entourage-members,
+  #entourage .entourage-role-flower .entourage-members {
+    grid-template-columns: 1fr;
+  }
+
+  #entourage .entourage-group-heading p,
+  #entourage .entourage-group.olive-group .entourage-group-heading p,
+  #entourage .entourage-group.burgundy-group .entourage-group-heading p {
+    font-size: clamp(24px, 8vw, 30px);
+  }
+
+  #entourage .entourage-member span,
+  #entourage .entourage-group .entourage-member span {
+    font-size: 13px !important;
+    letter-spacing: .04em;
+  }
+}
+
+@media (max-width: 470px) {
+  body.section-tab-mode #entourage.is-active-section .entourage-grid,
+  #entourage .entourage-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  #entourage .entourage-group,
+  #entourage .entourage-role-parents,
+  #entourage .entourage-role-principal,
+  #entourage .entourage-role-honour,
+  #entourage .entourage-role-secondary,
+  #entourage .entourage-role-symbolic,
+  #entourage .entourage-role-attendants,
+  #entourage .entourage-role-bearer,
+  #entourage .entourage-role-flower,
+  #entourage .entourage-role-standard {
+    grid-column: 1 / -1;
+  }
+
+  #entourage .entourage-program {
+    padding-inline: 17px;
+  }
+
+  #entourage .entourage-program-heading .section-intro {
+    font-size: 16px;
+  }
+
+  #entourage .entourage-member span,
+  #entourage .entourage-group .entourage-member span {
+    font-size: 14px !important;
+  }
+}
+
+/* =========================================================
+   V33 — Layout refinement based on custom section map
+   Keeps the emerald program look but places each entourage
+   role in a cleaner, map-like arrangement.
+   ========================================================= */
+
+body.section-tab-mode #entourage.is-active-section .entourage-grid,
+#entourage .entourage-grid {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: clamp(34px, 4.2vw, 52px) clamp(18px, 3vw, 34px);
+}
+
+#entourage .entourage-group,
+body.section-tab-mode #entourage.is-active-section .entourage-group {
+  grid-column: span 2;
+  align-self: start;
+  padding-inline: clamp(2px, .7vw, 8px);
+}
+
+#entourage .role-parents-groom { grid-column: 1 / span 2; }
+#entourage .role-parents-bride { grid-column: 5 / span 2; }
+#entourage .role-primary-sponsor { grid-column: 2 / span 4; }
+#entourage .role-secondary-sponsor { grid-column: 2 / span 4; }
+#entourage .role-maid-of-honor { grid-column: 1 / span 2; }
+#entourage .role-matron-of-honor { grid-column: 3 / span 2; }
+#entourage .role-best-men { grid-column: 5 / span 2; }
+#entourage .role-veil { grid-column: 1 / span 2; }
+#entourage .role-cord { grid-column: 3 / span 2; }
+#entourage .role-candle { grid-column: 5 / span 2; }
+#entourage .role-groomsmen { grid-column: 1 / span 3; }
+#entourage .role-bridesmaids { grid-column: 4 / span 3; }
+#entourage .role-ring-bearer { grid-column: 1 / span 2; }
+#entourage .role-coin-bearer { grid-column: 3 / span 2; }
+#entourage .role-bible-bearer { grid-column: 5 / span 2; }
+#entourage .role-flower-girls { grid-column: 2 / span 4; }
+
+#entourage .role-primary-sponsor .entourage-members,
+#entourage .role-secondary-sponsor .entourage-members,
+#entourage .role-groomsmen .entourage-members,
+#entourage .role-bridesmaids .entourage-members,
+#entourage .role-flower-girls .entourage-members {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: clamp(14px, 3vw, 34px);
+  row-gap: 5px;
+}
+
+#entourage .role-primary-sponsor .entourage-group-heading p,
+#entourage .role-secondary-sponsor .entourage-group-heading p,
+#entourage .role-flower-girls .entourage-group-heading p {
+  font-size: clamp(26px, 3.1vw, 36px);
+}
+
+#entourage .role-groomsmen .entourage-group-heading p,
+#entourage .role-bridesmaids .entourage-group-heading p,
+#entourage .role-ring-bearer .entourage-group-heading p,
+#entourage .role-coin-bearer .entourage-group-heading p,
+#entourage .role-bible-bearer .entourage-group-heading p,
+#entourage .role-parents-groom .entourage-group-heading p,
+#entourage .role-parents-bride .entourage-group-heading p,
+#entourage .role-maid-of-honor .entourage-group-heading p,
+#entourage .role-matron-of-honor .entourage-group-heading p,
+#entourage .role-best-men .entourage-group-heading p,
+#entourage .role-veil .entourage-group-heading p,
+#entourage .role-cord .entourage-group-heading p,
+#entourage .role-candle .entourage-group-heading p {
+  font-size: clamp(22px, 2.7vw, 30px);
+}
+
+#entourage .entourage-member span,
+#entourage .entourage-group .entourage-member span {
+  font-size: clamp(12px, 1.25vw, 15px) !important;
+  line-height: 1.25;
+}
+
+@media (max-width: 900px) {
+  body.section-tab-mode #entourage.is-active-section .entourage-grid,
+  #entourage .entourage-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 30px 14px;
+  }
+
+  #entourage .role-primary-sponsor,
+  #entourage .role-secondary-sponsor,
+  #entourage .role-flower-girls,
+  #entourage .role-groomsmen,
+  #entourage .role-bridesmaids {
+    grid-column: 1 / -1;
+  }
+
+  #entourage .role-parents-groom,
+  #entourage .role-parents-bride,
+  #entourage .role-maid-of-honor,
+  #entourage .role-matron-of-honor,
+  #entourage .role-best-men,
+  #entourage .role-veil,
+  #entourage .role-cord,
+  #entourage .role-candle,
+  #entourage .role-ring-bearer,
+  #entourage .role-coin-bearer,
+  #entourage .role-bible-bearer,
+  #entourage .role-other {
+    grid-column: span 1;
+  }
+}
+
+@media (max-width: 560px) {
+  body.section-tab-mode #entourage.is-active-section .entourage-grid,
+  #entourage .entourage-grid {
+    grid-template-columns: 1fr;
+    gap: 26px;
+  }
+
+  #entourage .entourage-group,
+  #entourage .role-parents-groom,
+  #entourage .role-parents-bride,
+  #entourage .role-primary-sponsor,
+  #entourage .role-secondary-sponsor,
+  #entourage .role-maid-of-honor,
+  #entourage .role-matron-of-honor,
+  #entourage .role-best-men,
+  #entourage .role-veil,
+  #entourage .role-cord,
+  #entourage .role-candle,
+  #entourage .role-groomsmen,
+  #entourage .role-bridesmaids,
+  #entourage .role-ring-bearer,
+  #entourage .role-coin-bearer,
+  #entourage .role-bible-bearer,
+  #entourage .role-flower-girls,
+  #entourage .role-other {
+    grid-column: 1 / -1;
+  }
+
+  #entourage .role-primary-sponsor .entourage-members,
+  #entourage .role-secondary-sponsor .entourage-members,
+  #entourage .role-groomsmen .entourage-members,
+  #entourage .role-bridesmaids .entourage-members,
+  #entourage .role-flower-girls .entourage-members {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================================================
+   V36 — Reference-matched entourage composition
+   ========================================================= */
+
+#entourage .entourage-program {
+  width: min(100%, 1020px);
+  padding: clamp(42px, 5vw, 66px) clamp(22px, 5vw, 58px) clamp(48px, 6vw, 72px);
+}
+
+#entourage .entourage-program-heading {
+  margin-bottom: clamp(28px, 4vw, 42px);
+}
+
+#entourage .entourage-program-heading .section-kicker,
+#entourage .entourage-program-heading .section-intro,
+#entourage .entourage-program-heading::after {
+  display: none !important;
+}
+
+#entourage .entourage-program-heading h2 {
+  font-size: clamp(62px, 8.6vw, 98px);
+  line-height: .92;
+}
+
+body.section-tab-mode #entourage.is-active-section .entourage-grid,
+#entourage .entourage-grid {
+  display: block !important;
+  width: 100% !important;
+  max-width: 920px !important;
+  margin: 0 auto !important;
+}
+
+#entourage .entourage-layout-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 100%;
+  gap: clamp(20px, 4vw, 52px);
+  margin: 0;
+}
+
+#entourage .entourage-group,
+body.section-tab-mode #entourage.is-active-section .entourage-group {
+  flex: 1 1 0;
+  width: auto;
+  min-width: 0;
+  max-width: none;
+  grid-column: auto !important;
+  padding-inline: 2px;
+}
+
+#entourage .entourage-group-heading {
+  margin-bottom: 6px;
+}
+
+#entourage .entourage-group-heading p,
+#entourage .entourage-group.olive-group .entourage-group-heading p,
+#entourage .entourage-group.burgundy-group .entourage-group-heading p {
+  font-size: clamp(20px, 2.35vw, 29px) !important;
+  line-height: 1;
+}
+
+#entourage .entourage-member span,
+#entourage .entourage-group .entourage-member span {
+  font-size: clamp(11px, 1.12vw, 14px) !important;
+  line-height: 1.17;
+  letter-spacing: .045em;
+}
+
+#entourage .entourage-parents-row {
+  margin-bottom: clamp(24px, 3vw, 36px);
+}
+
+#entourage .entourage-parents-row > .entourage-group {
+  flex: 0 1 40%;
+}
+
+#entourage .entourage-primary-row {
+  width: min(86%, 760px);
+  margin: 0 auto clamp(26px, 3.6vw, 40px);
+}
+
+#entourage .entourage-primary-row .entourage-group {
+  width: 100%;
+}
+
+#entourage .entourage-primary-row .entourage-group-heading p {
+  font-size: clamp(23px, 2.75vw, 32px) !important;
+}
+
+#entourage .entourage-primary-row .entourage-members {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  column-gap: clamp(28px, 6vw, 78px);
+  row-gap: 2px;
+}
+
+#entourage .entourage-honour-row {
+  margin-bottom: clamp(26px, 3.8vw, 42px);
+}
+
+#entourage .entourage-honour-row > .entourage-group {
+  flex: 0 1 30%;
+}
+
+#entourage .entourage-subsection {
+  width: 100%;
+  margin: 0 auto clamp(28px, 4vw, 44px);
+}
+
+#entourage .entourage-subsection > h3 {
+  margin: 0 0 16px;
+  color: #e3be63;
+  font-family: "Parisienne", cursive;
+  font-size: clamp(25px, 3vw, 34px);
+  font-weight: 400;
+  line-height: 1;
+  text-align: center;
+}
+
+#entourage .entourage-symbolic-row > .entourage-group,
+#entourage .entourage-bearers-row > .entourage-group {
+  flex: 0 1 30%;
+}
+
+#entourage .entourage-secondary-sponsors {
+  margin-bottom: clamp(28px, 3.8vw, 40px);
+}
+
+#entourage .entourage-attendants-subsection {
+  width: min(78%, 720px);
+}
+
+#entourage .entourage-attendants-row {
+  gap: clamp(30px, 6vw, 86px);
+}
+
+#entourage .entourage-attendants-row .entourage-group-heading {
+  display: none;
+}
+
+#entourage .entourage-attendants-row > .entourage-group {
+  flex: 1 1 50%;
+}
+
+#entourage .entourage-attendants-row .entourage-members {
+  grid-template-columns: 1fr !important;
+}
+
+#entourage .entourage-bearers-row {
+  margin: 0 auto clamp(26px, 3.5vw, 38px);
+}
+
+#entourage .entourage-flower-row {
+  justify-content: center;
+  width: min(66%, 580px);
+  margin: 0 auto;
+}
+
+#entourage .entourage-flower-row > .entourage-group {
+  flex: 0 1 100%;
+}
+
+#entourage .entourage-flower-row .entourage-members {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  column-gap: clamp(16px, 3vw, 34px);
+}
+
+#entourage .entourage-other-row {
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 28px;
+}
+
+#entourage .entourage-other-row > .entourage-group {
+  flex: 0 1 30%;
+}
+
+@media (max-width: 760px) {
+  #entourage .entourage-program {
+    width: calc(100% - 6px);
+    padding: 42px 16px 50px;
+  }
+
+  #entourage .entourage-program-heading {
+    margin-bottom: 32px;
+  }
+
+  #entourage .entourage-layout-row {
+    gap: 18px;
+  }
+
+  #entourage .entourage-primary-row,
+  #entourage .entourage-attendants-subsection,
+  #entourage .entourage-flower-row {
+    width: 100%;
+  }
+
+  #entourage .entourage-member span,
+  #entourage .entourage-group .entourage-member span {
+    font-size: 11px !important;
+  }
+}
+
+@media (max-width: 560px) {
+  #entourage .entourage-parents-row,
+  #entourage .entourage-honour-row,
+  #entourage .entourage-symbolic-row,
+  #entourage .entourage-attendants-row,
+  #entourage .entourage-bearers-row,
+  #entourage .entourage-flower-row,
+  #entourage .entourage-other-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  #entourage .entourage-group,
+  #entourage .entourage-parents-row > .entourage-group,
+  #entourage .entourage-honour-row > .entourage-group,
+  #entourage .entourage-symbolic-row > .entourage-group,
+  #entourage .entourage-bearers-row > .entourage-group,
+  #entourage .entourage-attendants-row > .entourage-group,
+  #entourage .entourage-flower-row > .entourage-group,
+  #entourage .entourage-other-row > .entourage-group {
+    width: 100%;
+    max-width: none;
+  }
+
+  #entourage .entourage-primary-row .entourage-members,
+  #entourage .entourage-flower-row .entourage-members {
+    grid-template-columns: 1fr !important;
+  }
+
+  #entourage .entourage-subsection > h3 {
+    margin-bottom: 20px;
+  }
+
+  #entourage .entourage-member span,
+  #entourage .entourage-group .entourage-member span {
+    font-size: 12px !important;
+  }
+}
+
+/* =========================================================
+   V37 — Primary Sponsors + symbolic sponsor refinement
+   ========================================================= */
+
+/* Primary Sponsors: flow vertically into two balanced columns,
+   matching a traditional printed entourage program. */
+#entourage .entourage-primary-row {
+  width: min(90%, 790px);
+  margin-bottom: clamp(30px, 4vw, 44px);
+}
+
+#entourage .entourage-primary-row .entourage-primary-sponsors {
+  width: 100%;
+  max-width: none;
+}
+
+#entourage .entourage-primary-row .entourage-primary-sponsors .entourage-group-heading {
+  margin-bottom: 10px;
+}
+
+#entourage .entourage-primary-row .entourage-primary-sponsors .entourage-members {
+  display: block !important;
+  column-count: 2;
+  column-gap: clamp(44px, 8vw, 96px);
+  column-fill: balance;
+  text-align: center;
+}
+
+#entourage .entourage-primary-row .entourage-primary-sponsors .entourage-member {
+  display: block;
+  width: 100%;
+  break-inside: avoid;
+  -webkit-column-break-inside: avoid;
+  page-break-inside: avoid;
+  margin: 0 0 2px;
+}
+
+#entourage .entourage-primary-row .entourage-primary-sponsors .entourage-member span {
+  white-space: normal;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+/* Candle / Veil / Cord remain individual roles, without a
+   separate "Secondary Sponsors" label. */
+#entourage .entourage-symbolic-subsection {
+  margin-top: 0;
+  margin-bottom: clamp(30px, 4vw, 42px);
+}
+
+@media (max-width: 680px) {
+  #entourage .entourage-primary-row {
+    width: 100%;
+  }
+
+  #entourage .entourage-primary-row .entourage-primary-sponsors .entourage-members {
+    column-gap: 24px;
+  }
+}
+
+@media (max-width: 520px) {
+  #entourage .entourage-primary-row .entourage-primary-sponsors .entourage-members {
+    column-count: 1;
+  }
+}
+
+/* =========================================================
+   V38 — Primary Sponsors alignment fix
+   Two explicit equal-width columns keep both sponsor lists
+   aligned from the same top baseline and centered as one unit.
+   ========================================================= */
+#entourage .entourage-primary-row {
+  width: min(88%, 780px);
+  margin-inline: auto;
+}
+
+#entourage .entourage-primary-row .entourage-primary-sponsors {
+  width: 100%;
+  margin-inline: auto;
+}
+
+#entourage .entourage-primary-row .entourage-primary-sponsors .entourage-group-heading {
+  width: 100%;
+  margin: 0 auto 12px;
+  text-align: center;
+}
+
+#entourage .entourage-primary-row .entourage-primary-sponsors .entourage-members {
+  display: none !important;
+}
+
+#entourage .entourage-primary-columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  column-gap: clamp(44px, 7vw, 88px);
+}
+
+#entourage .entourage-primary-column {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  min-width: 0;
+  text-align: center;
+}
+
+#entourage .entourage-primary-column .entourage-member {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#entourage .entourage-primary-column .entourage-member + .entourage-member {
+  margin-top: 2px;
+}
+
+#entourage .entourage-primary-column .entourage-member span {
+  display: block;
+  width: 100%;
+  text-align: center;
+  white-space: normal;
+  overflow-wrap: break-word;
+}
+
+#entourage .entourage-primary-columns.is-single-column {
+  grid-template-columns: minmax(0, 360px);
+  justify-content: center;
+}
+
+@media (max-width: 680px) {
+  #entourage .entourage-primary-row {
+    width: 100%;
+  }
+
+  #entourage .entourage-primary-columns {
+    column-gap: 22px;
+  }
+}
+
+@media (max-width: 520px) {
+  #entourage .entourage-primary-columns {
+    grid-template-columns: 1fr;
+    row-gap: 2px;
+    max-width: 360px;
+  }
+}
+
+/* =========================================================
+   V38 — Primary Sponsors alignment fix
+   Explicit equal-width columns keep both sponsor lists on the
+   same top baseline and centered as one balanced block.
+   ========================================================= */
+#entourage .entourage-primary-row {
+  width: min(88%, 780px);
+  margin-inline: auto;
+}
+
+#entourage .entourage-primary-row .entourage-primary-sponsors {
+  width: 100%;
+  margin-inline: auto;
+}
+
+#entourage .entourage-primary-row .entourage-primary-sponsors .entourage-group-heading {
+  width: 100%;
+  margin: 0 auto 12px;
+  text-align: center;
+}
+
+#entourage .entourage-primary-row .entourage-primary-sponsors .entourage-members {
+  display: none !important;
+}
+
+#entourage .entourage-primary-columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  column-gap: clamp(44px, 7vw, 88px);
+}
+
+#entourage .entourage-primary-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  min-width: 0;
+  text-align: center;
+}
+
+#entourage .entourage-primary-column .entourage-member {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#entourage .entourage-primary-column .entourage-member + .entourage-member {
+  margin-top: 2px;
+}
+
+#entourage .entourage-primary-column .entourage-member span {
+  display: block;
+  width: 100%;
+  text-align: center;
+  white-space: normal;
+  overflow-wrap: break-word;
+}
+
+#entourage .entourage-primary-columns.is-single-column {
+  grid-template-columns: minmax(0, 360px);
+  justify-content: center;
+}
+
+@media (max-width: 680px) {
+  #entourage .entourage-primary-row {
+    width: 100%;
+  }
+
+  #entourage .entourage-primary-columns {
+    column-gap: 22px;
+  }
+}
+
+@media (max-width: 520px) {
+  #entourage .entourage-primary-columns {
+    grid-template-columns: 1fr;
+    row-gap: 2px;
+    max-width: 360px;
+  }
+}
+
+/* =========================================================
+   V39 — Entourage text animation
+   Gentle staggered text reveal when the Entourage section opens.
+   ========================================================= */
+
+@keyframes entourageTextRevealV39 {
+  0% {
+    opacity: 0;
+    transform: translateY(12px);
+    filter: blur(2px);
+  }
+  55% {
+    opacity: 1;
+    filter: blur(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes entourageTitleRevealV39 {
+  0% {
+    opacity: 0;
+    transform: translateY(16px) scale(.98);
+    letter-spacing: .04em;
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    letter-spacing: inherit;
+  }
+}
+
+/* Each major row gets a slightly later start, producing a soft
+   top-to-bottom reveal without changing the existing layout. */
+#entourage .entourage-grid > :nth-child(1) { --entourage-row-delay: .22s; }
+#entourage .entourage-grid > :nth-child(2) { --entourage-row-delay: .34s; }
+#entourage .entourage-grid > :nth-child(3) { --entourage-row-delay: .46s; }
+#entourage .entourage-grid > :nth-child(4) { --entourage-row-delay: .58s; }
+#entourage .entourage-grid > :nth-child(5) { --entourage-row-delay: .70s; }
+#entourage .entourage-grid > :nth-child(6) { --entourage-row-delay: .82s; }
+#entourage .entourage-grid > :nth-child(7) { --entourage-row-delay: .94s; }
+#entourage .entourage-grid > :nth-child(8) { --entourage-row-delay: 1.06s; }
+
+body.section-tab-mode #entourage.is-active-section .entourage-program-heading .section-kicker {
+  animation: entourageTextRevealV39 .7s cubic-bezier(.22,.8,.28,1) .06s both;
+}
+
+body.section-tab-mode #entourage.is-active-section .entourage-program-heading h2 {
+  animation: entourageTitleRevealV39 .9s cubic-bezier(.16,.9,.25,1) .12s both;
+}
+
+body.section-tab-mode #entourage.is-active-section .entourage-program-heading .section-intro {
+  animation: entourageTextRevealV39 .75s cubic-bezier(.22,.8,.28,1) .24s both;
+}
+
+body.section-tab-mode #entourage.is-active-section .entourage-grid > * .entourage-group-heading p,
+body.section-tab-mode #entourage.is-active-section .entourage-grid > * > .entourage-group-heading p,
+body.section-tab-mode #entourage.is-active-section .entourage-grid > * > h3 {
+  animation: entourageTextRevealV39 .65s cubic-bezier(.22,.8,.28,1)
+    var(--entourage-row-delay, .3s) both;
+}
+
+body.section-tab-mode #entourage.is-active-section .entourage-grid > * .entourage-member span {
+  animation: entourageTextRevealV39 .62s cubic-bezier(.22,.8,.28,1)
+    calc(var(--entourage-row-delay, .3s) + .11s) both;
+}
+
+/* A little extra stagger inside the denser sponsor / attendant lists. */
+body.section-tab-mode #entourage.is-active-section .entourage-primary-column .entourage-member:nth-child(2n) span,
+body.section-tab-mode #entourage.is-active-section .entourage-attendants-row .entourage-member:nth-child(2n) span {
+  animation-delay: calc(var(--entourage-row-delay, .3s) + .17s);
+}
+
+body.section-tab-mode #entourage.is-active-section .entourage-primary-column .entourage-member:nth-child(3n) span,
+body.section-tab-mode #entourage.is-active-section .entourage-attendants-row .entourage-member:nth-child(3n) span {
+  animation-delay: calc(var(--entourage-row-delay, .3s) + .23s);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.section-tab-mode #entourage.is-active-section .entourage-program-heading .section-kicker,
+  body.section-tab-mode #entourage.is-active-section .entourage-program-heading h2,
+  body.section-tab-mode #entourage.is-active-section .entourage-program-heading .section-intro,
+  body.section-tab-mode #entourage.is-active-section .entourage-grid > * .entourage-group-heading p,
+  body.section-tab-mode #entourage.is-active-section .entourage-grid > * > .entourage-group-heading p,
+  body.section-tab-mode #entourage.is-active-section .entourage-grid > * > h3,
+  body.section-tab-mode #entourage.is-active-section .entourage-grid > * .entourage-member span {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
+}

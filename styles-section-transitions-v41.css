@@ -1,0 +1,103 @@
+/* =========================================================
+   V41 — Smooth public section transitions
+   GPU-friendly fade + short directional glide. No blur,
+   no double animation and no delayed blank state.
+   ========================================================= */
+
+:root {
+  --section-transition-duration: 360ms;
+  --section-transition-ease: cubic-bezier(.16, 1, .3, 1);
+}
+
+body.is-section-switching main > .section-panel {
+  pointer-events: none;
+}
+
+/* The active section is composited during the short transition. */
+main > section.section-panel.section-transition-enter {
+  will-change: opacity, transform;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+body.section-direction-forward main > section.section-panel.section-transition-enter {
+  animation: sectionEnterForwardV41 var(--section-transition-duration) var(--section-transition-ease) both !important;
+}
+
+body.section-direction-backward main > section.section-panel.section-transition-enter {
+  animation: sectionEnterBackwardV41 var(--section-transition-duration) var(--section-transition-ease) both !important;
+}
+
+@keyframes sectionEnterForwardV41 {
+  from {
+    opacity: .18;
+    transform: translate3d(14px, 4px, 0) scale(.998);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes sectionEnterBackwardV41 {
+  from {
+    opacity: .18;
+    transform: translate3d(-14px, 4px, 0) scale(.998);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+/* Home feels better with a softer vertical reveal instead of a side slide. */
+#home.section-transition-enter {
+  animation-name: sectionEnterHomeV41 !important;
+}
+
+@keyframes sectionEnterHomeV41 {
+  from {
+    opacity: .18;
+    transform: translate3d(0, 7px, 0) scale(.998);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+/* Do not run a second animation on large inner cards. Individual section
+   effects (such as Entourage text animation and Venue swipe) remain intact. */
+main > section.section-panel.section-transition-enter > .section-heading,
+main > section.section-panel.section-transition-enter > .section-return-wrap,
+main > section.section-panel.section-transition-enter > .section-float-panel,
+main > section.section-panel.section-transition-enter > .details-layout,
+main > section.section-panel.section-transition-enter > .schedule-grid,
+main > section.section-panel.section-transition-enter > .entourage-program,
+main > section.section-panel.section-transition-enter > .dress-card,
+main > section.section-panel.section-transition-enter > .venue-shell,
+main > section.section-panel.section-transition-enter > .rsvp-shell {
+  animation-name: none !important;
+}
+
+@media (max-width: 640px) {
+  :root { --section-transition-duration: 320ms; }
+
+  @keyframes sectionEnterForwardV41 {
+    from { opacity: .18; transform: translate3d(9px, 3px, 0) scale(.999); }
+    to { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+  }
+
+  @keyframes sectionEnterBackwardV41 {
+    from { opacity: .18; transform: translate3d(-9px, 3px, 0) scale(.999); }
+    to { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  main > section.section-panel.section-transition-enter {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

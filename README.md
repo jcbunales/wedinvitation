@@ -151,3 +151,10 @@ Attire motif colours updated to Evergreen, Sage, Pistachio, Fern, Green Tea, and
 - Entourage is presented as a single deep-emerald and antique-gold formal program.
 - Existing Admin entourage data remains editable and is rendered dynamically.
 - Role-aware responsive grouping supports parents, sponsors, honour attendants, bridesmaids/groomsmen, bearers, flower girls, and custom roles.
+
+## V40 — Section transition animation
+- Added smooth fade/slide transitions when switching between Home, Details, Schedule, Entourage, Attire, Venue, and RSVP.
+- Forward/backward navigation uses subtle directional movement.
+- Outgoing sections finish before incoming sections are shown, preventing overlap.
+- Respects prefers-reduced-motion.
+- Enabled the V39 Entourage text animation stylesheet in index.html.
