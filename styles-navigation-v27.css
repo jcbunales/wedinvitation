@@ -1,0 +1,30 @@
+/* =========================================================
+   V27 public section navigation reliability fix
+   - Keep only one public section in layout at a time.
+   - Hidden sections cannot intercept clicks.
+   - The active section is always interactive.
+   ========================================================= */
+body.section-tab-mode main > section.section-panel {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+body.section-tab-mode main > section.section-panel.is-active-section:not([hidden]) {
+  display: block !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+}
+
+/* Home menu must remain fully clickable after the invitation intro closes. */
+body:not(.invitation-intro-active) #home.is-active-section,
+body:not(.invitation-intro-active) #home.is-active-section .home-section-launcher,
+body:not(.invitation-intro-active) #home.is-active-section .home-launcher-grid,
+body:not(.invitation-intro-active) #home.is-active-section .home-launcher-card {
+  pointer-events: auto !important;
+}
+
+/* Avoid a stale vintage transition locking the menu after navigation. */
+body:not(.vintage-card-transition) .home-launcher-card {
+  pointer-events: auto;
+}

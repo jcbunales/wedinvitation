@@ -1,0 +1,39 @@
+/* =========================================================
+   V28 schedule + entourage content visibility hardening
+   The tab navigator owns section visibility. Content inside an active
+   Schedule/Entourage panel should never remain transparent because an
+   IntersectionObserver was attached while the panel was hidden.
+   ========================================================= */
+body.section-tab-mode #schedule.is-active-section,
+body.section-tab-mode #entourage.is-active-section {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+body.section-tab-mode #schedule.is-active-section > *,
+body.section-tab-mode #entourage.is-active-section > *,
+body.section-tab-mode #schedule.is-active-section .schedule-card,
+body.section-tab-mode #entourage.is-active-section .entourage-group {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
+}
+
+body.section-tab-mode #schedule.is-active-section .schedule-grid,
+body.section-tab-mode #entourage.is-active-section .entourage-grid {
+  display: grid !important;
+  height: auto !important;
+  min-height: 1px !important;
+}
+
+body.section-tab-mode #entourage.is-active-section .entourage-grid {
+  width: min(100%, 760px);
+  margin-inline: auto;
+}
+
+/* The colour palette is fixed site-wide; no admin colour-picker UI remains. */
+.theme-settings-section,
+.theme-color-grid,
+.theme-preview {
+  display: none !important;
+}

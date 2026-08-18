@@ -112,3 +112,42 @@ V14 update: Fixed the intro letter text alignment by centering and balancing the
 
 
 V15 update: Fixed the opening-letter monogram overlap by reserving dedicated space and resizing it responsively. Added scroll-triggered home-page reveals for the countdown, countdown values, menu heading, and vintage section cards.
+
+V16 update: Added editable Reception details (date, time, address) and Preparation Venue details (venue, address, date) to the public Details section and Admin → Wedding details. Existing Supabase projects should run `supabase-add-event-details.sql` once so these new fields are saved. The migration only adds an `event_details` JSON column and does not modify guest or RSVP records.
+
+## V23 attire refinement
+- Replaced the attire sample with the clean text-free/border-free midi dress + semi-formal illustration.
+- Gentlemen dress code is now Semi-formal.
+- Refined the Attire section with a cleaner editorial layout, circular motif swatches, simplified guidance cards, and improved responsive spacing.
+
+## V24 layout polish
+- Refined global content-section spacing and section rhythm.
+- Reworked Attire layout for cleaner desktop/tablet/mobile presentation.
+- Improved motif palette legibility with full, non-truncated colour names.
+- Standardized `Evergreen` capitalization.
+- Updated Attire motif copy and admin placeholder/default migration.
+
+## V26 homepage section visibility fix
+- Public sections are now hidden in the HTML by default except Home.
+- Added a CSS visibility guard so only `.is-active-section` is displayed.
+- Prevents Details, Schedule, Entourage, Attire, Venue, and RSVP from appearing underneath Home during initial load.
+
+## V27 section navigation fix
+- Fixed public section cards/links so Details, Schedule, Entourage, Attire, Venue, and RSVP can always be selected from Home.
+- Reworked the active/hidden section state so exactly one public section is interactive at a time.
+- Removed the delayed vintage-card navigation lock that could leave Home cards unresponsive on some browsers/devices.
+- Added an independent navigation fallback loaded after the main app so section switching still works even if an optional animation/widget initializer fails.
+
+## V28 fixes
+- Restored Schedule and Entourage public content when Supabase contains empty arrays.
+- Hardened Schedule/Entourage visibility so reveal animations cannot leave their content transparent after tab navigation.
+- Removed the Admin theme colour picker.
+- Locked the public theme to the emerald-green and antique-gold palette.
+
+## V30 motif palette update
+Attire motif colours updated to Evergreen, Sage, Pistachio, Fern, Green Tea, and Pine. The public motif copy and default/admin guidance text were updated to match.
+
+## V32 entourage redesign
+- Entourage is presented as a single deep-emerald and antique-gold formal program.
+- Existing Admin entourage data remains editable and is rendered dynamically.
+- Role-aware responsive grouping supports parents, sponsors, honour attendants, bridesmaids/groomsmen, bearers, flower girls, and custom roles.

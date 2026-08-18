@@ -1,0 +1,387 @@
+/* =========================================================
+   V25 public layout stabiliser
+   Prevents public sections/cards from visually overlapping
+   while preserving the existing emerald + gold design.
+   ========================================================= */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  min-width: 0;
+}
+
+.page-shell,
+main {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Every public section must participate in normal document flow. */
+main > section {
+  position: relative !important;
+  inset: auto !important;
+  float: none !important;
+  clear: both;
+  width: 100%;
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible;
+  isolation: isolate;
+}
+
+/* Hidden tab panels always stay fully out of layout. */
+body.section-tab-mode main > section.section-panel[hidden],
+main > section.section-panel[hidden] {
+  display: none !important;
+}
+
+/* Active panels use natural content height instead of viewport/fixed heights. */
+body.section-tab-mode main > section.section-panel.is-active-section,
+main > section.section-panel.is-active-section {
+  position: relative !important;
+  inset: auto !important;
+  float: none !important;
+  clear: both;
+  height: auto !important;
+  max-height: none !important;
+  min-height: 0 !important;
+  overflow: visible !important;
+}
+
+/* Keep the home invitation as a normal flowing page too. */
+#home.hero-section {
+  position: relative !important;
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
+  padding-bottom: clamp(54px, 7vw, 90px);
+}
+
+#home > .paper-card,
+#home > .countdown-panel,
+#home > .home-section-launcher {
+  position: relative !important;
+  inset: auto !important;
+  float: none !important;
+  clear: both;
+}
+
+/* Public content sections: spacing belongs to the section itself. */
+.content-section {
+  position: relative !important;
+  height: auto !important;
+  max-height: none !important;
+  min-height: 0 !important;
+  overflow: visible !important;
+  padding-top: clamp(64px, 8vw, 104px);
+  padding-bottom: clamp(72px, 9vw, 118px);
+}
+
+.content-section > .section-return-wrap,
+.content-section > .section-heading,
+.content-section > .section-float-panel,
+.content-section > .venue-location-tabs,
+.content-section > .venue-shell,
+.content-section > .rsvp-layout {
+  position: relative !important;
+  inset: auto !important;
+  float: none !important;
+  clear: both;
+}
+
+.section-return-wrap {
+  z-index: 5;
+  margin-bottom: clamp(22px, 3vw, 34px) !important;
+}
+
+.section-heading {
+  z-index: 2;
+  margin-top: 0 !important;
+  margin-bottom: clamp(30px, 4vw, 48px) !important;
+}
+
+/* The decorative floating animation was moving large cards outside their
+   layout boxes. Keep entrance animations, but stop persistent floating. */
+.section-float-panel {
+  animation: none !important;
+  transform: none !important;
+  will-change: auto !important;
+}
+
+/* Schedule */
+#schedule .schedule-grid {
+  position: relative !important;
+  display: grid;
+  height: auto !important;
+  min-height: 0 !important;
+  margin-top: 0 !important;
+  align-items: stretch;
+}
+
+#schedule .schedule-card {
+  position: relative !important;
+  inset: auto !important;
+  height: auto !important;
+  min-height: 0 !important;
+}
+
+/* Entourage */
+#entourage .entourage-grid {
+  position: relative !important;
+  height: auto !important;
+  min-height: 0 !important;
+  margin-top: 0 !important;
+}
+
+#entourage .entourage-group {
+  position: relative !important;
+  inset: auto !important;
+  height: auto !important;
+  min-height: 0 !important;
+}
+
+/* Details: reserve real space for the monogram that intentionally sits
+   above the stationery card. */
+#details.split-section {
+  position: relative !important;
+  height: auto !important;
+  min-height: 0 !important;
+  overflow: visible !important;
+}
+
+#details .details-stationery {
+  position: relative !important;
+  height: auto !important;
+  min-height: 0 !important;
+  margin-top: clamp(70px, 8vw, 92px) !important;
+  overflow: visible !important;
+}
+
+#details .details-stationery-copy,
+#details .details-content-grid,
+#details .details-welcome-copy,
+#details .details-rsvp-note {
+  height: auto !important;
+  min-height: 0 !important;
+}
+
+/* Attire: remove legacy nested padding/min-heights that were stacking on
+   top of the newer card layout and causing the image/copy to collide. */
+#dress.dress-section {
+  position: relative !important;
+  height: auto !important;
+  min-height: 0 !important;
+  overflow: visible !important;
+}
+
+#dress .dress-card {
+  position: relative !important;
+  display: grid !important;
+  grid-template-columns: minmax(360px, .88fr) minmax(0, 1.12fr) !important;
+  grid-auto-rows: auto;
+  align-items: center !important;
+  gap: clamp(28px, 5vw, 64px) !important;
+  width: 100%;
+  height: auto !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+}
+
+#dress .dress-copy,
+#dress .dress-art {
+  position: relative !important;
+  inset: auto !important;
+  width: 100%;
+  min-width: 0;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  align-self: center;
+}
+
+#dress .dress-copy {
+  max-width: 560px;
+  padding: 0 !important;
+}
+
+#dress .dress-art {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  padding: 0 !important;
+  overflow: visible !important;
+  background: transparent !important;
+}
+
+#dress .dress-visual-card,
+#dress .dress-illustration-frame {
+  position: relative !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+}
+
+#dress .dress-illustration-frame img {
+  display: block;
+  width: 100% !important;
+  max-width: 100%;
+  height: auto !important;
+  max-height: none !important;
+  aspect-ratio: auto !important;
+  object-fit: contain !important;
+}
+
+#dress .motif-swatches,
+#dress .attire-guide-grid {
+  position: relative;
+  height: auto !important;
+  min-height: 0 !important;
+}
+
+#dress .motif-swatch,
+#dress .attire-guide-card {
+  position: relative !important;
+  inset: auto !important;
+  height: auto !important;
+  min-height: 0 !important;
+}
+
+/* Venue: allow the tab navigation and shell to occupy their own rows.
+   Individual venue panels still overlap only during the intentional swipe
+   transition handled by app-details-v24.js. */
+#venue.venue-section {
+  position: relative !important;
+  height: auto !important;
+  min-height: 0 !important;
+  overflow: visible !important;
+}
+
+#venue .venue-heading {
+  margin-bottom: clamp(24px, 3vw, 34px) !important;
+}
+
+#venue .venue-location-tabs {
+  clear: both;
+  margin-top: 0 !important;
+  margin-bottom: clamp(22px, 3vw, 30px) !important;
+}
+
+#venue .venue-shell {
+  clear: both;
+  height: auto !important;
+  min-height: 0 !important;
+  margin-top: 0 !important;
+}
+
+#venue [data-venue-panel][hidden] {
+  display: none !important;
+}
+
+/* RSVP */
+#rsvp.rsvp-section {
+  position: relative !important;
+  height: auto !important;
+  min-height: 0 !important;
+  overflow: visible !important;
+}
+
+#rsvp .rsvp-layout,
+#rsvp .rsvp-stationery-layout,
+#rsvp .rsvp-invitation-form,
+#rsvp .rsvp-companion-card {
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+}
+
+#rsvp .rsvp-layout {
+  margin-top: 0 !important;
+  align-items: start !important;
+}
+
+/* Responsive layout: collapse wide two-column content before it can collide. */
+@media (max-width: 980px) {
+  #dress .dress-card {
+    grid-template-columns: 1fr !important;
+    gap: 30px !important;
+  }
+
+  #dress .dress-copy {
+    max-width: 720px;
+  }
+
+  #dress .dress-art {
+    order: 0 !important;
+  }
+
+  #rsvp .rsvp-layout,
+  #rsvp .rsvp-stationery-layout {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 700px) {
+  .content-section {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 52px 16px 72px !important;
+  }
+
+  .section-return-wrap {
+    margin-bottom: 24px !important;
+  }
+
+  .section-heading {
+    margin-bottom: 28px !important;
+  }
+
+  #details.split-section {
+    width: 100% !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+
+  #details .details-stationery {
+    margin-top: 58px !important;
+  }
+
+  #dress .dress-card {
+    padding: 22px 18px !important;
+    gap: 26px !important;
+    border-radius: 24px;
+  }
+
+  #dress .dress-copy {
+    max-width: none;
+  }
+
+  #venue.venue-section {
+    width: 100% !important;
+  }
+
+  #venue .venue-location-tabs,
+  #venue .venue-shell {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .content-section {
+    padding-inline: 12px !important;
+  }
+
+  #dress .dress-card {
+    padding-inline: 14px !important;
+  }
+}

@@ -8,9 +8,15 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600;700&family=Parisienne&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles-details-v15.css" />
+  <link rel="stylesheet" href="styles-details-v24.css" />
+  <link rel="stylesheet" href="styles-layout-v26.css" />
+  <link rel="stylesheet" href="styles-navigation-v27.css" />
+  <link rel="stylesheet" href="styles-content-v28.css" />
+  <link rel="stylesheet" href="styles-attire-v31.css" />
+  <link rel="stylesheet" href="styles-entourage-v38.css" />
+  <link rel="stylesheet" href="styles-admin-entourage-v34.css" />
 </head>
-<body class="invitation-intro-active">
+<body class="invitation-intro-active section-tab-mode">
   <div id="invitationIntro" class="invitation-intro is-arriving" aria-labelledby="introCoupleNames" role="dialog" aria-modal="true">
     <div class="intro-glow" aria-hidden="true"></div>
     <div class="intro-stage">
@@ -44,7 +50,7 @@
     </button>
 
     <main>
-      <section id="home" class="hero-section">
+      <section id="home" class="hero-section section-panel is-active-section" aria-hidden="false">
         <div class="paper-card invitation-card">
 <div class="invitation-copy">
             <p class="eyebrow">Together with their families</p>
@@ -111,7 +117,7 @@
         </div>
       </section>
 
-      <section id="details" class="content-section split-section">
+      <section id="details" class="content-section split-section section-panel" hidden aria-hidden="true">
         <div class="section-return-wrap">
           <a href="#home" data-section-target="home" data-return-menu="true" class="section-return-link">
             <span aria-hidden="true">←</span> Back to menu
@@ -146,11 +152,12 @@
                 <p><strong>One RSVP per household.</strong> If your invitation includes a guest, you can confirm their attendance in the RSVP form.</p>
               </aside>
             </div>
+
           </div>
         </div>
       </section>
 
-      <section id="schedule" class="content-section muted-section">
+      <section id="schedule" class="content-section muted-section section-panel" hidden aria-hidden="true">
         <div class="section-return-wrap">
           <a href="#home" data-section-target="home" data-return-menu="true" class="section-return-link">
             <span aria-hidden="true">←</span> Back to menu
@@ -163,21 +170,25 @@
         <div id="scheduleCards" class="schedule-grid section-float-panel float-delay-1"></div>
       </section>
 
-      <section id="entourage" class="content-section entourage-section">
+      <section id="entourage" class="content-section entourage-section section-panel" hidden aria-hidden="true">
         <div class="section-return-wrap">
           <a href="#home" data-section-target="home" data-return-menu="true" class="section-return-link">
             <span aria-hidden="true">←</span> Back to menu
           </a>
         </div>
-        <div class="section-heading centered">
-          <p class="section-kicker">The people beside us</p>
-          <h2>Wedding entourage</h2>
-          <p class="section-intro">With love and gratitude, we celebrate the family and friends who will stand with us on our wedding day.</p>
+        <div class="entourage-program section-float-panel float-delay-2">
+          <div class="entourage-program-ornament entourage-program-ornament-left" aria-hidden="true">❦</div>
+          <div class="entourage-program-ornament entourage-program-ornament-right" aria-hidden="true">❦</div>
+          <div class="section-heading centered entourage-program-heading">
+            <p class="section-kicker">With love, we present our</p>
+            <h2>Entourage</h2>
+            <p class="section-intro">The family and friends who will stand beside us as we begin this new chapter.</p>
+          </div>
+          <div id="entourageGrid" class="entourage-grid"></div>
         </div>
-        <div id="entourageGrid" class="entourage-grid section-float-panel float-delay-2"></div>
       </section>
 
-      <section id="dress" class="content-section dress-section">
+      <section id="dress" class="content-section dress-section section-panel" hidden aria-hidden="true">
         <div class="section-return-wrap">
           <a href="#home" data-section-target="home" data-return-menu="true" class="section-return-link">
             <span aria-hidden="true">←</span> Back to menu
@@ -185,47 +196,43 @@
         </div>
         <div class="dress-card section-float-panel float-delay-3">
           <div class="dress-copy">
-            <p class="section-kicker">Attire guide</p>
-            <h2>Olive green &amp; burgundy motif</h2>
-            <p id="dressMotifMessage">We would love our guests to dress in elegant earth tones inspired by our wedding palette. Olive green, burgundy, warm neutrals, and soft cream accents are especially welcome.</p>
-            <div class="motif-swatches" aria-label="Wedding colour palette">
-              <div class="motif-swatch"><span class="swatch olive"></span><strong>Olive Green</strong><small>#5F6F3A</small></div>
-              <div class="motif-swatch"><span class="swatch burgundy"></span><strong>Burgundy</strong><small>#7B2438</small></div>
-              <div class="motif-swatch"><span class="swatch cream"></span><strong>Warm Cream</strong><small>#F5F1E7</small></div>
+            <p class="section-kicker">Dress code</p>
+            <h2>Wedding motif</h2>
+            <p id="dressMotifMessage">We would love our guests to wear one of our wedding motif shades: Evergreen, Sage, Pistachio, Fern, Green Tea, or Pine. Gold, champagne, cream, and neutral accents are welcome.</p>
+            <div class="motif-swatches" aria-label="Wedding motif colours">
+              <p class="motif-label">Our colour palette</p>
+              <div class="motif-swatch"><span class="swatch evergreen"></span><strong>Evergreen</strong></div>
+              <div class="motif-swatch"><span class="swatch sage"></span><strong>Sage</strong></div>
+              <div class="motif-swatch"><span class="swatch pistachio"></span><strong>Pistachio</strong></div>
+              <div class="motif-swatch"><span class="swatch fern-green"></span><strong>Fern</strong></div>
+              <div class="motif-swatch"><span class="swatch green-tea"></span><strong>Green Tea</strong></div>
+              <div class="motif-swatch"><span class="swatch pine"></span><strong>Pine</strong></div>
             </div>
             <div class="attire-guide-grid">
               <article class="attire-guide-card">
                 <span class="attire-pill">Ladies</span>
-                <h3>Formal gown or midi dress</h3>
-                <p>Olive green is the preferred shade. You may also wear burgundy, champagne, or soft neutral accents.</p>
+                <h3>Midi dress</h3>
+                <p>Elegant midi dresses in any of our wedding motif shades.</p>
               </article>
               <article class="attire-guide-card">
                 <span class="attire-pill">Gentlemen</span>
-                <h3>Formal suit or barong</h3>
-                <p>Black, charcoal, beige, or deep neutrals are welcome, with olive green or burgundy ties, pocket squares, or accents.</p>
+                <h3>Semi-formal</h3>
+                <p>Collared shirts, tailored trousers or chinos, and optional blazers in complementary greens and neutrals.</p>
               </article>
             </div>
             <p class="dress-note"><strong>Gentle note:</strong> Please avoid an all-white or bridal-white outfit.</p>
           </div>
           <div class="dress-art">
-            <span class="dress-arch dress-arch-one" aria-hidden="true"></span>
-            <span class="dress-arch dress-arch-two" aria-hidden="true"></span>
             <div class="dress-visual-card">
-              <div class="dress-visual-header">
-                <span class="attire-pill">Gown sample</span>
-                <div class="dress-monogram"><span id="dressInitialOne">O</span><em>&amp;</em><span id="dressInitialTwo">E</span></div>
-              </div>
               <div class="dress-illustration-frame">
-                <img src="assets/attire-guide-sample.jpg" alt="Vector-style wedding attire inspiration illustration of a bride and groom from the back" />
+                <img src="assets/attire-guide-midi-semi-formal-v23.png" alt="Wedding attire inspiration with women in green midi dresses and men in coordinated semi-formal green and neutral outfits" />
               </div>
-              <p class="dress-visual-note">Sample style inspiration for the wedding motif</p>
             </div>
-            <span class="dress-leaf" aria-hidden="true">❧</span>
           </div>
         </div>
       </section>
 
-      <section id="venue" class="content-section venue-section">
+      <section id="venue" class="content-section venue-section section-panel" hidden aria-hidden="true">
         <div class="section-return-wrap">
           <a href="#home" data-section-target="home" data-return-menu="true" class="section-return-link">
             <span aria-hidden="true">←</span> Back to menu
@@ -233,47 +240,126 @@
         </div>
         <div class="section-heading centered venue-heading">
           <p class="section-kicker">Where to find us</p>
-          <h2>Ceremony venue</h2>
-          <p class="section-intro">All the location details you need for the celebration.</p>
+          <h2>Venue locations</h2>
+          <p class="section-intro">Choose a location below for the wedding ceremony, reception, or preparation venue.</p>
         </div>
+
+        <div class="venue-location-tabs" role="tablist" aria-label="Wedding venue locations">
+          <button id="venueTabWedding" class="venue-location-tab is-active" type="button" role="tab" aria-selected="true" aria-controls="venuePanelWedding" data-venue-tab="wedding">
+            <span class="venue-tab-copy">
+              <span class="venue-tab-label">Wedding Location</span>
+              <span class="venue-tab-note">Ceremony venue</span>
+            </span>
+            <span class="venue-tab-mark" aria-hidden="true">✦</span>
+          </button>
+          <button id="venueTabReception" class="venue-location-tab" type="button" role="tab" aria-selected="false" aria-controls="venuePanelReception" data-venue-tab="reception" tabindex="-1">
+            <span class="venue-tab-copy">
+              <span class="venue-tab-label">Reception</span>
+              <span class="venue-tab-note">Celebration venue</span>
+            </span>
+            <span class="venue-tab-mark" aria-hidden="true">✦</span>
+          </button>
+          <button id="venueTabPreparation" class="venue-location-tab" type="button" role="tab" aria-selected="false" aria-controls="venuePanelPreparation" data-venue-tab="preparation" tabindex="-1">
+            <span class="venue-tab-copy">
+              <span class="venue-tab-label">Preparation Venue</span>
+              <span class="venue-tab-note">Getting ready</span>
+            </span>
+            <span class="venue-tab-mark" aria-hidden="true">✦</span>
+          </button>
+        </div>
+
         <div class="venue-shell section-float-panel float-delay-4">
-          <div class="venue-card venue-card-polished">
-            <div class="venue-copy-panel">
-              <span class="venue-badge">Wedding location</span>
-              <h3 id="venueHeadingDisplay">The Garden Estate</h3>
-              <p id="venueFullAddressDisplay" class="venue-address-line">123 Bloomfield Road, Sydney NSW</p>
+          <div id="venuePanelWedding" class="venue-location-panel is-active" role="tabpanel" aria-labelledby="venueTabWedding" data-venue-panel="wedding">
+            <div class="venue-card venue-card-polished">
+              <div class="venue-copy-panel">
+                <span class="venue-badge">Wedding location</span>
+                <h3 id="venueHeadingDisplay">The Garden Estate</h3>
+                <p id="venueFullAddressDisplay" class="venue-address-line">123 Bloomfield Road, Sydney NSW</p>
 
-              <div class="venue-meta-list">
-                <div class="venue-meta-item">
-                  <span class="venue-meta-label">Arrival</span>
-                  <strong>Please arrive 20–30 minutes early</strong>
+                <div class="venue-meta-list">
+                  <div class="venue-meta-item">
+                    <span class="venue-meta-label">Arrival</span>
+                    <strong>Please arrive 20–30 minutes early</strong>
+                  </div>
+                  <div class="venue-meta-item">
+                    <span class="venue-meta-label">Guest note</span>
+                    <p id="venueNotesDisplay">Complimentary parking is available on site. Please arrive 20–30 minutes before the ceremony begins.</p>
+                  </div>
                 </div>
-                <div class="venue-meta-item">
-                  <span class="venue-meta-label">Guest note</span>
-                  <p id="venueNotesDisplay">Complimentary parking is available on site. Please arrive 20–30 minutes before the ceremony begins.</p>
+
+                <div class="venue-actions">
+                  <a id="mapLinkDisplay" class="primary-btn" href="https://maps.google.com" target="_blank" rel="noreferrer">Open in Maps</a>
+                  <span class="venue-helper">Use your preferred maps app for directions on the day.</span>
                 </div>
               </div>
 
-              <div class="venue-actions">
-                <a id="mapLinkDisplay" class="primary-btn" href="https://maps.google.com" target="_blank" rel="noreferrer">Open in Maps</a>
-                <span class="venue-helper">Use your preferred maps app for directions on the day.</span>
-              </div>
-            </div>
-
-            <div class="venue-image-panel">
-              <div class="venue-image-card">
-                <img src="assets/church-venue-sketch.png" alt="Vintage sketch of the wedding ceremony venue" class="venue-image" />
-                <div class="venue-image-caption venue-image-caption-translucent">
-                  <span class="venue-image-kicker">Ceremony venue</span>
-                  <strong>Church illustration</strong>
+              <div class="venue-image-panel">
+                <div class="venue-image-card">
+                  <img src="assets/church-venue-sketch.png" alt="Vintage sketch of the wedding ceremony venue" class="venue-image" />
+                  <div class="venue-image-caption venue-image-caption-translucent">
+                    <span class="venue-image-kicker">Ceremony venue</span>
+                    <strong>Wedding location</strong>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+
+          <div id="venuePanelReception" class="venue-location-panel" role="tabpanel" aria-labelledby="venueTabReception" data-venue-panel="reception" hidden>
+            <article class="venue-detail-card venue-detail-card-reception">
+              <div class="venue-detail-ornament" aria-hidden="true">✦</div>
+              <p class="venue-detail-eyebrow">After the ceremony</p>
+              <h3>Reception</h3>
+              <dl class="venue-detail-list">
+                <div class="venue-detail-row">
+                  <dt>Date</dt>
+                  <dd id="receptionDateDisplay">To be announced</dd>
+                </div>
+                <div class="venue-detail-row">
+                  <dt>Time</dt>
+                  <dd id="receptionTimeDisplay">To be announced</dd>
+                </div>
+                <div class="venue-detail-row venue-detail-row-wide">
+                  <dt>Address</dt>
+                  <dd id="receptionAddressDisplay">To be announced</dd>
+                </div>
+              </dl>
+              <div class="venue-actions venue-detail-actions">
+                <a id="receptionMapLinkDisplay" class="primary-btn" href="https://maps.google.com" target="_blank" rel="noreferrer">Open in Maps</a>
+                <span class="venue-helper">Directions are generated from the reception address.</span>
+              </div>
+            </article>
+          </div>
+
+          <div id="venuePanelPreparation" class="venue-location-panel" role="tabpanel" aria-labelledby="venueTabPreparation" data-venue-panel="preparation" hidden>
+            <article class="venue-detail-card venue-detail-card-preparation">
+              <div class="venue-detail-ornament" aria-hidden="true">✦</div>
+              <p class="venue-detail-eyebrow">Before the celebration</p>
+              <h3>Preparation Venue</h3>
+              <dl class="venue-detail-list">
+                <div class="venue-detail-row">
+                  <dt>Venue</dt>
+                  <dd id="preparationVenueDisplay">To be announced</dd>
+                </div>
+                <div class="venue-detail-row">
+                  <dt>Date</dt>
+                  <dd id="preparationDateDisplay">To be announced</dd>
+                </div>
+                <div class="venue-detail-row venue-detail-row-wide">
+                  <dt>Address</dt>
+                  <dd id="preparationAddressDisplay">To be announced</dd>
+                </div>
+              </dl>
+              <div class="venue-actions venue-detail-actions">
+                <a id="preparationMapLinkDisplay" class="primary-btn" href="https://maps.google.com" target="_blank" rel="noreferrer">Open in Maps</a>
+                <span class="venue-helper">Directions are generated from the preparation venue address.</span>
+              </div>
+            </article>
+          </div>
         </div>
       </section>
 
-      <section id="rsvp" class="content-section rsvp-section">
+      <section id="rsvp" class="content-section rsvp-section section-panel" hidden aria-hidden="true">
         <div class="section-return-wrap">
           <a href="#home" data-section-target="home" data-return-menu="true" class="section-return-link">
             <span aria-hidden="true">←</span> Back to menu
@@ -550,7 +636,7 @@
                 </div>
               </div>
               <div class="settings-section">
-                <h3>Venue</h3>
+                <h3>Ceremony venue</h3>
                 <div class="form-grid two-col">
                   <div><label for="settingVenueName">Venue name</label><input id="settingVenueName" required /></div>
                   <div><label for="settingVenueAddress">Address</label><input id="settingVenueAddress" required /></div>
@@ -559,48 +645,106 @@
                 <label for="settingVenueNotes">Guest notes</label><textarea id="settingVenueNotes" rows="3"></textarea>
               </div>
               <div class="settings-section">
-                <h3>Entourage</h3>
-                <p class="form-help">Each line creates one separate vertical group. Use <strong>Role | Name</strong>. For groups such as bridesmaids or groomsmen, separate each person with a semicolon <strong>;</strong>.</p>
-                <textarea id="settingEntourage" rows="10" placeholder="Parents of the Bride | Maria & Antonio Santos&#10;Maid of Honour | Sofia Reyes&#10;Bridesmaids | Isabella Cruz; Mia Chen; Ava Wilson&#10;Best Man | Daniel Reyes&#10;Groomsmen | Noah Lee; Liam Carter; Ethan Tan"></textarea>
-                <p class="form-help entourage-format-example"><strong>Example:</strong> Bridesmaids | Anna Cruz; Maria Santos; Grace Lee; Julia Reyes</p>
+                <h3>Reception</h3>
+                <div class="form-grid two-col">
+                  <div><label for="settingReceptionDate">Date</label><input id="settingReceptionDate" type="date" /></div>
+                  <div><label for="settingReceptionTime">Time</label><input id="settingReceptionTime" type="time" /></div>
+                </div>
+                <label for="settingReceptionAddress">Address</label><input id="settingReceptionAddress" type="text" placeholder="Reception address" />
+              </div>
+              <div class="settings-section">
+                <h3>Preparation venue</h3>
+                <div class="form-grid two-col">
+                  <div><label for="settingPreparationVenue">Venue</label><input id="settingPreparationVenue" type="text" placeholder="Hotel, home, or preparation venue" /></div>
+                  <div><label for="settingPreparationDate">Date</label><input id="settingPreparationDate" type="date" /></div>
+                </div>
+                <label for="settingPreparationAddress">Address</label><input id="settingPreparationAddress" type="text" placeholder="Preparation venue address" />
+              </div>
+              <div class="settings-section entourage-settings-section">
+                <div class="entourage-settings-heading">
+                  <div>
+                    <h3>Entourage</h3>
+                    <p class="form-help">Add each entourage group separately. For groups with several people, enter one name per line or separate names with a semicolon.</p>
+                  </div>
+                </div>
+
+                <div class="entourage-admin-grid entourage-admin-grid-two">
+                  <div class="entourage-admin-group">
+                    <label for="settingParentsGroom">Parents of the Groom</label>
+                    <textarea id="settingParentsGroom" rows="2" placeholder="Leonildo D. Singson Jr.&#10;Dr. Gerlyn G. Singson"></textarea>
+                  </div>
+                  <div class="entourage-admin-group">
+                    <label for="settingParentsBride">Parents of the Bride</label>
+                    <textarea id="settingParentsBride" rows="2" placeholder="Dr. Oseas I. Diasen&#10;Fe P. Diasen"></textarea>
+                  </div>
+                </div>
+
+                <div class="entourage-admin-group entourage-admin-wide">
+                  <label for="settingPrimarySponsors">Primary Sponsors</label>
+                  <textarea id="settingPrimarySponsors" rows="5" placeholder="Enter one sponsor per line"></textarea>
+                </div>
+
+                <div class="entourage-admin-grid entourage-admin-grid-two">
+                  <div class="entourage-admin-group">
+                    <label for="settingMaidHonor">Maid of Honor</label>
+                    <textarea id="settingMaidHonor" rows="2" placeholder="Name"></textarea>
+                  </div>
+                  <div class="entourage-admin-group">
+                    <label for="settingBestMen">Best Men</label>
+                    <textarea id="settingBestMen" rows="2" placeholder="Enter one name per line"></textarea>
+                  </div>
+                </div>
+
+                <div class="entourage-admin-grid entourage-admin-grid-three">
+                  <div class="entourage-admin-group">
+                    <label for="settingVeil">Veil</label>
+                    <textarea id="settingVeil" rows="2" placeholder="Names"></textarea>
+                  </div>
+                  <div class="entourage-admin-group">
+                    <label for="settingCord">Cord</label>
+                    <textarea id="settingCord" rows="2" placeholder="Names"></textarea>
+                  </div>
+                  <div class="entourage-admin-group">
+                    <label for="settingCandle">Candle</label>
+                    <textarea id="settingCandle" rows="2" placeholder="Names"></textarea>
+                  </div>
+                </div>
+
+                <div class="entourage-admin-grid entourage-admin-grid-two">
+                  <div class="entourage-admin-group">
+                    <label for="settingGroomsmen">Groomsmen</label>
+                    <textarea id="settingGroomsmen" rows="4" placeholder="Enter one name per line"></textarea>
+                  </div>
+                  <div class="entourage-admin-group">
+                    <label for="settingBridesmaids">Bridesmaids</label>
+                    <textarea id="settingBridesmaids" rows="4" placeholder="Enter one name per line"></textarea>
+                  </div>
+                </div>
+
+                <div class="entourage-admin-grid entourage-admin-grid-three">
+                  <div class="entourage-admin-group">
+                    <label for="settingRingBearer">Ring Bearer</label>
+                    <textarea id="settingRingBearer" rows="2" placeholder="Name"></textarea>
+                  </div>
+                  <div class="entourage-admin-group">
+                    <label for="settingCoinBearer">Coin Bearer</label>
+                    <textarea id="settingCoinBearer" rows="2" placeholder="Name"></textarea>
+                  </div>
+                  <div class="entourage-admin-group">
+                    <label for="settingBibleBearer">Bible Bearer</label>
+                    <textarea id="settingBibleBearer" rows="2" placeholder="Name"></textarea>
+                  </div>
+                </div>
+
+                <div class="entourage-admin-group entourage-admin-wide entourage-admin-last">
+                  <label for="settingFlowerGirls">Flower Girls</label>
+                  <textarea id="settingFlowerGirls" rows="3" placeholder="Enter one name per line"></textarea>
+                </div>
               </div>
               <div class="settings-section">
                 <h3>Attire guide / dress motif</h3>
                 <label for="settingDressMotif">Attire guidance text</label>
-                <textarea id="settingDressMotif" rows="4" placeholder="Olive green, burgundy, warm neutrals, and soft cream accents are welcome."></textarea>
-              </div>
-              <div class="settings-section theme-settings-section">
-                <div class="card-title-row">
-                  <div>
-                    <h3>Theme colors</h3>
-                    <p class="form-help">Choose your wedding palette here. Changes preview instantly; click Save wedding details to keep them.</p>
-                  </div>
-                  <button id="resetThemeColorsBtn" class="text-btn" type="button">Restore defaults</button>
-                </div>
-                <div class="theme-color-grid">
-                  <label class="theme-color-field" for="settingThemeOlive">
-                    <span>Primary / Olive</span>
-                    <span class="color-control"><input id="settingThemeOlive" type="color" value="#5f6f3a" /><output id="settingThemeOliveHex">#5F6F3A</output></span>
-                  </label>
-                  <label class="theme-color-field" for="settingThemeBurgundy">
-                    <span>Accent / Burgundy</span>
-                    <span class="color-control"><input id="settingThemeBurgundy" type="color" value="#7b2438" /><output id="settingThemeBurgundyHex">#7B2438</output></span>
-                  </label>
-                  <label class="theme-color-field" for="settingThemeCream">
-                    <span>Background / Cream</span>
-                    <span class="color-control"><input id="settingThemeCream" type="color" value="#f5f1e7" /><output id="settingThemeCreamHex">#F5F1E7</output></span>
-                  </label>
-                  <label class="theme-color-field" for="settingThemeGold">
-                    <span>Detail / Gold</span>
-                    <span class="color-control"><input id="settingThemeGold" type="color" value="#b08d57" /><output id="settingThemeGoldHex">#B08D57</output></span>
-                  </label>
-                </div>
-                <div class="theme-preview" aria-label="Current wedding palette preview">
-                  <span data-theme-preview="olive"></span>
-                  <span data-theme-preview="burgundy"></span>
-                  <span data-theme-preview="cream"></span>
-                  <span data-theme-preview="gold"></span>
-                </div>
+                <textarea id="settingDressMotif" rows="4" placeholder="We would love our guests to wear one of our wedding motif shades: Evergreen, Sage, Pistachio, Fern, Green Tea, or Pine. Gold, champagne, cream, and neutral accents are welcome."></textarea>
               </div>
               <div class="settings-section music-settings-section">
                 <div class="card-title-row">
@@ -684,6 +828,7 @@
   <div id="toast" class="toast hidden" role="status"></div>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase-config.js"></script>
-  <script src="app-details-v15.js"></script>
+  <script src="app-details-v38.js"></script>
+  <script src="section-navigation-v27.js"></script>
 </body>
 </html>

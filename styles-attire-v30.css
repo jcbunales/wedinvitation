@@ -1,0 +1,18 @@
+/* V30 — Attire motif palette refresh */
+#dress .motif-swatches {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+/* Requested wedding motif shades */
+#dress .swatch.evergreen { background: #123c2f; }
+#dress .swatch.sage { background: #a7b89a; }
+#dress .swatch.pistachio { background: #c8d69b; }
+#dress .swatch.fern { background: #4f7942; }
+#dress .swatch.green-tea { background: #d6e4bd; }
+#dress .swatch.pine { background: #274b3d; }
+
+@media (min-width: 760px) {
+  #dress .motif-swatches {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
