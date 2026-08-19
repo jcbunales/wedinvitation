@@ -10,18 +10,15 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600;700&family=Parisienne&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
 </head>
-<body class="invitation-intro-active">
-  <div id="invitationIntro" class="invitation-intro" aria-labelledby="introCoupleNames" role="dialog" aria-modal="true">
+<body class="invitation-intro-active section-tab-mode">
+  <div id="invitationIntro" class="invitation-intro is-arriving" aria-labelledby="introCoupleNames" role="dialog" aria-modal="true">
     <div class="intro-glow" aria-hidden="true"></div>
-    <div class="intro-botanical intro-botanical-left" aria-hidden="true">❧</div>
-    <div class="intro-botanical intro-botanical-right" aria-hidden="true">❧</div>
-
     <div class="intro-stage">
       <p class="intro-kicker">You’re invited</p>
       <div id="introEnvelope" class="intro-envelope" aria-hidden="true">
         <div class="envelope-back"></div>
         <div class="intro-card-preview">
-          <span class="preview-flourish">❧</span>
+          <span class="preview-monogram" aria-hidden="true"><span id="introInitialOne">O</span><em>&amp;</em><span id="introInitialTwo">E</span></span>
           <p>Together with their families</p>
           <h1 id="introCoupleNames"><span id="introPartnerOne">Olivia</span><em>&amp;</em><span id="introPartnerTwo">Ethan</span></h1>
           <div class="preview-rule"><span>✦</span></div>
@@ -30,70 +27,26 @@
         </div>
         <div class="envelope-pocket"></div>
         <div class="envelope-flap"></div>
-        <div class="wax-seal"><span>F</span></div>
+        <div class="wax-seal"><span>OE</span></div>
       </div>
       <button id="openInvitationBtn" class="open-invitation-btn" type="button" aria-controls="invitationIntro">
         <span>Open invitation</span>
         <span class="open-arrow" aria-hidden="true">↓</span>
       </button>
-      <p class="intro-hint">Tap to open our wedding invitation</p>
+      <p class="intro-hint">Open our wedding invitation</p>
     </div>
   </div>
 
   <div class="page-shell">
-    <header class="topbar">
-      <a href="#home" class="brand" aria-label="Wedding invitation home">
-        <span class="brand-mark">F</span>
-        <span class="brand-text">Forever & Always</span>
-      </a>
-      <nav class="nav-links" aria-label="Primary navigation">
-        <a href="#details">Details</a>
-        <a href="#schedule">Schedule</a>
-        <a href="#venue">Venue</a>
-        <a href="#rsvp">RSVP</a>
-      </nav>
-      <button class="ghost-btn admin-open" type="button">Admin</button>
-    </header>
+    <button class="floating-admin-btn ghost-btn admin-open" type="button" aria-label="Open admin dashboard">
+      <span class="floating-admin-icon" aria-hidden="true">✦</span>
+      <span>Admin</span>
+    </button>
 
     <main>
-      <section id="home" class="hero-section">
+      <section id="home" class="hero-section section-panel is-active-section" aria-hidden="false">
         <div class="paper-card invitation-card">
-          <svg class="fern fern-top-left" viewBox="0 0 220 320" aria-hidden="true">
-            <g fill="none" stroke="currentColor" stroke-linecap="round">
-              <path d="M30 292 C62 210 90 126 163 30" stroke-width="3"/>
-              <path d="M55 238 C26 225 17 206 18 185"/>
-              <path d="M67 213 C39 197 34 174 38 152"/>
-              <path d="M81 184 C54 165 53 143 60 121"/>
-              <path d="M96 155 C73 138 72 117 80 98"/>
-              <path d="M112 126 C92 110 93 91 101 74"/>
-              <path d="M132 96 C116 82 118 66 127 52"/>
-              <path d="M58 234 C76 224 88 207 93 188"/>
-              <path d="M72 207 C91 197 103 179 108 159"/>
-              <path d="M87 179 C107 168 119 149 124 129"/>
-              <path d="M103 150 C123 140 135 120 140 100"/>
-              <path d="M120 121 C138 112 149 94 154 75"/>
-              <path d="M139 91 C154 83 163 69 168 52"/>
-            </g>
-          </svg>
-          <svg class="fern fern-bottom-right" viewBox="0 0 220 320" aria-hidden="true">
-            <g fill="none" stroke="currentColor" stroke-linecap="round">
-              <path d="M30 292 C62 210 90 126 163 30" stroke-width="3"/>
-              <path d="M55 238 C26 225 17 206 18 185"/>
-              <path d="M67 213 C39 197 34 174 38 152"/>
-              <path d="M81 184 C54 165 53 143 60 121"/>
-              <path d="M96 155 C73 138 72 117 80 98"/>
-              <path d="M112 126 C92 110 93 91 101 74"/>
-              <path d="M132 96 C116 82 118 66 127 52"/>
-              <path d="M58 234 C76 224 88 207 93 188"/>
-              <path d="M72 207 C91 197 103 179 108 159"/>
-              <path d="M87 179 C107 168 119 149 124 129"/>
-              <path d="M103 150 C123 140 135 120 140 100"/>
-              <path d="M120 121 C138 112 149 94 154 75"/>
-              <path d="M139 91 C154 83 163 69 168 52"/>
-            </g>
-          </svg>
-
-          <div class="invitation-copy">
+<div class="invitation-copy">
             <p class="eyebrow">Together with their families</p>
             <h1><span id="partnerOneDisplay">Olivia</span><span class="ampersand">&</span><span id="partnerTwoDisplay">Ethan</span></h1>
             <p class="invite-line">joyfully invite you to celebrate their wedding</p>
@@ -105,7 +58,7 @@
             <div class="divider"><span>✦</span></div>
             <p id="venueNameDisplay" class="venue-name">The Garden Estate</p>
             <p id="venueAddressDisplay" class="venue-address">123 Bloomfield Road, Sydney NSW</p>
-            <a href="#rsvp" class="primary-btn">Kindly RSVP</a>
+            <a href="#rsvp" class="primary-btn" data-section-target="rsvp">Kindly RSVP</a>
           </div>
         </div>
 
@@ -118,56 +71,306 @@
             <div><strong id="countSeconds">00</strong><span>Seconds</span></div>
           </div>
         </div>
+
+        <div id="sectionMenu" class="home-section-launcher" aria-label="Explore wedding invitation">
+          <div class="home-launcher-heading">
+            <span class="home-launcher-rule" aria-hidden="true"></span>
+            <div>
+              <p class="section-kicker">Explore our day</p>
+              <h2>Wedding invitation</h2>
+              <p>Tap a card to open each part of our invitation.</p>
+            </div>
+            <span class="home-launcher-rule" aria-hidden="true"></span>
+          </div>
+          <div class="home-launcher-grid">
+            <a href="#details" data-section-target="details" class="home-launcher-card">
+              <span class="home-launcher-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="7.2"/><path d="M12 7.1c1.7 1.7 3.2 2.4 4.5 2.3-.2 2.5-1.5 5.2-4.5 7.5-3-2.3-4.3-5-4.5-7.5 1.3.1 2.8-.6 4.5-2.3Z"/><path d="M12 4.1v2M12 17.1v2M5.9 12h-2M20.1 12h-2"/></svg></span>
+              <strong>Details</strong><small>Important information for our special day</small>
+            </a>
+            <a href="#schedule" data-section-target="schedule" class="home-launcher-card">
+              <span class="home-launcher-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="7.5"/><path d="M12 7.7V12l3.1 1.9"/><path d="M8.6 3.9h6.8M12 2.5v2"/><path d="M7.2 17.6 5.8 19M16.8 17.6l1.4 1.4"/></svg></span>
+              <strong>Schedule</strong><small>A timeline of events for the celebration</small>
+            </a>
+            <a href="#entourage" data-section-target="entourage" class="home-launcher-card">
+              <span class="home-launcher-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="8.3" cy="9" r="2.3"/><circle cx="15.7" cy="9" r="2.3"/><circle cx="12" cy="6.5" r="2.5"/><path d="M3.8 18.5c.4-2.8 2-4.4 4.5-4.4 1.3 0 2.4.4 3.1 1.2"/><path d="M20.2 18.5c-.4-2.8-2-4.4-4.5-4.4-1.3 0-2.4.4-3.1 1.2"/><path d="M7.4 18.7c.4-3.5 2.1-5.3 4.6-5.3s4.2 1.8 4.6 5.3"/></svg></span>
+              <strong>Entourage</strong><small>Meet the wonderful people walking with us</small>
+            </a>
+            <a href="#dress" data-section-target="dress" class="home-launcher-card">
+              <span class="home-launcher-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5.2a2.1 2.1 0 0 0-2.1-2.1c-1.1 0-2 .8-2 1.8"/><path d="M12 5.2 4.8 10.5h14.4L12 5.2Z"/><path d="M6.2 10.5h11.6"/><path d="M8.1 13.1c1.2 1 2.5 1.5 3.9 1.5s2.7-.5 3.9-1.5"/><path d="M7.2 18.8h9.6"/></svg></span>
+              <strong>Attire</strong><small>Dress code and style inspiration</small>
+            </a>
+            <a href="#venue" data-section-target="venue" class="home-launcher-card">
+              <span class="home-launcher-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19h14M6.5 19V10.5h11V19"/><path d="M5.5 10.5 12 5l6.5 5.5"/><path d="M9 19v-4.2h6V19"/><path d="M10 10.5V8.2h4v2.3M12 5V2.8M10.8 4h2.4"/></svg></span>
+              <strong>Venue</strong><small>Location details and directions</small>
+            </a>
+            <a href="#rsvp" data-section-target="rsvp" class="home-launcher-card home-launcher-card-accent">
+              <span class="home-launcher-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6.5h16v12H4z"/><path d="m4 7 8 6 8-6"/><path d="m8.3 17.2 2.1 2.1 5.1-5.1"/></svg></span>
+              <strong>RSVP</strong><small>Kindly respond to our invitation</small>
+            </a>
+          </div>
+        </div>
       </section>
 
-      <section id="details" class="content-section split-section">
-        <div>
-          <p class="section-kicker">Our celebration</p>
-          <h2>A day surrounded by the people we love.</h2>
+      <section id="details" class="content-section split-section section-panel" hidden aria-hidden="true">
+        <div class="section-return-wrap">
+          <a href="#home" data-section-target="home" data-return-menu="true" class="section-return-link">
+            <span aria-hidden="true">←</span> Back to menu
+          </a>
         </div>
-        <div class="body-copy">
-          <p id="welcomeMessageDisplay">We are so excited to celebrate this chapter with you. Join us for a garden ceremony, dinner, drinks, dancing, and a night to remember.</p>
-          <p class="small-note">Please submit one RSVP per invited household. If your invitation includes a guest, you can confirm their attendance in the form below.</p>
+
+        <div class="details-stationery section-float-panel float-delay-0">
+          <div class="details-logo-wrap" aria-label="Couple initials">
+            <div class="details-monogram details-monogram-v3">
+              <span id="detailsInitialOne">O</span>
+              <em>&amp;</em>
+              <span id="detailsInitialTwo">E</span>
+            </div>
+            <span class="details-logo-caption">Classic invitation</span>
+          </div>
+
+          <div class="details-stationery-copy">
+            <div class="details-heading-copy">
+              <p class="section-kicker">Wedding invitation</p>
+              <h2>The pleasure of your company</h2>
+              <div class="details-ornament" aria-hidden="true"><span>✦</span></div>
+            </div>
+
+            <div class="details-content-grid">
+              <div class="details-welcome-copy">
+                <span class="details-mini-label">A note from us</span>
+                <p id="welcomeMessageDisplay">We are so excited to celebrate this chapter with you. Join us for a garden ceremony, dinner, drinks, dancing, and a night to remember.</p>
+              </div>
+
+              <aside class="details-rsvp-note">
+                <span class="details-mini-label">Kindly respond</span>
+                <p><strong>One RSVP per household.</strong> If your invitation includes a guest, you can confirm their attendance in the RSVP form.</p>
+              </aside>
+            </div>
+
+          </div>
         </div>
       </section>
 
-      <section id="schedule" class="content-section muted-section">
+      <section id="schedule" class="content-section muted-section section-panel" hidden aria-hidden="true">
+        <div class="section-return-wrap">
+          <a href="#home" data-section-target="home" data-return-menu="true" class="section-return-link">
+            <span aria-hidden="true">←</span> Back to menu
+          </a>
+        </div>
         <div class="section-heading centered">
           <p class="section-kicker">Order of the day</p>
           <h2>Wedding schedule</h2>
         </div>
-        <div id="scheduleCards" class="schedule-grid"></div>
+        <div id="scheduleCards" class="schedule-grid section-float-panel float-delay-1"></div>
       </section>
 
-      <section id="venue" class="content-section venue-section">
-        <div class="venue-card">
-          <div>
-            <p class="section-kicker">Where to find us</p>
-            <h2 id="venueHeadingDisplay">The Garden Estate</h2>
-            <p id="venueFullAddressDisplay">123 Bloomfield Road, Sydney NSW</p>
-            <p id="venueNotesDisplay">Complimentary parking is available on site. Please arrive 20–30 minutes before the ceremony begins.</p>
-            <a id="mapLinkDisplay" class="primary-btn" href="https://maps.google.com" target="_blank" rel="noreferrer">Open in Maps</a>
+      <section id="entourage" class="content-section entourage-section section-panel" hidden aria-hidden="true">
+        <div class="section-return-wrap">
+          <a href="#home" data-section-target="home" data-return-menu="true" class="section-return-link">
+            <span aria-hidden="true">←</span> Back to menu
+          </a>
+        </div>
+        <div class="entourage-program section-float-panel float-delay-2">
+          <div class="entourage-program-ornament entourage-program-ornament-left" aria-hidden="true">❦</div>
+          <div class="entourage-program-ornament entourage-program-ornament-right" aria-hidden="true">❦</div>
+          <div class="section-heading centered entourage-program-heading">
+            <p class="section-kicker">With love, we present our</p>
+            <h2>Entourage</h2>
+            <p class="section-intro">The family and friends who will stand beside us as we begin this new chapter.</p>
           </div>
-          <div class="map-art" aria-label="Decorative venue map">
-            <div class="map-road road-a"></div>
-            <div class="map-road road-b"></div>
-            <div class="map-road road-c"></div>
-            <div class="map-lake"></div>
-            <div class="map-pin"><span>♥</span></div>
-            <span class="map-label">Ceremony</span>
+          <div id="entourageGrid" class="entourage-grid"></div>
+        </div>
+      </section>
+
+      <section id="dress" class="content-section dress-section section-panel" hidden aria-hidden="true">
+        <div class="section-return-wrap">
+          <a href="#home" data-section-target="home" data-return-menu="true" class="section-return-link">
+            <span aria-hidden="true">←</span> Back to menu
+          </a>
+        </div>
+        <div class="dress-card section-float-panel float-delay-3">
+          <div class="dress-copy">
+            <p class="section-kicker">Dress code</p>
+            <h2>Wedding motif</h2>
+            <p id="dressMotifMessage">We would love our guests to wear one of our wedding motif shades: Evergreen, Sage, Pistachio, Fern, Green Tea, or Pine. Gold, champagne, cream, and neutral accents are welcome.</p>
+            <div class="motif-swatches" aria-label="Wedding motif colours">
+              <p class="motif-label">Our colour palette</p>
+              <div class="motif-swatch"><span class="swatch evergreen"></span><strong>Evergreen</strong></div>
+              <div class="motif-swatch"><span class="swatch sage"></span><strong>Sage</strong></div>
+              <div class="motif-swatch"><span class="swatch pistachio"></span><strong>Pistachio</strong></div>
+              <div class="motif-swatch"><span class="swatch fern-green"></span><strong>Fern</strong></div>
+              <div class="motif-swatch"><span class="swatch green-tea"></span><strong>Green Tea</strong></div>
+              <div class="motif-swatch"><span class="swatch pine"></span><strong>Pine</strong></div>
+            </div>
+            <div class="attire-guide-grid">
+              <article class="attire-guide-card">
+                <span class="attire-pill">Ladies</span>
+                <h3>Midi dress</h3>
+                <p>Elegant midi dresses in any of our wedding motif shades.</p>
+              </article>
+              <article class="attire-guide-card">
+                <span class="attire-pill">Gentlemen</span>
+                <h3>Semi-formal</h3>
+                <p>Collared shirts, tailored trousers or chinos, and optional blazers in complementary greens and neutrals.</p>
+              </article>
+            </div>
+            <p class="dress-note"><strong>Gentle note:</strong> Please avoid an all-white or bridal-white outfit.</p>
+          </div>
+          <div class="dress-art">
+            <div class="dress-visual-card">
+              <div class="dress-illustration-frame">
+                <img src="assets/attire-guide.png" alt="Wedding attire inspiration with women in green midi dresses and men in coordinated semi-formal green and neutral outfits" />
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      <section id="rsvp" class="content-section rsvp-section">
-        <div class="section-heading centered">
+      <section id="venue" class="content-section venue-section section-panel" hidden aria-hidden="true">
+        <div class="section-return-wrap">
+          <a href="#home" data-section-target="home" data-return-menu="true" class="section-return-link">
+            <span aria-hidden="true">←</span> Back to menu
+          </a>
+        </div>
+        <div class="section-heading centered venue-heading">
+          <p class="section-kicker">Where to find us</p>
+          <h2>Venue locations</h2>
+          <p class="section-intro">Choose a location below for the wedding ceremony, reception, or preparation venue.</p>
+        </div>
+
+        <div class="venue-location-tabs" role="tablist" aria-label="Wedding venue locations">
+          <button id="venueTabWedding" class="venue-location-tab is-active" type="button" role="tab" aria-selected="true" aria-controls="venuePanelWedding" data-venue-tab="wedding">
+            <span class="venue-tab-copy">
+              <span class="venue-tab-label">Wedding Location</span>
+              <span class="venue-tab-note">Ceremony venue</span>
+            </span>
+            <span class="venue-tab-mark" aria-hidden="true">✦</span>
+          </button>
+          <button id="venueTabReception" class="venue-location-tab" type="button" role="tab" aria-selected="false" aria-controls="venuePanelReception" data-venue-tab="reception" tabindex="-1">
+            <span class="venue-tab-copy">
+              <span class="venue-tab-label">Reception</span>
+              <span class="venue-tab-note">Celebration venue</span>
+            </span>
+            <span class="venue-tab-mark" aria-hidden="true">✦</span>
+          </button>
+          <button id="venueTabPreparation" class="venue-location-tab" type="button" role="tab" aria-selected="false" aria-controls="venuePanelPreparation" data-venue-tab="preparation" tabindex="-1">
+            <span class="venue-tab-copy">
+              <span class="venue-tab-label">Preparation Venue</span>
+              <span class="venue-tab-note">Getting ready</span>
+            </span>
+            <span class="venue-tab-mark" aria-hidden="true">✦</span>
+          </button>
+        </div>
+
+        <div class="venue-shell section-float-panel float-delay-4">
+          <div id="venuePanelWedding" class="venue-location-panel is-active" role="tabpanel" aria-labelledby="venueTabWedding" data-venue-panel="wedding">
+            <div class="venue-card venue-card-polished">
+              <div class="venue-copy-panel">
+                <span class="venue-badge">Wedding location</span>
+                <h3 id="venueHeadingDisplay">The Garden Estate</h3>
+                <p id="venueFullAddressDisplay" class="venue-address-line">123 Bloomfield Road, Sydney NSW</p>
+
+                <div class="venue-meta-list">
+                  <div class="venue-meta-item">
+                    <span class="venue-meta-label">Arrival</span>
+                    <strong>Please arrive 20–30 minutes early</strong>
+                  </div>
+                  <div class="venue-meta-item">
+                    <span class="venue-meta-label">Guest note</span>
+                    <p id="venueNotesDisplay">Complimentary parking is available on site. Please arrive 20–30 minutes before the ceremony begins.</p>
+                  </div>
+                </div>
+
+                <div class="venue-actions">
+                  <a id="mapLinkDisplay" class="primary-btn" href="https://maps.google.com" target="_blank" rel="noreferrer">Open in Maps</a>
+                  <span class="venue-helper">Use your preferred maps app for directions on the day.</span>
+                </div>
+              </div>
+
+              <div class="venue-image-panel">
+                <div class="venue-image-card">
+                  <img src="assets/church-venue-sketch.png" alt="Vintage sketch of the wedding ceremony venue" class="venue-image" />
+                  <div class="venue-image-caption venue-image-caption-translucent">
+                    <span class="venue-image-kicker">Ceremony venue</span>
+                    <strong>Wedding location</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div id="venuePanelReception" class="venue-location-panel" role="tabpanel" aria-labelledby="venueTabReception" data-venue-panel="reception" hidden>
+            <article class="venue-detail-card venue-detail-card-reception">
+              <div class="venue-detail-ornament" aria-hidden="true">✦</div>
+              <p class="venue-detail-eyebrow">After the ceremony</p>
+              <h3>Reception</h3>
+              <dl class="venue-detail-list">
+                <div class="venue-detail-row">
+                  <dt>Date</dt>
+                  <dd id="receptionDateDisplay">To be announced</dd>
+                </div>
+                <div class="venue-detail-row">
+                  <dt>Time</dt>
+                  <dd id="receptionTimeDisplay">To be announced</dd>
+                </div>
+                <div class="venue-detail-row venue-detail-row-wide">
+                  <dt>Address</dt>
+                  <dd id="receptionAddressDisplay">To be announced</dd>
+                </div>
+              </dl>
+              <div class="venue-actions venue-detail-actions">
+                <a id="receptionMapLinkDisplay" class="primary-btn" href="https://maps.google.com" target="_blank" rel="noreferrer">Open in Maps</a>
+                <span class="venue-helper">Directions are generated from the reception address.</span>
+              </div>
+            </article>
+          </div>
+
+          <div id="venuePanelPreparation" class="venue-location-panel" role="tabpanel" aria-labelledby="venueTabPreparation" data-venue-panel="preparation" hidden>
+            <article class="venue-detail-card venue-detail-card-preparation">
+              <div class="venue-detail-ornament" aria-hidden="true">✦</div>
+              <p class="venue-detail-eyebrow">Before the celebration</p>
+              <h3>Preparation Venue</h3>
+              <dl class="venue-detail-list">
+                <div class="venue-detail-row">
+                  <dt>Venue</dt>
+                  <dd id="preparationVenueDisplay">To be announced</dd>
+                </div>
+                <div class="venue-detail-row">
+                  <dt>Date</dt>
+                  <dd id="preparationDateDisplay">To be announced</dd>
+                </div>
+                <div class="venue-detail-row venue-detail-row-wide">
+                  <dt>Address</dt>
+                  <dd id="preparationAddressDisplay">To be announced</dd>
+                </div>
+              </dl>
+              <div class="venue-actions venue-detail-actions">
+                <a id="preparationMapLinkDisplay" class="primary-btn" href="https://maps.google.com" target="_blank" rel="noreferrer">Open in Maps</a>
+                <span class="venue-helper">Directions are generated from the preparation venue address.</span>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="rsvp" class="content-section rsvp-section section-panel" hidden aria-hidden="true">
+        <div class="section-return-wrap">
+          <a href="#home" data-section-target="home" data-return-menu="true" class="section-return-link">
+            <span aria-hidden="true">←</span> Back to menu
+          </a>
+        </div>
+        <div class="section-heading centered rsvp-heading">
+          <div class="rsvp-heading-medallion" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M4 6.5h16v12H4z"/><path d="m4 7 8 6 8-6"/><path d="M8.3 17.2 10.4 19l5.2-5.1"/></svg>
+          </div>
           <p class="section-kicker">Please reply</p>
           <h2>RSVP</h2>
+          <div class="rsvp-heading-rule" aria-hidden="true"><span>✦</span></div>
           <p id="rsvpDeadlineDisplay">Kindly respond by 1 July 2026.</p>
         </div>
 
-        <div class="rsvp-layout">
-          <form id="rsvpForm" class="form-card">
+        <div class="rsvp-layout rsvp-stationery-layout section-float-panel float-delay-5">
+          <form id="rsvpForm" class="form-card rsvp-invitation-form">
             <div id="rsvpLookupStep">
               <label for="guestLookup">Your name or email</label>
               <div class="lookup-row">
@@ -236,8 +439,9 @@
             </div>
           </form>
 
-          <aside class="rsvp-note">
-            <span class="botanical-icon">❧</span>
+          <aside class="rsvp-note rsvp-companion-card">
+            <div class="rsvp-note-seal" aria-hidden="true"><span>R</span></div>
+            <p class="rsvp-note-kicker">Your response</p>
             <h3>Need to update your response?</h3>
             <p>Search your invitation again using the same name or email. Your latest response will replace the previous one.</p>
             <div class="mini-stats">
@@ -253,6 +457,28 @@
       <span id="footerCouple">Olivia & Ethan</span>
       <span>Made with love · <span id="footerYear">2026</span></span>
     </footer>
+  </div>
+
+  <div id="musicPlayer" class="music-player hidden" aria-label="Background music player">
+    <button id="musicToggleBtn" class="vinyl-button" type="button" aria-label="Play background music" aria-pressed="false">
+      <span class="vinyl-disc" aria-hidden="true">
+        <span class="vinyl-groove vinyl-groove-one"></span>
+        <span class="vinyl-groove vinyl-groove-two"></span>
+        <span class="vinyl-groove vinyl-groove-three"></span>
+        <span class="vinyl-sheen"></span>
+        <span class="vinyl-spin-marker"></span>
+        <span class="vinyl-label"><span class="vinyl-spindle"></span></span>
+      </span>
+      <span class="vinyl-control-icon" aria-hidden="true">
+        <span class="vinyl-play-icon"></span>
+        <span class="vinyl-pause-icon"><i></i><i></i></span>
+      </span>
+    </button>
+    <div class="music-player-copy">
+      <span id="musicPlayerStatus">Wedding music</span>
+      <strong id="musicTitleDisplay">Our Wedding Song</strong>
+    </div>
+    <audio id="weddingAudio" preload="metadata" loop></audio>
   </div>
 
   <div id="adminModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="adminTitle">
@@ -283,7 +509,6 @@
       <div id="adminDashboard" class="admin-dashboard hidden">
         <aside class="admin-sidebar">
           <div class="admin-brand">
-            <div class="brand-mark">F</div>
             <div><strong>Wedding Admin</strong><span id="adminCoupleName">Olivia & Ethan</span></div>
           </div>
           <nav id="adminNav">
@@ -346,9 +571,16 @@
           </div>
 
           <div id="adminTab-guests" class="admin-tab">
-            <div class="admin-title-row">
+            <div class="admin-title-row guest-list-title-row">
               <div><p class="section-kicker">Invitations</p><h2>Guest list</h2></div>
-              <button id="addGuestBtn" class="primary-btn" type="button">+ Add guest</button>
+              <div class="admin-title-actions">
+                <button id="downloadGuestCsvTemplateBtn" class="ghost-btn" type="button">CSV template</button>
+                <label class="ghost-btn guest-csv-import" for="importGuestCsvInput">
+                  <span>Import CSV</span>
+                  <input id="importGuestCsvInput" type="file" accept=".csv,text/csv,application/csv" />
+                </label>
+                <button id="addGuestBtn" class="primary-btn" type="button">+ Add guest</button>
+              </div>
             </div>
             <div class="toolbar">
               <input id="guestSearch" type="search" placeholder="Search guests…" />
@@ -359,6 +591,7 @@
                 <option value="Declined">Declined</option>
               </select>
             </div>
+            <p id="guestCsvImportStatus" class="guest-import-status form-help" aria-live="polite">Import a CSV to add guests in bulk. Existing guests are matched by email first, then exact household name.</p>
             <div class="table-wrap">
               <table>
                 <thead><tr><th>Guest / household</th><th>Contact</th><th>Invited</th><th>Status</th><th>Attending</th><th></th></tr></thead>
@@ -397,7 +630,7 @@
                 </div>
               </div>
               <div class="settings-section">
-                <h3>Venue</h3>
+                <h3>Ceremony venue</h3>
                 <div class="form-grid two-col">
                   <div><label for="settingVenueName">Venue name</label><input id="settingVenueName" required /></div>
                   <div><label for="settingVenueAddress">Address</label><input id="settingVenueAddress" required /></div>
@@ -405,6 +638,134 @@
                 <label for="settingMapLink">Google Maps link</label><input id="settingMapLink" type="url" />
                 <label for="settingVenueNotes">Guest notes</label><textarea id="settingVenueNotes" rows="3"></textarea>
               </div>
+              <div class="settings-section">
+                <h3>Reception</h3>
+                <div class="form-grid two-col">
+                  <div><label for="settingReceptionDate">Date</label><input id="settingReceptionDate" type="date" /></div>
+                  <div><label for="settingReceptionTime">Time</label><input id="settingReceptionTime" type="time" /></div>
+                </div>
+                <label for="settingReceptionAddress">Address</label><input id="settingReceptionAddress" type="text" placeholder="Reception address" />
+              </div>
+              <div class="settings-section">
+                <h3>Preparation venue</h3>
+                <div class="form-grid two-col">
+                  <div><label for="settingPreparationVenue">Venue</label><input id="settingPreparationVenue" type="text" placeholder="Hotel, home, or preparation venue" /></div>
+                  <div><label for="settingPreparationDate">Date</label><input id="settingPreparationDate" type="date" /></div>
+                </div>
+                <label for="settingPreparationAddress">Address</label><input id="settingPreparationAddress" type="text" placeholder="Preparation venue address" />
+              </div>
+              <div class="settings-section entourage-settings-section">
+                <div class="entourage-settings-heading">
+                  <div>
+                    <h3>Entourage</h3>
+                    <p class="form-help">Add each entourage group separately. For groups with several people, enter one name per line or separate names with a semicolon.</p>
+                  </div>
+                </div>
+
+                <div class="entourage-admin-grid entourage-admin-grid-two">
+                  <div class="entourage-admin-group">
+                    <label for="settingParentsGroom">Parents of the Groom</label>
+                    <textarea id="settingParentsGroom" rows="2" placeholder="Leonildo D. Singson Jr.&#10;Dr. Gerlyn G. Singson"></textarea>
+                  </div>
+                  <div class="entourage-admin-group">
+                    <label for="settingParentsBride">Parents of the Bride</label>
+                    <textarea id="settingParentsBride" rows="2" placeholder="Dr. Oseas I. Diasen&#10;Fe P. Diasen"></textarea>
+                  </div>
+                </div>
+
+                <div class="entourage-admin-group entourage-admin-wide">
+                  <label for="settingPrimarySponsors">Primary Sponsors</label>
+                  <textarea id="settingPrimarySponsors" rows="5" placeholder="Enter one sponsor per line"></textarea>
+                </div>
+
+                <div class="entourage-admin-grid entourage-admin-grid-two">
+                  <div class="entourage-admin-group">
+                    <label for="settingMaidHonor">Maid of Honor</label>
+                    <textarea id="settingMaidHonor" rows="2" placeholder="Name"></textarea>
+                  </div>
+                  <div class="entourage-admin-group">
+                    <label for="settingBestMen">Best Men</label>
+                    <textarea id="settingBestMen" rows="2" placeholder="Enter one name per line"></textarea>
+                  </div>
+                </div>
+
+                <div class="entourage-admin-grid entourage-admin-grid-three">
+                  <div class="entourage-admin-group">
+                    <label for="settingVeil">Veil</label>
+                    <textarea id="settingVeil" rows="2" placeholder="Names"></textarea>
+                  </div>
+                  <div class="entourage-admin-group">
+                    <label for="settingCord">Cord</label>
+                    <textarea id="settingCord" rows="2" placeholder="Names"></textarea>
+                  </div>
+                  <div class="entourage-admin-group">
+                    <label for="settingCandle">Candle</label>
+                    <textarea id="settingCandle" rows="2" placeholder="Names"></textarea>
+                  </div>
+                </div>
+
+                <div class="entourage-admin-grid entourage-admin-grid-two">
+                  <div class="entourage-admin-group">
+                    <label for="settingGroomsmen">Groomsmen</label>
+                    <textarea id="settingGroomsmen" rows="4" placeholder="Enter one name per line"></textarea>
+                  </div>
+                  <div class="entourage-admin-group">
+                    <label for="settingBridesmaids">Bridesmaids</label>
+                    <textarea id="settingBridesmaids" rows="4" placeholder="Enter one name per line"></textarea>
+                  </div>
+                </div>
+
+                <div class="entourage-admin-grid entourage-admin-grid-three">
+                  <div class="entourage-admin-group">
+                    <label for="settingRingBearer">Ring Bearer</label>
+                    <textarea id="settingRingBearer" rows="2" placeholder="Name"></textarea>
+                  </div>
+                  <div class="entourage-admin-group">
+                    <label for="settingCoinBearer">Coin Bearer</label>
+                    <textarea id="settingCoinBearer" rows="2" placeholder="Name"></textarea>
+                  </div>
+                  <div class="entourage-admin-group">
+                    <label for="settingBibleBearer">Bible Bearer</label>
+                    <textarea id="settingBibleBearer" rows="2" placeholder="Name"></textarea>
+                  </div>
+                </div>
+
+                <div class="entourage-admin-group entourage-admin-wide entourage-admin-last">
+                  <label for="settingFlowerGirls">Flower Girls</label>
+                  <textarea id="settingFlowerGirls" rows="3" placeholder="Enter one name per line"></textarea>
+                </div>
+              </div>
+              <div class="settings-section">
+                <h3>Attire guide / dress motif</h3>
+                <label for="settingDressMotif">Attire guidance text</label>
+                <textarea id="settingDressMotif" rows="4" placeholder="We would love our guests to wear one of our wedding motif shades: Evergreen, Sage, Pistachio, Fern, Green Tea, or Pine. Gold, champagne, cream, and neutral accents are welcome."></textarea>
+              </div>
+              <div class="settings-section music-settings-section">
+                <div class="card-title-row">
+                  <div>
+                    <h3>Background music</h3>
+                    <p class="form-help">Upload a wedding song and show a vinyl player in the lower-right corner of the invitation.</p>
+                  </div>
+                  <label class="music-enabled-toggle"><input id="settingMusicEnabled" type="checkbox" /><span>Enabled</span></label>
+                </div>
+                <div class="form-grid two-col music-admin-grid">
+                  <div>
+                    <label for="settingMusicTitle">Track title</label>
+                    <input id="settingMusicTitle" type="text" placeholder="Our Wedding Song" />
+                  </div>
+                  <div>
+                    <label for="settingMusicFile">Audio file</label>
+                    <input id="settingMusicFile" type="file" accept="audio/*,.mp3,.m4a,.wav,.ogg" />
+                  </div>
+                </div>
+                <div class="music-upload-row">
+                  <button id="uploadMusicBtn" class="primary-btn compact" type="button">Upload music</button>
+                  <button id="removeMusicBtn" class="ghost-btn" type="button">Remove track</button>
+                  <span id="musicUploadStatus" class="form-help">No music uploaded yet.</span>
+                </div>
+                <p class="form-help">Supabase mode stores the audio in the public <code>wedding-media</code> bucket. Local mode stores the file in this browser only.</p>
+              </div>
+
               <div class="settings-section">
                 <div class="card-title-row"><h3>Schedule</h3><button id="addScheduleItemBtn" class="text-btn" type="button">+ Add item</button></div>
                 <div id="scheduleEditor"></div>
@@ -462,5 +823,6 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase-config.js"></script>
   <script src="app.js"></script>
+  <script src="navigation.js"></script>
 </body>
 </html>
