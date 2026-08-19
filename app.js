@@ -16,6 +16,14 @@ const defaultState = {
       preparation: { venue: "", address: "", date: "" }
     },
     welcomeMessage: "We are so excited to celebrate this chapter with you. Join us for a garden ceremony, dinner, drinks, dancing, and a night to remember.",
+    giftGuide: "Your presence is the greatest gift of all. Should you wish to bless us with a gift, a contribution toward our future together would be warmly appreciated.",
+    faqs: [
+      { question: "What time should I arrive?", answer: "Please arrive 20–30 minutes before the ceremony so everyone can be comfortably seated before we begin." },
+      { question: "Can I bring a plus one?", answer: "Please refer to the names listed on your invitation and RSVP. If a plus one is included, you will be able to confirm them when responding." },
+      { question: "What should I wear?", answer: "Please visit the Attire section for our dress code and wedding motif colours." },
+      { question: "Is parking available?", answer: "Please check the Venue section for the latest location, parking, and arrival information." },
+      { question: "When should I RSVP?", answer: "Kindly submit your response by the RSVP deadline shown on the invitation." }
+    ],
     passcode: "wedding2026",
     entourage: [
       { role: "Parents of the Bride", names: ["Maria & Antonio Santos"] },
@@ -172,6 +180,8 @@ function weddingToRow(wedding) {
     venue_notes: wedding.venueNotes || "",
     event_details: wedding.eventDetails || clone(defaultState.wedding.eventDetails),
     welcome_message: wedding.welcomeMessage || "",
+    gift_guide: wedding.giftGuide || "",
+    faqs: Array.isArray(wedding.faqs) ? wedding.faqs : [],
     // Keep the legacy JSON in sync for older deployments, while V35 stores
     // each entourage category in its own Supabase text[] column.
     entourage: Array.isArray(wedding.entourage) ? wedding.entourage : [],
@@ -208,6 +218,12 @@ function rowToWedding(row) {
       }
     },
     welcomeMessage: row.welcome_message ?? "",
+    giftGuide: row.gift_guide ?? defaultState.wedding.giftGuide,
+    faqs: Array.isArray(row.faqs) && row.faqs.length
+      ? row.faqs
+          .map(item => ({ question: String(item?.question || "").trim(), answer: String(item?.answer || "").trim() }))
+          .filter(item => item.question && item.answer)
+      : clone(defaultState.wedding.faqs),
     entourage: (() => {
       const separated = rowHasSeparateEntourageColumns(row) ? entourageFromSeparateColumns(row) : [];
       if (separated.length) return separated;
@@ -702,6 +718,7 @@ function renderPublic() {
   // remain available even if an optional decorative element elsewhere changes.
   renderScheduleCards();
   renderEntourage();
+  renderFaqs();
 
   const date = new Date(`${w.weddingDate}T00:00:00`);
   byId("partnerOneDisplay").textContent = w.partnerOne;
@@ -712,6 +729,8 @@ function renderPublic() {
   byId("venueNameDisplay").textContent = w.venueName;
   byId("venueAddressDisplay").textContent = w.venueAddress;
   byId("welcomeMessageDisplay").textContent = w.welcomeMessage;
+  const giftGuideDisplay = byId("giftGuideDisplay");
+  if (giftGuideDisplay) giftGuideDisplay.textContent = w.giftGuide || defaultState.wedding.giftGuide;
   byId("venueHeadingDisplay").textContent = w.venueName;
   byId("venueFullAddressDisplay").textContent = w.venueAddress;
   byId("venueNotesDisplay").textContent = w.venueNotes;
@@ -840,6 +859,16 @@ function buildEntourageAdminItem(role, fieldId) {
   return names.length ? { role, names } : null;
 }
 
+function entouragePublicRoleLabel(item) {
+  const slug = entourageRoleSlug(item?.role);
+  const symbolicLabels = {
+    candle: "To light our path",
+    veil: "To clothe us as one",
+    cord: "To bind us together in unity"
+  };
+  return symbolicLabels[slug] || item?.role || "Entourage";
+}
+
 function renderEntourageGroup(item, extraClass = "") {
   if (!item) return "";
   const names = normaliseEntourageNames(item.names);
@@ -847,10 +876,11 @@ function renderEntourageGroup(item, extraClass = "") {
 
   const roleClass = entourageRoleClass(item.role);
   const roleSlug = entourageRoleSlug(item.role);
+  const publicRole = entouragePublicRoleLabel(item);
   return `
     <article class="entourage-group ${roleClass} role-${roleSlug} ${extraClass}">
       <div class="entourage-group-heading">
-        <p>${escapeHtml(item.role || "Entourage")}</p>
+        <p>${escapeHtml(publicRole)}</p>
       </div>
       <div class="entourage-members">
         ${names.map(name => `
@@ -925,16 +955,18 @@ function renderEntourage() {
 
   const parentsRow = row("entourage-parents-row", [get("parents-groom"), get("parents-bride")]);
   const primarySponsors = renderPrimarySponsors(get("primary-sponsor"));
-  const honourRow = row("entourage-honour-row", [get("maid-of-honor"), get("best-men"), get("matron-of-honor")]);
 
   const symbolicGroups = [get("candle"), get("veil"), get("cord")].filter(Boolean);
   const symbolicRow = symbolicGroups.length
     ? `<div class="entourage-subsection entourage-symbolic-subsection">
+        <h3 class="entourage-secondary-heading">Secondary Sponsor</h3>
         <div class="entourage-layout-row entourage-symbolic-row">
           ${symbolicGroups.map(group => renderEntourageGroup(group)).join("")}
         </div>
       </div>`
     : "";
+
+  const honourRow = row("entourage-honour-row", [get("maid-of-honor"), get("best-men"), get("matron-of-honor")]);
 
   const attendantGroups = [get("groomsmen"), get("bridesmaids")].filter(Boolean);
   const attendantsRow = attendantGroups.length
@@ -957,8 +989,8 @@ function renderEntourage() {
   const layoutMarkup = [
     parentsRow,
     primarySponsors ? `<div class="entourage-primary-row">${primarySponsors}</div>` : "",
-    honourRow,
     symbolicRow,
+    honourRow,
     attendantsRow,
     bearersRow,
     flowerRow,
@@ -966,6 +998,53 @@ function renderEntourage() {
   ].filter(Boolean).join("");
 
   container.innerHTML = layoutMarkup || `<p class="empty-entourage">Entourage details will be announced soon.</p>`;
+}
+
+function normaliseFaqs(items) {
+  return (Array.isArray(items) ? items : [])
+    .map(item => ({
+      question: String(item?.question || "").trim(),
+      answer: String(item?.answer || "").trim()
+    }))
+    .filter(item => item.question && item.answer);
+}
+
+function renderFaqs() {
+  const container = byId("faqList");
+  if (!container) return;
+
+  const items = normaliseFaqs(state.wedding.faqs);
+  const faqs = items.length ? items : clone(defaultState.wedding.faqs);
+  container.innerHTML = faqs.map((item, index) => `
+    <details class="faq-item" ${index === 0 ? "open" : ""}>
+      <summary>
+        <span>${escapeHtml(item.question)}</span>
+        <span class="faq-toggle" aria-hidden="true">+</span>
+      </summary>
+      <div class="faq-answer"><p>${escapeHtml(item.answer)}</p></div>
+    </details>
+  `).join("");
+}
+
+function faqsToAdminText(items) {
+  return normaliseFaqs(items)
+    .map(item => `${item.question} | ${item.answer}`)
+    .join("\n");
+}
+
+function parseFaqsAdminText(value) {
+  return String(value || "")
+    .split(/\r?\n/)
+    .map(line => line.trim())
+    .filter(Boolean)
+    .map(line => {
+      const separatorIndex = line.indexOf("|");
+      if (separatorIndex < 0) return null;
+      const question = line.slice(0, separatorIndex).trim();
+      const answer = line.slice(separatorIndex + 1).trim();
+      return question && answer ? { question, answer } : null;
+    })
+    .filter(Boolean);
 }
 
 function renderScheduleCards() {
@@ -1344,6 +1423,8 @@ function populateSettingsForm() {
   byId("settingPartnerOne").value = w.partnerOne;
   byId("settingPartnerTwo").value = w.partnerTwo;
   byId("settingWelcome").value = w.welcomeMessage;
+  byId("settingGiftGuide").value = w.giftGuide || defaultState.wedding.giftGuide;
+  byId("settingFaqs").value = faqsToAdminText(w.faqs?.length ? w.faqs : defaultState.wedding.faqs);
   byId("settingWeddingDate").value = w.weddingDate;
   byId("settingWeddingTime").value = w.weddingTime;
   byId("settingRsvpDeadline").value = w.rsvpDeadline;
@@ -1461,6 +1542,8 @@ byId("weddingDetailsForm").addEventListener("submit", async e => {
     partnerOne: byId("settingPartnerOne").value.trim(),
     partnerTwo: byId("settingPartnerTwo").value.trim(),
     welcomeMessage: byId("settingWelcome").value.trim(),
+    giftGuide: byId("settingGiftGuide").value.trim(),
+    faqs: parseFaqsAdminText(byId("settingFaqs").value),
     weddingDate: byId("settingWeddingDate").value,
     weddingTime: byId("settingWeddingTime").value,
     rsvpDeadline: byId("settingRsvpDeadline").value,
@@ -1506,6 +1589,8 @@ byId("weddingDetailsForm").addEventListener("submit", async e => {
     const message = String(error?.message || "");
     if (/entourage_(parents|primary|maid|best|veil|cord|candle|groomsmen|bridesmaids|ring|coin|bible|flower)/i.test(message)) {
       showToast("Run supabase-separate-entourage-v35.sql in Supabase first.");
+    } else if (/faqs/i.test(message)) {
+      showToast("Run supabase-add-faqs-v49.sql in Supabase first.");
     } else {
       showToast("Wedding details could not be saved.");
     }
@@ -2125,7 +2210,7 @@ function initialiseHomeScrollAnimations() {
 
 
 // Icon-based section navigation: Home acts as a section launcher and each tab opens one panel.
-const PUBLIC_SECTION_IDS = ["home", "details", "schedule", "entourage", "dress", "venue", "rsvp"];
+const PUBLIC_SECTION_IDS = ["home", "details", "schedule", "entourage", "dress", "venue", "faqs", "rsvp"];
 
 function openPublicSection(sectionId, options = {}) {
   const { updateHash = true, focusSection = true, scrollToMenu = false, fromVintageCard = false } = options;
@@ -2249,6 +2334,13 @@ function buildVintageCardPreviewMarkup(targetId) {
         { label: "Address", value: trimPreviewText(w.venueAddress, 26) },
         { label: "Note", value: trimPreviewText(w.venueNotes || "Directions available", 24) }
       ])}</span>`
+    },
+    faqs: {
+      title: "Frequently asked",
+      body: `<span class="vintage-card-mini-list">${vintagePreviewRowsMarkup((normaliseFaqs(w.faqs).length ? normaliseFaqs(w.faqs) : defaultState.wedding.faqs).slice(0, 2).map(item => ({
+        label: "Q",
+        value: trimPreviewText(item.question, 28)
+      })))}</span>`
     },
     rsvp: {
       title: "Reply card",

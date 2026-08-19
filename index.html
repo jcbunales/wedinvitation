@@ -103,6 +103,10 @@
               <span class="home-launcher-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19h14M6.5 19V10.5h11V19"/><path d="M5.5 10.5 12 5l6.5 5.5"/><path d="M9 19v-4.2h6V19"/><path d="M10 10.5V8.2h4v2.3M12 5V2.8M10.8 4h2.4"/></svg></span>
               <strong>Venue</strong><small>Location details and directions</small>
             </a>
+            <a href="#faqs" data-section-target="faqs" class="home-launcher-card">
+              <span class="home-launcher-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.2 5.5h13.6v10.2H10l-4.8 3.2v-3.2Z"/><path d="M9.4 9.1a2.7 2.7 0 0 1 5.2.9c0 1.8-2.6 2-2.6 3.5"/><path d="M12 15.1h.01"/></svg></span>
+              <strong>FAQs</strong><small>Helpful answers before our special day</small>
+            </a>
             <a href="#rsvp" data-section-target="rsvp" class="home-launcher-card home-launcher-card-accent">
               <span class="home-launcher-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6.5h16v12H4z"/><path d="m4 7 8 6 8-6"/><path d="m8.3 17.2 2.1 2.1 5.1-5.1"/></svg></span>
               <strong>RSVP</strong><small>Kindly respond to our invitation</small>
@@ -142,8 +146,8 @@
               </div>
 
               <aside class="details-rsvp-note">
-                <span class="details-mini-label">Kindly respond</span>
-                <p><strong>One RSVP per household.</strong> If your invitation includes a guest, you can confirm their attendance in the RSVP form.</p>
+                <span class="details-mini-label">GIFT GUIDE</span>
+                <p id="giftGuideDisplay">Your presence is the greatest gift of all. Should you wish to bless us with a gift, a contribution toward our future together would be warmly appreciated.</p>
               </aside>
             </div>
 
@@ -351,6 +355,20 @@
             </article>
           </div>
         </div>
+      </section>
+
+      <section id="faqs" class="content-section faq-section section-panel" hidden aria-hidden="true">
+        <div class="section-return-wrap">
+          <a href="#home" data-section-target="home" data-return-menu="true" class="section-return-link">
+            <span aria-hidden="true">←</span> Back to menu
+          </a>
+        </div>
+        <div class="section-heading centered faq-heading">
+          <p class="section-kicker">Good to know</p>
+          <h2>Frequently Asked Questions</h2>
+          <p class="section-intro">A few helpful details to make celebrating with us easy.</p>
+        </div>
+        <div id="faqList" class="faq-list"></div>
       </section>
 
       <section id="rsvp" class="content-section rsvp-section section-panel" hidden aria-hidden="true">
@@ -619,6 +637,12 @@
                 </div>
                 <label for="settingWelcome">Welcome message</label>
                 <textarea id="settingWelcome" rows="4"></textarea>
+                <label for="settingGiftGuide">Gift Guide text</label>
+                <textarea id="settingGiftGuide" rows="4" placeholder="Your presence is the greatest gift of all..."></textarea>
+                <label for="settingFaqs">FAQs</label>
+                <textarea id="settingFaqs" rows="10" placeholder="What time should I arrive? | Please arrive 20–30 minutes before the ceremony.
+Can I bring a plus one? | Please refer to the names listed on your invitation."></textarea>
+                <p class="form-help"><strong>Format:</strong> One FAQ per line using <code>Question | Answer</code>.</p>
               </div>
               <div class="settings-section">
                 <h3>Date & RSVP</h3>

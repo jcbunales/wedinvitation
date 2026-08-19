@@ -16,11 +16,15 @@ create table if not exists public.wedding_settings (
   map_link text default '',
   venue_notes text default '',
   welcome_message text default '',
+  gift_guide text default '',
+  faqs jsonb not null default '[]'::jsonb,
   schedule jsonb not null default '[]'::jsonb,
   updated_at timestamptz not null default now()
 );
 
 -- Safe upgrades for existing projects. Re-running this file will not delete data.
+alter table public.wedding_settings add column if not exists gift_guide text default '';
+alter table public.wedding_settings add column if not exists faqs jsonb not null default '[]'::jsonb;
 alter table public.wedding_settings add column if not exists entourage jsonb not null default '[]'::jsonb;
 -- V35: entourage groups are also stored in dedicated columns so each Admin
 -- field persists independently. The legacy entourage JSON column is retained

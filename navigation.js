@@ -1,5 +1,5 @@
 (() => {
-  const SECTION_IDS = ["home", "details", "schedule", "entourage", "dress", "venue", "rsvp"];
+  const SECTION_IDS = ["home", "details", "schedule", "entourage", "dress", "venue", "faqs", "rsvp"];
 
   function activateSection(sectionId, options = {}) {
     const targetId = SECTION_IDS.includes(sectionId) ? sectionId : "home";
