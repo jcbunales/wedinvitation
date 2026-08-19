@@ -1424,7 +1424,8 @@ function populateSettingsForm() {
   byId("settingPartnerTwo").value = w.partnerTwo;
   byId("settingWelcome").value = w.welcomeMessage;
   byId("settingGiftGuide").value = w.giftGuide || defaultState.wedding.giftGuide;
-  byId("settingFaqs").value = faqsToAdminText(w.faqs?.length ? w.faqs : defaultState.wedding.faqs);
+  const settingFaqs = byId("settingFaqs");
+  if (settingFaqs) settingFaqs.value = faqsToAdminText(w.faqs?.length ? w.faqs : defaultState.wedding.faqs);
   byId("settingWeddingDate").value = w.weddingDate;
   byId("settingWeddingTime").value = w.weddingTime;
   byId("settingRsvpDeadline").value = w.rsvpDeadline;
@@ -1543,7 +1544,9 @@ byId("weddingDetailsForm").addEventListener("submit", async e => {
     partnerTwo: byId("settingPartnerTwo").value.trim(),
     welcomeMessage: byId("settingWelcome").value.trim(),
     giftGuide: byId("settingGiftGuide").value.trim(),
-    faqs: parseFaqsAdminText(byId("settingFaqs").value),
+    faqs: byId("settingFaqs")
+      ? parseFaqsAdminText(byId("settingFaqs").value)
+      : clone(state.wedding.faqs?.length ? state.wedding.faqs : defaultState.wedding.faqs),
     weddingDate: byId("settingWeddingDate").value,
     weddingTime: byId("settingWeddingTime").value,
     rsvpDeadline: byId("settingRsvpDeadline").value,
@@ -2089,10 +2092,12 @@ function openInvitationIntro() {
   tryStartWeddingMusic();
   const reducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
 
-  const flapDelay = reducedMotion ? 5 : 380;
-  const cardDelay = reducedMotion ? 10 : 1080;
-  const revealDelay = reducedMotion ? 15 : 1980;
-  const finishDelay = reducedMotion ? 25 : 2820;
+  // Continuous stationery motion: release seal, open flap, then pull card upward
+  // with overlapping timings so the interaction feels like one physical action.
+  const flapDelay = reducedMotion ? 5 : 120;
+  const cardDelay = reducedMotion ? 10 : 470;
+  const revealDelay = reducedMotion ? 15 : 1320;
+  const finishDelay = reducedMotion ? 25 : 2180;
 
   window.setTimeout(() => {
     intro.classList.add("flap-open");
@@ -2106,8 +2111,8 @@ function openInvitationIntro() {
     intro.classList.add("is-revealing");
     document.body.classList.remove("invitation-intro-active");
     document.body.classList.add("invitation-intro-opened", "home-entry-animation");
-    window.setTimeout(() => document.body.classList.remove("home-entry-animation"), reducedMotion ? 40 : 2500);
-    window.setTimeout(initialiseHomeScrollAnimations, reducedMotion ? 50 : 2580);
+    window.setTimeout(() => document.body.classList.remove("home-entry-animation"), reducedMotion ? 40 : 1550);
+    window.setTimeout(initialiseHomeScrollAnimations, reducedMotion ? 50 : 1620);
   }, revealDelay);
 
   window.setTimeout(() => {

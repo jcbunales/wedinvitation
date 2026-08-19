@@ -25,7 +25,3 @@ Do not put a Supabase service-role key in `supabase-config.js`; use the browser-
 
 ## V48 Gift Guide
 Run `supabase-add-gift-guide-v48.sql` once in Supabase SQL Editor to enable the editable Gift Guide text field.
-
-## V49 FAQs
-
-The public invitation includes an editable FAQs section. In **Admin → Wedding details**, enter one FAQ per line using `Question | Answer`. If Supabase is enabled, run `supabase-add-faqs-v49.sql` once in the Supabase SQL Editor before saving FAQ changes.
