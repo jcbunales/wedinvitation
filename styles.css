@@ -13331,3 +13331,143 @@ body.invitation-intro-opened .page-shell {
     transition-duration: .01ms !important;
   }
 }
+
+/* =========================================================
+   V56 — Venue/home ordering + Flower Girls alignment
+   ========================================================= */
+
+/* Three Flower Girls: keep all names centered on one balanced row. */
+#entourage .entourage-flower-row .entourage-members {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  align-items: start;
+  justify-content: center;
+  column-gap: clamp(10px, 2.6vw, 26px);
+  width: 100%;
+}
+
+#entourage .entourage-flower-row .entourage-member,
+#entourage .entourage-flower-row .entourage-member span {
+  width: 100%;
+  text-align: center;
+}
+
+@media (max-width: 560px) {
+  #entourage .entourage-flower-row > .entourage-group {
+    flex-basis: 100%;
+  }
+
+  #entourage .entourage-flower-row .entourage-members {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    column-gap: 5px;
+  }
+}
+
+/* =========================================================
+   V57 — Venue tabs + RSVP meal preference removal
+   ========================================================= */
+
+/* Two public venue choices: keep the selector balanced and centered. */
+#venue .venue-location-tabs {
+  width: min(760px, calc(100% - 32px)) !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  grid-auto-flow: row !important;
+  grid-auto-columns: auto !important;
+  gap: 10px !important;
+  padding: 8px !important;
+  overflow: visible !important;
+  scroll-snap-type: none !important;
+}
+
+#venue .venue-location-tab {
+  width: 100%;
+  min-width: 0 !important;
+  min-height: 72px;
+  justify-content: center !important;
+  text-align: center !important;
+  padding: 12px 18px !important;
+}
+
+#venue .venue-tab-copy {
+  flex: 0 1 auto;
+  justify-items: center;
+  text-align: center;
+}
+
+#venue .venue-tab-mark {
+  margin-left: 8px;
+  padding-left: 0;
+  flex: 0 0 auto;
+}
+
+@media (max-width: 620px) {
+  #venue .venue-location-tabs {
+    width: 100% !important;
+    max-width: 440px !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 6px !important;
+    padding: 6px !important;
+    margin-inline: auto !important;
+    border-radius: 16px !important;
+  }
+
+  #venue .venue-location-tab {
+    min-height: 64px !important;
+    padding: 9px 8px !important;
+    gap: 5px !important;
+    border-radius: 11px !important;
+  }
+
+  #venue .venue-tab-label {
+    font-size: 15px !important;
+    line-height: 1.05 !important;
+  }
+
+  #venue .venue-tab-note {
+    font-size: 7px !important;
+    letter-spacing: .08em !important;
+  }
+
+  #venue .venue-tab-mark {
+    display: none;
+  }
+}
+
+@media (max-width: 380px) {
+  #venue .venue-location-tabs {
+    grid-template-columns: 1fr !important;
+    max-width: 300px !important;
+  }
+}
+
+/* RSVP: one clean attendance-count field after removing meal preference. */
+#rsvp .rsvp-attending-count {
+  max-width: 360px;
+  margin-bottom: 16px;
+}
+
+#rsvp .rsvp-attending-count select {
+  width: 100%;
+}
+
+/* =========================================================
+   V59 — Homepage FAQ card alignment only
+   FAQ section itself keeps its original V57 layout.
+   ========================================================= */
+.home-launcher-card[data-section-target="faqs"] {
+  grid-column: 2;
+}
+
+@media (max-width: 900px) {
+  .home-launcher-card[data-section-target="faqs"] {
+    grid-column: 1 / -1;
+    width: calc((100% - 14px) / 2);
+    justify-self: center;
+  }
+}
+
+@media (max-width: 620px) {
+  .home-launcher-card[data-section-target="faqs"] {
+    width: calc((100% - 10px) / 2);
+  }
+}

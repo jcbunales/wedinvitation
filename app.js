@@ -1131,9 +1131,9 @@ function showRsvpGuest(guest) {
   select.innerHTML = Array.from({ length: guest.partySize }, (_, i) => `<option value="${i + 1}">${i + 1}</option>`).join("");
   select.value = String(Math.max(1, guest.attendingCount || 1));
   document.querySelectorAll('input[name="attendance"]').forEach(el => el.checked = el.value === guest.status);
-  byId("mealChoice").value = guest.mealChoice || "No preference";
   byId("plusOneName").value = guest.plusOneName || "";
-  byId("dietaryNotes").value = guest.dietaryNotes || "";
+  const dietaryField = byId("dietaryNotes");
+  if (dietaryField) dietaryField.value = guest.dietaryNotes || "";
   byId("rsvpLookupStep").classList.add("hidden");
   byId("rsvpSuccess").classList.add("hidden");
   byId("rsvpResponseStep").classList.remove("hidden");
@@ -1185,9 +1185,10 @@ byId("rsvpForm").addEventListener("submit", async e => {
 
   guest.status = attendance;
   guest.attendingCount = attendance === "Attending" ? Number(byId("partyAttending").value) : 0;
-  guest.mealChoice = attendance === "Attending" ? byId("mealChoice").value : "";
+  guest.mealChoice = "";
   guest.plusOneName = attendance === "Attending" ? byId("plusOneName").value.trim() : "";
-  guest.dietaryNotes = byId("dietaryNotes").value.trim();
+  const dietaryField = byId("dietaryNotes");
+  if (dietaryField) guest.dietaryNotes = dietaryField.value.trim();
   guest.respondedAt = new Date().toISOString();
 
   const submitButton = e.submitter || e.currentTarget.querySelector('[type="submit"]');
@@ -1198,7 +1199,7 @@ byId("rsvpForm").addEventListener("submit", async e => {
         p_guest_id: guest.id,
         p_status: guest.status,
         p_attending_count: guest.attendingCount,
-        p_meal_choice: guest.mealChoice,
+        p_meal_choice: "",
         p_plus_one_name: guest.plusOneName,
         p_dietary_notes: guest.dietaryNotes
       });
@@ -1414,7 +1415,7 @@ function renderConfirmations() {
       <div><h3>${escapeHtml(g.name)}</h3><p>${escapeHtml(g.email || g.phone || "No contact saved")} · ${formatResponseTime(g.respondedAt)}</p></div>
       <div class="confirmation-field"><span>Status</span><strong><span class="status-pill ${g.status}">${g.status}</span></strong></div>
       <div class="confirmation-field"><span>Attending</span><strong>${g.status === "Attending" ? `${g.attendingCount} / ${g.partySize}` : "0"}</strong></div>
-      <div class="confirmation-field"><span>Details</span><strong>${escapeHtml([g.mealChoice, g.plusOneName, g.dietaryNotes].filter(Boolean).join(" · ") || "—")}</strong></div>
+      <div class="confirmation-field"><span>Details</span><strong>${escapeHtml([g.plusOneName, g.dietaryNotes].filter(Boolean).join(" · ") || "—")}</strong></div>
     </article>`).join("") : `<div class="admin-card"><p>No RSVP responses yet.</p></div>`;
 }
 

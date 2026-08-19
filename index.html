@@ -103,13 +103,13 @@
               <span class="home-launcher-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19h14M6.5 19V10.5h11V19"/><path d="M5.5 10.5 12 5l6.5 5.5"/><path d="M9 19v-4.2h6V19"/><path d="M10 10.5V8.2h4v2.3M12 5V2.8M10.8 4h2.4"/></svg></span>
               <strong>Venue</strong><small>Location details and directions</small>
             </a>
-            <a href="#faqs" data-section-target="faqs" class="home-launcher-card">
-              <span class="home-launcher-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M9.7 9.2a2.5 2.5 0 0 1 4.8.9c0 1.8-2.5 2.1-2.5 3.8"/><path d="M12 17.1h.01"/></svg></span>
-              <strong>FAQs</strong><small>Helpful answers before the celebration</small>
-            </a>
             <a href="#rsvp" data-section-target="rsvp" class="home-launcher-card home-launcher-card-accent">
               <span class="home-launcher-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6.5h16v12H4z"/><path d="m4 7 8 6 8-6"/><path d="m8.3 17.2 2.1 2.1 5.1-5.1"/></svg></span>
               <strong>RSVP</strong><small>Kindly respond to our invitation</small>
+            </a>
+            <a href="#faqs" data-section-target="faqs" class="home-launcher-card">
+              <span class="home-launcher-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M9.7 9.2a2.5 2.5 0 0 1 4.8.9c0 1.8-2.5 2.1-2.5 3.8"/><path d="M12 17.1h.01"/></svg></span>
+              <strong>FAQs</strong><small>Helpful answers before the celebration</small>
             </a>
           </div>
         </div>
@@ -239,7 +239,7 @@
         <div class="section-heading centered venue-heading">
           <p class="section-kicker">Where to find us</p>
           <h2>Venue locations</h2>
-          <p class="section-intro">Choose a location below for the wedding ceremony, reception, or preparation venue.</p>
+          <p class="section-intro">Choose a location below for the wedding ceremony or reception.</p>
         </div>
 
         <div class="venue-location-tabs" role="tablist" aria-label="Wedding venue locations">
@@ -254,13 +254,6 @@
             <span class="venue-tab-copy">
               <span class="venue-tab-label">Reception</span>
               <span class="venue-tab-note">Celebration venue</span>
-            </span>
-            <span class="venue-tab-mark" aria-hidden="true">✦</span>
-          </button>
-          <button id="venueTabPreparation" class="venue-location-tab" type="button" role="tab" aria-selected="false" aria-controls="venuePanelPreparation" data-venue-tab="preparation" tabindex="-1">
-            <span class="venue-tab-copy">
-              <span class="venue-tab-label">Preparation Venue</span>
-              <span class="venue-tab-note">Getting ready</span>
             </span>
             <span class="venue-tab-mark" aria-hidden="true">✦</span>
           </button>
@@ -419,22 +412,9 @@
               </fieldset>
 
               <div id="attendingFields">
-                <div class="form-grid two-col">
-                  <div>
-                    <label for="partyAttending">Guests attending</label>
-                    <select id="partyAttending"></select>
-                  </div>
-                  <div>
-                    <label for="mealChoice">Meal preference</label>
-                    <select id="mealChoice">
-                      <option value="No preference">No preference</option>
-                      <option value="Chicken">Chicken</option>
-                      <option value="Beef">Beef</option>
-                      <option value="Fish">Fish</option>
-                      <option value="Vegetarian">Vegetarian</option>
-                      <option value="Vegan">Vegan</option>
-                    </select>
-                  </div>
+                <div class="rsvp-attending-count">
+                  <label for="partyAttending">Guests attending</label>
+                  <select id="partyAttending"></select>
                 </div>
                 <label for="plusOneName">Guest / plus-one name</label>
                 <input id="plusOneName" type="text" placeholder="Optional" />
