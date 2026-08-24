@@ -15100,3 +15100,18 @@ body.section-tab-mode #home.is-active-section .invitation-copy h1 {
     letter-spacing: .14em !important;
   }
 }
+
+
+/* =========================================================
+   OUR STORY — centered wedding hashtag after story message
+   ========================================================= */
+#details .story-hashtag {
+  margin: 18px auto 0 !important;
+  text-align: center !important;
+  color: #216148 !important;
+  font-family: "Cormorant Garamond", Georgia, serif !important;
+  font-size: clamp(17px, 2.4vw, 22px) !important;
+  font-weight: 600 !important;
+  line-height: 1.25 !important;
+  letter-spacing: .035em !important;
+}

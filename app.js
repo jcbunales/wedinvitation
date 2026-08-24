@@ -95,7 +95,7 @@ const ENTOURAGE_SUPABASE_FIELDS = [
   { column: "entourage_parents_bride", slug: "parents-bride", role: "Parents of the Bride" },
   { column: "entourage_primary_sponsors", slug: "primary-sponsor", role: "Primary Sponsors" },
   { column: "entourage_maid_of_honor", slug: "maid-of-honor", role: "Maid of Honor" },
-  { column: "entourage_best_men", slug: "best-men", role: "Best Men" },
+  { column: "entourage_best_men", slug: "best-men", role: "Best Man" },
   { column: "entourage_veil", slug: "veil", role: "Veil" },
   { column: "entourage_cord", slug: "cord", role: "Cord" },
   { column: "entourage_candle", slug: "candle", role: "Candle" },
@@ -1535,7 +1535,7 @@ byId("weddingDetailsForm").addEventListener("submit", async e => {
     buildEntourageAdminItem("Parents of the Bride", "settingParentsBride"),
     buildEntourageAdminItem("Primary Sponsors", "settingPrimarySponsors"),
     buildEntourageAdminItem("Maid of Honor", "settingMaidHonor"),
-    buildEntourageAdminItem("Best Men", "settingBestMen"),
+    buildEntourageAdminItem("Best Man", "settingBestMen"),
     buildEntourageAdminItem("Veil", "settingVeil"),
     buildEntourageAdminItem("Cord", "settingCord"),
     buildEntourageAdminItem("Candle", "settingCandle"),
@@ -2087,9 +2087,7 @@ function syncInvitationIntro() {
   if (initialOne) initialOne.textContent = (w.partnerOne || "O").trim().charAt(0).toUpperCase() || "O";
   if (initialTwo) initialTwo.textContent = (w.partnerTwo || "E").trim().charAt(0).toUpperCase() || "E";
   if (seal) {
-    const firstInitial = (w.partnerOne || "O").trim().charAt(0).toUpperCase() || "O";
-    const secondInitial = (w.partnerTwo || "E").trim().charAt(0).toUpperCase() || "E";
-    seal.textContent = `${firstInitial}${secondInitial}`;
+    seal.textContent = "PG";
   }
 }
 
