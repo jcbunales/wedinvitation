@@ -15581,3 +15581,110 @@ body.section-tab-mode #home.is-active-section .invitation-copy h1 {
     font-size: 14px !important;
   }
 }
+
+
+/* =========================================================
+   MOBILE TYPE V2 — restore compact Entourage + clearer names
+   ========================================================= */
+@media (max-width: 620px) {
+  /* Home celebrant names: reduce crowding and improve contrast/readability. */
+  #home .invitation-copy {
+    padding-left: 18px !important;
+    padding-right: 18px !important;
+  }
+
+  #home .invitation-copy h1 {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 18px auto 14px !important;
+    color: #f9e8c5 !important;
+    font-family: "Cormorant Garamond", Georgia, serif !important;
+    font-size: clamp(44px, 13.2vw, 58px) !important;
+    font-weight: 600 !important;
+    line-height: .94 !important;
+    letter-spacing: -.015em !important;
+    text-shadow: 0 2px 5px rgba(4, 35, 27, .34) !important;
+  }
+
+  #home .invitation-copy h1 #partnerOneDisplay,
+  #home .invitation-copy h1 #partnerTwoDisplay {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding-inline: 2px !important;
+    white-space: normal !important;
+    overflow-wrap: normal !important;
+    word-break: normal !important;
+  }
+
+  #home .invitation-copy h1 .ampersand {
+    margin: 8px 0 5px !important;
+    color: #d6ad55 !important;
+    font-size: .58em !important;
+    line-height: 1 !important;
+    text-shadow: 0 1px 3px rgba(4, 35, 27, .25) !important;
+  }
+
+  /* Entourage: restore the original compact mobile typography. */
+  #entourage .entourage-program-heading h2 {
+    font-size: clamp(46px, 14vw, 58px) !important;
+    line-height: .96 !important;
+  }
+
+  #entourage .entourage-program-heading .section-intro {
+    font-size: 14px !important;
+    line-height: 1.45 !important;
+  }
+
+  #entourage .entourage-subsection > h3 {
+    font-size: clamp(18px, 5.4vw, 23px) !important;
+    line-height: 1.08 !important;
+  }
+
+  #entourage .entourage-group-heading p,
+  #entourage .entourage-group.olive-group .entourage-group-heading p,
+  #entourage .entourage-group.burgundy-group .entourage-group-heading p,
+  #entourage .entourage-primary-row .entourage-group-heading p {
+    font-size: clamp(14px, 4.35vw, 18px) !important;
+    line-height: .95 !important;
+  }
+
+  #entourage .entourage-symbolic-row .entourage-group-heading p {
+    font-size: clamp(12px, 3.7vw, 15px) !important;
+    line-height: 1.05 !important;
+  }
+
+  #entourage .entourage-member span,
+  #entourage .entourage-group .entourage-member span,
+  #entourage .entourage-primary-column .entourage-member span {
+    font-size: clamp(8px, 2.45vw, 10px) !important;
+    line-height: 1.16 !important;
+    letter-spacing: .015em !important;
+    overflow-wrap: anywhere !important;
+    word-break: normal !important;
+  }
+}
+
+@media (max-width: 380px) {
+  #home .invitation-copy h1 {
+    font-size: clamp(41px, 12.8vw, 50px) !important;
+    line-height: .96 !important;
+  }
+
+  #entourage .entourage-group-heading p,
+  #entourage .entourage-group.olive-group .entourage-group-heading p,
+  #entourage .entourage-group.burgundy-group .entourage-group-heading p,
+  #entourage .entourage-primary-row .entourage-group-heading p {
+    font-size: 14px !important;
+  }
+
+  #entourage .entourage-symbolic-row .entourage-group-heading p {
+    font-size: 12px !important;
+  }
+
+  #entourage .entourage-member span,
+  #entourage .entourage-group .entourage-member span,
+  #entourage .entourage-primary-column .entourage-member span {
+    font-size: 8px !important;
+  }
+}
