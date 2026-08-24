@@ -15115,3 +15115,100 @@ body.section-tab-mode #home.is-active-section .invitation-copy h1 {
   line-height: 1.25 !important;
   letter-spacing: .035em !important;
 }
+
+
+/* =========================================================
+   OUR STORY — opening animation on photos
+   ========================================================= */
+#details .story-photo {
+  backface-visibility: hidden;
+  transform-origin: center center;
+  will-change: transform, opacity, filter;
+}
+
+#details .story-photo.is-opening {
+  animation-duration: .92s;
+  animation-timing-function: cubic-bezier(.2,.82,.2,1);
+  animation-fill-mode: both;
+}
+
+#details .story-photo-left.is-opening {
+  animation-name: storyPhotoOpenLeft;
+  animation-delay: .08s;
+}
+
+#details .story-photo-center.is-opening {
+  animation-name: storyPhotoOpenCenter;
+  animation-delay: .22s;
+}
+
+#details .story-photo-right.is-opening {
+  animation-name: storyPhotoOpenRight;
+  animation-delay: .36s;
+}
+
+@keyframes storyPhotoOpenLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-34px) translateY(48px) rotate(-15deg) scale(.78);
+    filter: blur(10px);
+  }
+  62% {
+    opacity: 1;
+    transform: translateX(4px) translateY(14px) rotate(-5deg) scale(1.03);
+    filter: blur(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(20px) rotate(-8deg) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes storyPhotoOpenCenter {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(36px) rotate(-1deg) scale(.8);
+    filter: blur(10px);
+  }
+  62% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-8px) rotate(0deg) scale(1.04);
+    filter: blur(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-3px) rotate(0deg) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes storyPhotoOpenRight {
+  0% {
+    opacity: 0;
+    transform: translateX(34px) translateY(46px) rotate(15deg) scale(.78);
+    filter: blur(10px);
+  }
+  62% {
+    opacity: 1;
+    transform: translateX(-4px) translateY(12px) rotate(5deg) scale(1.03);
+    filter: blur(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(18px) rotate(8deg) scale(1);
+    filter: blur(0);
+  }
+}
+
+@media (max-width: 600px) {
+  #details .story-photo.is-opening {
+    animation-duration: .82s;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #details .story-photo.is-opening {
+    animation: none !important;
+  }
+}

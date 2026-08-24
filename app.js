@@ -2238,6 +2238,17 @@ function initialiseHomeScrollAnimations() {
 // Icon-based section navigation: Home acts as a section launcher and each tab opens one panel.
 const PUBLIC_SECTION_IDS = ["home", "details", "schedule", "entourage", "dress", "venue", "faqs", "rsvp"];
 
+
+function playOurStoryPhotoAnimation() {
+  const photos = Array.from(document.querySelectorAll("#details .story-photo"));
+  if (!photos.length) return;
+
+  photos.forEach(photo => photo.classList.remove("is-opening"));
+  void document.body.offsetWidth;
+  photos.forEach(photo => photo.classList.add("is-opening"));
+}
+
+
 function openPublicSection(sectionId, options = {}) {
   const { updateHash = true, focusSection = true, scrollToMenu = false, fromVintageCard = false } = options;
   const targetId = PUBLIC_SECTION_IDS.includes(sectionId) ? sectionId : "home";
@@ -2266,6 +2277,10 @@ function openPublicSection(sectionId, options = {}) {
 
     if (targetId === "home" && !document.body.classList.contains("invitation-intro-active")) {
       window.setTimeout(playHomeCelebrantAnimation, 120);
+    }
+
+    if (targetId === "details") {
+      window.setTimeout(playOurStoryPhotoAnimation, 90);
     }
   }
 

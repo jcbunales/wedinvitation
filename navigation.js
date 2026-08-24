@@ -1,6 +1,26 @@
 (() => {
   const SECTION_IDS = ["home", "details", "schedule", "entourage", "dress", "venue", "faqs", "rsvp"];
 
+
+  function playOurStoryPhotoAnimation() {
+    const photos = Array.from(document.querySelectorAll("#details .story-photo"));
+    if (!photos.length) return;
+
+    photos.forEach(photo => photo.classList.remove("is-opening"));
+
+    // Run after the Details panel has been painted. navigation.js handles the
+    // section switch in capture phase, so the animation must be triggered here.
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        photos.forEach(photo => photo.classList.add("is-opening"));
+
+        window.setTimeout(() => {
+          photos.forEach(photo => photo.classList.remove("is-opening"));
+        }, 1500);
+      });
+    });
+  }
+
   function activateSection(sectionId, options = {}) {
     const targetId = SECTION_IDS.includes(sectionId) ? sectionId : "home";
     const { updateHash = true, returnToMenu = false } = options;
@@ -49,6 +69,10 @@
     if (updateHash) {
       const nextHash = `#${targetId}`;
       if (location.hash !== nextHash) history.pushState({ section: targetId }, "", nextHash);
+    }
+
+    if (targetId === "details") {
+      playOurStoryPhotoAnimation();
     }
 
     if (targetId === "home" && returnToMenu) {
