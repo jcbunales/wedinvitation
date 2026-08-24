@@ -85,7 +85,7 @@
           <div class="home-launcher-grid">
             <a href="#details" data-section-target="details" class="home-launcher-card">
               <span class="home-launcher-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="7.2"/><path d="M12 7.1c1.7 1.7 3.2 2.4 4.5 2.3-.2 2.5-1.5 5.2-4.5 7.5-3-2.3-4.3-5-4.5-7.5 1.3.1 2.8-.6 4.5-2.3Z"/><path d="M12 4.1v2M12 17.1v2M5.9 12h-2M20.1 12h-2"/></svg></span>
-              <strong>Details</strong><small>Important information for our special day</small>
+              <strong>Our Story</strong><small>A little glimpse of the journey that brought us here</small>
             </a>
             <a href="#schedule" data-section-target="schedule" class="home-launcher-card">
               <span class="home-launcher-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="7.5"/><path d="M12 7.7V12l3.1 1.9"/><path d="M8.6 3.9h6.8M12 2.5v2"/><path d="M7.2 17.6 5.8 19M16.8 17.6l1.4 1.4"/></svg></span>
@@ -122,35 +122,52 @@
           </a>
         </div>
 
-        <div class="details-stationery section-float-panel float-delay-0">
-          <div class="details-logo-wrap" aria-label="Couple initials">
-            <div class="details-monogram details-monogram-v3">
-              <span id="detailsInitialOne">O</span>
-              <em>&amp;</em>
-              <span id="detailsInitialTwo">E</span>
-            </div>
-            <span class="details-logo-caption">Classic invitation</span>
-          </div>
+        <div class="our-story-envelope section-float-panel float-delay-0" aria-labelledby="ourStoryTitle">
+          <div class="story-envelope-back" aria-hidden="true"></div>
+          <div class="story-envelope-flap" aria-hidden="true"></div>
 
-          <div class="details-stationery-copy">
-            <div class="details-heading-copy">
-              <p class="section-kicker">Wedding invitation</p>
-              <h2>The pleasure of your company</h2>
-              <div class="details-ornament" aria-hidden="true"><span>✦</span></div>
-            </div>
+          <article class="story-letter">
+            <div class="story-letter-inner">
+              <header class="story-heading">
+                <h2 id="ourStoryTitle">Our Story</h2>
+                <div class="story-heading-ornament" aria-hidden="true"><span>✦</span></div>
+              </header>
 
-            <div class="details-content-grid">
-              <div class="details-welcome-copy">
-                <span class="details-mini-label">A note from us</span>
+              <div class="story-photo-stack" aria-label="Our story photos">
+                <figure class="story-photo story-photo-left">
+                  <img src="assets/our-story-1.jpg" alt="A couple smiling together by the ocean at sunset" />
+                  <figcaption>Our beginning</figcaption>
+                </figure>
+                <figure class="story-photo story-photo-center">
+                  <img src="assets/our-story-2.jpg" alt="A couple embracing with flowers by the ocean at sunset" />
+                  <figcaption>One beautiful chapter</figcaption>
+                </figure>
+                <figure class="story-photo story-photo-right">
+                  <img src="assets/our-story-3.jpg" alt="A couple celebrating together by the ocean at sunset" />
+                  <figcaption>Forever starts here</figcaption>
+                </figure>
+              </div>
+
+              <div class="story-message-card">
                 <p id="welcomeMessageDisplay">We are so excited to celebrate this chapter with you. Join us for a garden ceremony, dinner, drinks, dancing, and a night to remember.</p>
               </div>
 
-              <aside class="details-rsvp-note">
-                <span class="details-mini-label">GIFT GUIDE</span>
+              <div class="story-gift-guide">
+                <span class="story-gift-heading">Gift Guide</span>
+                <div class="story-gift-rule" aria-hidden="true"><span>✦</span></div>
                 <p id="giftGuideDisplay">Your presence is the greatest gift of all. Should you wish to bless us with a gift, a contribution toward our future together would be warmly appreciated.</p>
-              </aside>
+              </div>
             </div>
+          </article>
 
+          <div class="story-envelope-pocket" aria-hidden="true">
+            <span class="story-pocket-left"></span>
+            <span class="story-pocket-right"></span>
+            <span class="story-pocket-front"></span>
+          </div>
+
+          <div class="story-wax-seal" aria-label="Couple initials">
+            <span id="detailsInitialOne">O</span><em>&amp;</em><span id="detailsInitialTwo">E</span>
           </div>
         </div>
       </section>
@@ -301,6 +318,7 @@
               <div class="venue-detail-ornament" aria-hidden="true">✦</div>
               <p class="venue-detail-eyebrow">After the ceremony</p>
               <h3>Reception</h3>
+              <p class="venue-detail-name">LieSil’s Restaurant and Events</p>
               <dl class="venue-detail-list">
                 <div class="venue-detail-row">
                   <dt>Date</dt>
@@ -378,6 +396,7 @@
           <h2>RSVP</h2>
           <div class="rsvp-heading-rule" aria-hidden="true"><span>✦</span></div>
           <p id="rsvpDeadlineDisplay">Kindly respond by 1 July 2026.</p>
+          <p class="rsvp-capacity-note">Due to the capacity limits of our venue, we can only accommodate guests name on the this invitation. If you received a plus one, it will appear on your invitation and under your name when you RSVP. We hope you understand and still join us for special day!</p>
         </div>
 
         <div class="rsvp-layout rsvp-stationery-layout section-float-panel float-delay-5">
@@ -416,12 +435,11 @@
                   <label for="partyAttending">Guests attending</label>
                   <select id="partyAttending"></select>
                 </div>
-                <label for="plusOneName">Guest / plus-one name</label>
-                <input id="plusOneName" type="text" placeholder="Optional" />
+                <div id="plusOneField" class="plus-one-field hidden">
+                  <label for="plusOneName">Guest / plus-one name</label>
+                  <input id="plusOneName" type="text" placeholder="Guest / plus-one name" />
+                </div>
               </div>
-
-              <label for="dietaryNotes">Dietary requirements or message</label>
-              <textarea id="dietaryNotes" rows="4" placeholder="Allergies, accessibility needs, song request, or a note for the couple"></textarea>
 
               <div class="form-actions">
                 <button type="button" id="backToLookupBtn" class="ghost-btn">Back</button>
@@ -615,7 +633,7 @@
                   <div><label for="settingPartnerOne">Partner one</label><input id="settingPartnerOne" required /></div>
                   <div><label for="settingPartnerTwo">Partner two</label><input id="settingPartnerTwo" required /></div>
                 </div>
-                <label for="settingWelcome">Welcome message</label>
+                <label for="settingWelcome">Our Story message</label>
                 <textarea id="settingWelcome" rows="4"></textarea>
                 <label for="settingGiftGuide">Gift Guide text</label>
                 <textarea id="settingGiftGuide" rows="4" placeholder="Your presence is the greatest gift of all..."></textarea>

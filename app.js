@@ -1132,8 +1132,6 @@ function showRsvpGuest(guest) {
   select.value = String(Math.max(1, guest.attendingCount || 1));
   document.querySelectorAll('input[name="attendance"]').forEach(el => el.checked = el.value === guest.status);
   byId("plusOneName").value = guest.plusOneName || "";
-  const dietaryField = byId("dietaryNotes");
-  if (dietaryField) dietaryField.value = guest.dietaryNotes || "";
   byId("rsvpLookupStep").classList.add("hidden");
   byId("rsvpSuccess").classList.add("hidden");
   byId("rsvpResponseStep").classList.remove("hidden");
@@ -1150,12 +1148,23 @@ function resetRsvp() {
   byId("rsvpLookupStep").classList.remove("hidden");
 }
 
+function togglePlusOneField() {
+  const attendance = document.querySelector('input[name="attendance"]:checked')?.value;
+  const attendingCount = Number(byId("partyAttending")?.value || 0);
+  const plusOneField = byId("plusOneField");
+  const shouldShow = attendance === "Attending" && attendingCount >= 2;
+  if (plusOneField) plusOneField.classList.toggle("hidden", !shouldShow);
+  if (!shouldShow && byId("plusOneName")) byId("plusOneName").value = "";
+}
+
 function toggleAttendingFields() {
   const val = document.querySelector('input[name="attendance"]:checked')?.value;
   byId("attendingFields").classList.toggle("hidden", val === "Declined");
+  togglePlusOneField();
 }
 
 document.querySelectorAll('input[name="attendance"]').forEach(el => el.addEventListener("change", toggleAttendingFields));
+byId("partyAttending").addEventListener("change", togglePlusOneField);
 byId("findInvitationBtn").addEventListener("click", async () => {
   const button = byId("findInvitationBtn");
   button.disabled = true;
@@ -1186,9 +1195,8 @@ byId("rsvpForm").addEventListener("submit", async e => {
   guest.status = attendance;
   guest.attendingCount = attendance === "Attending" ? Number(byId("partyAttending").value) : 0;
   guest.mealChoice = "";
-  guest.plusOneName = attendance === "Attending" ? byId("plusOneName").value.trim() : "";
-  const dietaryField = byId("dietaryNotes");
-  if (dietaryField) guest.dietaryNotes = dietaryField.value.trim();
+  guest.plusOneName = attendance === "Attending" && guest.attendingCount >= 2 ? byId("plusOneName").value.trim() : "";
+  guest.dietaryNotes = "";
   guest.respondedAt = new Date().toISOString();
 
   const submitButton = e.submitter || e.currentTarget.querySelector('[type="submit"]');
@@ -1415,7 +1423,7 @@ function renderConfirmations() {
       <div><h3>${escapeHtml(g.name)}</h3><p>${escapeHtml(g.email || g.phone || "No contact saved")} · ${formatResponseTime(g.respondedAt)}</p></div>
       <div class="confirmation-field"><span>Status</span><strong><span class="status-pill ${g.status}">${g.status}</span></strong></div>
       <div class="confirmation-field"><span>Attending</span><strong>${g.status === "Attending" ? `${g.attendingCount} / ${g.partySize}` : "0"}</strong></div>
-      <div class="confirmation-field"><span>Details</span><strong>${escapeHtml([g.plusOneName, g.dietaryNotes].filter(Boolean).join(" · ") || "—")}</strong></div>
+      <div class="confirmation-field"><span>Guest / plus-one</span><strong>${escapeHtml(g.plusOneName || "—")}</strong></div>
     </article>`).join("") : `<div class="admin-card"><p>No RSVP responses yet.</p></div>`;
 }
 
@@ -2085,6 +2093,19 @@ function syncInvitationIntro() {
   }
 }
 
+
+function playHomeCelebrantAnimation() {
+  const heading = document.querySelector("#home .invitation-copy h1");
+  const home = byId("home");
+  if (!heading || !home || home.hasAttribute("hidden")) return;
+
+  // Remove and re-add the class after a forced reflow so the animation
+  // reliably replays every time Home is shown.
+  heading.classList.remove("celebrant-names-animate");
+  void heading.offsetWidth;
+  heading.classList.add("celebrant-names-animate");
+}
+
 function openInvitationIntro() {
   const intro = byId("invitationIntro");
   if (!intro || intro.classList.contains("is-opening") || intro.classList.contains("is-arriving")) return;
@@ -2121,6 +2142,7 @@ function openInvitationIntro() {
     intro.setAttribute("aria-hidden", "true");
     const mainHeading = document.querySelector(".invitation-copy h1");
     if (mainHeading) mainHeading.setAttribute("tabindex", "-1");
+    window.setTimeout(playHomeCelebrantAnimation, reducedMotion ? 20 : 90);
   }, finishDelay);
 }
 
@@ -2243,6 +2265,10 @@ function openPublicSection(sectionId, options = {}) {
     activeSection.removeAttribute("hidden");
     activeSection.classList.add("is-active-section", "is-visible");
     activeSection.setAttribute("aria-hidden", "false");
+
+    if (targetId === "home" && !document.body.classList.contains("invitation-intro-active")) {
+      window.setTimeout(playHomeCelebrantAnimation, 120);
+    }
   }
 
   document.querySelectorAll("[data-section-target]").forEach(control => {

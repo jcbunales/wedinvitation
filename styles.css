@@ -13471,3 +13471,1632 @@ body.invitation-intro-opened .page-shell {
     width: calc((100% - 10px) / 2);
   }
 }
+
+/* =========================================================
+   OUR STORY — open emerald envelope + photo stationery
+   Reference-inspired redesign for the former Details section.
+   ========================================================= */
+#details.split-section {
+  width: min(1120px, calc(100% - 32px)) !important;
+  margin-inline: auto !important;
+  padding-top: clamp(62px, 8vw, 96px) !important;
+  padding-bottom: clamp(82px, 10vw, 126px) !important;
+  overflow: visible !important;
+}
+
+#details .our-story-envelope {
+  --story-green-deep: #0f392b;
+  --story-green: #174b39;
+  --story-green-light: #245f49;
+  --story-gold: #b88c43;
+  --story-paper: #fffaf0;
+  position: relative !important;
+  width: min(100%, 860px) !important;
+  min-height: 790px;
+  margin: 18px auto 0 !important;
+  padding: 76px clamp(18px, 4vw, 42px) 122px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  isolation: isolate;
+  overflow: visible !important;
+}
+
+#details .story-envelope-back {
+  position: absolute;
+  z-index: 0;
+  inset: 38px 0 18px;
+  border-radius: 30px 30px 24px 24px;
+  background:
+    radial-gradient(circle at 50% 12%, rgba(255,255,255,.05), transparent 32%),
+    linear-gradient(145deg, #0b3024 0%, var(--story-green-deep) 48%, #102f25 100%);
+  border: 1px solid rgba(184,140,67,.34);
+  box-shadow: 0 28px 62px rgba(18,47,37,.24);
+}
+
+#details .story-envelope-flap {
+  position: absolute;
+  z-index: 1;
+  top: -54px;
+  left: 50%;
+  width: 72%;
+  height: 280px;
+  transform: translateX(-50%);
+  transform-origin: 50% 100%;
+  clip-path: polygon(50% 0, 100% 78%, 92% 100%, 8% 100%, 0 78%);
+  background:
+    linear-gradient(165deg, rgba(255,255,255,.05), transparent 34%),
+    linear-gradient(145deg, #133f30, #0d3024 72%);
+  border: 1px solid rgba(184,140,67,.34);
+  filter: drop-shadow(0 12px 15px rgba(7,27,20,.16));
+}
+
+#details .story-letter {
+  position: relative;
+  z-index: 3;
+  width: min(88%, 690px);
+  margin: 0 auto;
+  color: #55483b;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255,255,255,.9), transparent 34%),
+    linear-gradient(180deg, #fffdf8 0%, #f7eddc 100%);
+  border: 1px solid rgba(184,140,67,.64);
+  box-shadow: 0 24px 46px rgba(29,47,39,.20), inset 0 1px 0 rgba(255,255,255,.9);
+}
+
+#details .story-letter::before,
+#details .story-letter::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+}
+
+#details .story-letter::before {
+  inset: 11px;
+  border: 1px solid rgba(184,140,67,.36);
+}
+
+#details .story-letter::after {
+  inset: 19px;
+  border: 1px solid rgba(184,140,67,.16);
+}
+
+#details .story-letter-inner {
+  position: relative;
+  z-index: 1;
+  padding: clamp(34px, 5vw, 52px) clamp(26px, 5vw, 54px) 110px;
+}
+
+#details .story-heading {
+  text-align: center;
+  margin-bottom: clamp(24px, 4vw, 38px);
+}
+
+#details .story-heading h2 {
+  margin: 0;
+  color: #2b4b3d !important;
+  font-family: "Parisienne", cursive;
+  font-size: clamp(48px, 7vw, 76px) !important;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: .01em;
+}
+
+#details .story-heading-ornament,
+#details .story-gift-rule {
+  width: min(250px, 64%);
+  margin: 13px auto 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--story-gold);
+  font-size: 9px;
+}
+
+#details .story-heading-ornament::before,
+#details .story-heading-ornament::after,
+#details .story-gift-rule::before,
+#details .story-gift-rule::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(184,140,67,.72));
+}
+
+#details .story-heading-ornament::after,
+#details .story-gift-rule::after {
+  background: linear-gradient(90deg, rgba(184,140,67,.72), transparent);
+}
+
+#details .story-photo-stack {
+  position: relative;
+  width: min(100%, 590px);
+  min-height: 300px;
+  margin: 0 auto 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#details .story-photo {
+  position: absolute;
+  width: clamp(150px, 31%, 194px);
+  margin: 0;
+  padding: 9px 9px 26px;
+  background: #fffefa;
+  border: 1px solid rgba(124,99,66,.18);
+  box-shadow: 0 13px 28px rgba(49,42,35,.18);
+  transition: transform .28s ease, box-shadow .28s ease;
+}
+
+#details .story-photo img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: center;
+}
+
+#details .story-photo figcaption {
+  margin-top: 8px;
+  color: #756555;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 12px;
+  font-style: italic;
+  line-height: 1.1;
+  text-align: center;
+}
+
+#details .story-photo-left {
+  left: 8%;
+  transform: translateY(20px) rotate(-8deg);
+  z-index: 1;
+}
+
+#details .story-photo-center {
+  left: 50%;
+  transform: translateX(-50%) translateY(-3px) rotate(0deg);
+  z-index: 3;
+}
+
+#details .story-photo-right {
+  right: 8%;
+  transform: translateY(18px) rotate(8deg);
+  z-index: 2;
+}
+
+#details .story-photo:hover {
+  z-index: 6;
+  box-shadow: 0 18px 38px rgba(49,42,35,.24);
+}
+
+#details .story-photo-left:hover { transform: translateY(9px) rotate(-3deg) scale(1.03); }
+#details .story-photo-center:hover { transform: translateX(-50%) translateY(-10px) scale(1.03); }
+#details .story-photo-right:hover { transform: translateY(8px) rotate(3deg) scale(1.03); }
+
+#details .story-message-card {
+  width: min(100%, 580px);
+  margin: 0 auto;
+  text-align: center;
+}
+
+#details .story-mini-label {
+  display: inline-block;
+  margin-bottom: 10px;
+  color: #2d6a51;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .20em;
+  text-transform: uppercase;
+}
+
+#details .story-message-card p {
+  margin: 0;
+  color: #625447 !important;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(17px, 2.1vw, 20px) !important;
+  line-height: 1.62 !important;
+}
+
+#details .story-gift-guide {
+  width: min(100%, 560px);
+  margin: 28px auto 0;
+  padding-top: 24px;
+  text-align: center;
+  border-top: 1px solid rgba(184,140,67,.22);
+}
+
+#details .story-gift-heading {
+  color: #2b4b3d;
+  font-family: "Parisienne", cursive;
+  font-size: clamp(32px, 4vw, 42px);
+  line-height: 1;
+}
+
+#details .story-gift-rule {
+  width: min(190px, 54%);
+  margin-top: 9px;
+}
+
+#details .story-gift-guide p {
+  max-width: 500px;
+  margin: 12px auto 0 !important;
+  color: #6b5b4c !important;
+  font-size: 14px !important;
+  line-height: 1.62 !important;
+}
+
+#details .story-envelope-pocket {
+  position: absolute;
+  z-index: 5;
+  left: 0;
+  right: 0;
+  bottom: 18px;
+  height: 255px;
+  overflow: hidden;
+  border-radius: 0 0 24px 24px;
+  pointer-events: none;
+}
+
+#details .story-pocket-left,
+#details .story-pocket-right,
+#details .story-pocket-front {
+  position: absolute;
+  inset: 0;
+}
+
+#details .story-pocket-left {
+  clip-path: polygon(0 0, 58% 100%, 0 100%);
+  background: linear-gradient(145deg, #1d5944, #113a2c 82%);
+  border-left: 1px solid rgba(184,140,67,.22);
+}
+
+#details .story-pocket-right {
+  clip-path: polygon(100% 0, 42% 100%, 100% 100%);
+  background: linear-gradient(215deg, #1d5944, #113a2c 82%);
+  border-right: 1px solid rgba(184,140,67,.22);
+}
+
+#details .story-pocket-front {
+  clip-path: polygon(0 42%, 50% 100%, 100% 42%, 100% 100%, 0 100%);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.035), transparent 36%),
+    linear-gradient(145deg, #184d3a, #0f3428 86%);
+  border-bottom: 1px solid rgba(184,140,67,.26);
+}
+
+#details .story-wax-seal {
+  position: absolute;
+  z-index: 8;
+  left: 50%;
+  bottom: 92px;
+  width: 76px;
+  height: 76px;
+  transform: translateX(-50%) rotate(-3deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  border-radius: 50%;
+  color: #f2d89a;
+  background:
+    radial-gradient(circle at 34% 28%, #2e775a 0%, #17523d 58%, #0d3d2d 100%);
+  border: 2px solid #b98b3d;
+  box-shadow:
+    0 0 0 5px rgba(8,41,30,.92),
+    0 0 0 6px rgba(184,140,67,.48),
+    0 10px 24px rgba(4,21,15,.28);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 600;
+  font-size: 18px;
+  letter-spacing: .01em;
+}
+
+#details .story-wax-seal::before {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  border-radius: 50%;
+  border: 1px solid rgba(239,210,145,.62);
+}
+
+#details .story-wax-seal em {
+  font-size: 13px;
+  font-weight: 400;
+}
+
+/* Hide all retired Details-card elements if older cached markup ever appears. */
+#details .details-stationery,
+#details .details-logo-wrap,
+#details .details-stationery-copy,
+#details .details-content-grid {
+  max-height: none;
+}
+
+@media (max-width: 760px) {
+  #details .our-story-envelope {
+    min-height: 710px;
+    padding: 62px 8px 104px;
+  }
+
+  #details .story-envelope-back {
+    inset: 28px 0 12px;
+    border-radius: 24px 24px 20px 20px;
+  }
+
+  #details .story-envelope-flap {
+    top: -30px;
+    width: 82%;
+    height: 220px;
+  }
+
+  #details .story-letter {
+    width: 91%;
+  }
+
+  #details .story-letter-inner {
+    padding: 34px 20px 98px;
+  }
+
+  #details .story-photo-stack {
+    min-height: 245px;
+    margin-bottom: 22px;
+  }
+
+  #details .story-photo {
+    width: 34%;
+    padding: 6px 6px 20px;
+  }
+
+  #details .story-photo figcaption {
+    font-size: 10px;
+  }
+
+  #details .story-photo-left { left: 4%; }
+  #details .story-photo-right { right: 4%; }
+
+  #details .story-envelope-pocket {
+    bottom: 12px;
+    height: 205px;
+    border-radius: 0 0 20px 20px;
+  }
+
+  #details .story-wax-seal {
+    bottom: 70px;
+    width: 64px;
+    height: 64px;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 520px) {
+  #details.split-section {
+    width: 100% !important;
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+  }
+
+  #details .our-story-envelope {
+    min-height: 650px;
+    margin-top: 6px !important;
+    padding-top: 52px;
+  }
+
+  #details .story-letter {
+    width: 94%;
+  }
+
+  #details .story-letter-inner {
+    padding: 30px 14px 86px;
+  }
+
+  #details .story-heading h2 {
+    font-size: 48px !important;
+  }
+
+  #details .story-photo-stack {
+    min-height: 205px;
+  }
+
+  #details .story-photo {
+    width: 36%;
+    padding: 5px 5px 17px;
+  }
+
+  #details .story-photo-left { left: 1%; transform: translateY(18px) rotate(-7deg); }
+  #details .story-photo-right { right: 1%; transform: translateY(18px) rotate(7deg); }
+
+  #details .story-message-card p {
+    font-size: 16px !important;
+    line-height: 1.54 !important;
+  }
+
+  #details .story-gift-guide {
+    margin-top: 22px;
+    padding-top: 19px;
+  }
+
+  #details .story-gift-guide p {
+    font-size: 13px !important;
+  }
+
+  #details .story-envelope-pocket {
+    height: 176px;
+  }
+
+  #details .story-wax-seal {
+    bottom: 55px;
+    width: 58px;
+    height: 58px;
+    font-size: 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #details .story-photo {
+    transition: none !important;
+  }
+}
+
+/* =========================================================
+   OUR STORY — remove the former Details outer card/layout.
+   Keep only the envelope composition on the page background.
+   ========================================================= */
+#details.split-section {
+  background: transparent !important;
+  border: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+}
+
+/* =========================================================
+   OUR STORY — V2 refined envelope styling
+   Cleaner reference-inspired construction: deeper emerald,
+   sharper folds, fine gold seams, softer paper depth.
+   ========================================================= */
+#details .our-story-envelope {
+  --story-green-deep: #08291f;
+  --story-green: #0d382a;
+  --story-green-mid: #124633;
+  --story-green-light: #1a5841;
+  --story-gold: #c8a15a;
+  --story-gold-soft: rgba(200, 161, 90, .42);
+  width: min(100%, 900px) !important;
+  min-height: 805px;
+  padding: 72px clamp(22px, 4vw, 48px) 128px;
+  perspective: 1200px;
+}
+
+/* Upright rear body with a subtle stitched/pressed edge. */
+#details .story-envelope-back {
+  inset: 54px 12px 18px;
+  border-radius: 20px 20px 26px 26px;
+  background:
+    radial-gradient(ellipse at 50% 2%, rgba(255,255,255,.07) 0%, transparent 38%),
+    linear-gradient(115deg, rgba(255,255,255,.025) 0 22%, transparent 22% 78%, rgba(0,0,0,.045) 78%),
+    linear-gradient(145deg, #0c3528 0%, var(--story-green) 48%, #08271e 100%);
+  border: 1px solid rgba(200,161,90,.34);
+  box-shadow:
+    0 32px 64px rgba(8,31,24,.26),
+    inset 0 1px 0 rgba(255,255,255,.08),
+    inset 0 -1px 0 rgba(0,0,0,.18);
+}
+
+#details .story-envelope-back::before,
+#details .story-envelope-back::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+}
+
+/* Fine pressed perimeter line. */
+#details .story-envelope-back::before {
+  inset: 9px;
+  border: 1px solid rgba(205,172,103,.18);
+  border-radius: 14px 14px 20px 20px;
+}
+
+/* Very soft paper-grain lighting without a separate outer card. */
+#details .story-envelope-back::after {
+  inset: 0;
+  border-radius: inherit;
+  background:
+    repeating-linear-gradient(112deg, rgba(255,255,255,.012) 0 1px, transparent 1px 5px),
+    radial-gradient(circle at 18% 40%, rgba(255,255,255,.025), transparent 25%),
+    radial-gradient(circle at 82% 62%, rgba(0,0,0,.035), transparent 28%);
+  mix-blend-mode: soft-light;
+  opacity: .75;
+}
+
+/* Tall open flap, closer to the reference silhouette. */
+#details .story-envelope-flap {
+  z-index: 1;
+  top: -72px;
+  left: 50%;
+  width: 79%;
+  height: 325px;
+  transform: translateX(-50%) rotateX(-2deg);
+  clip-path: polygon(50% 0, 100% 69%, 94% 100%, 6% 100%, 0 69%);
+  background:
+    linear-gradient(170deg, rgba(255,255,255,.07), transparent 29%),
+    linear-gradient(145deg, #103e2f 0%, #0b3025 61%, #07251c 100%);
+  border: 1px solid rgba(200,161,90,.40);
+  filter: drop-shadow(0 18px 18px rgba(4,20,15,.18));
+}
+
+#details .story-envelope-flap::before {
+  content: "";
+  position: absolute;
+  inset: 11px 14px 9px;
+  clip-path: polygon(50% 0, 100% 69%, 94% 100%, 6% 100%, 0 69%);
+  border: 1px solid rgba(205,172,103,.20);
+}
+
+#details .story-envelope-flap::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 5px;
+  width: 80%;
+  height: 1px;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, transparent, rgba(205,172,103,.42), transparent);
+}
+
+/* Make the stationery feel slightly lifted out of the envelope. */
+#details .story-letter {
+  z-index: 4;
+  width: min(86%, 690px);
+  transform: translateY(-2px);
+  background:
+    radial-gradient(circle at 50% -8%, rgba(255,255,255,.98), transparent 35%),
+    linear-gradient(180deg, #fffdf8 0%, #fbf5e8 57%, #f4ead8 100%);
+  border-color: rgba(200,161,90,.70);
+  box-shadow:
+    0 28px 55px rgba(9,35,26,.22),
+    0 4px 10px rgba(9,35,26,.10),
+    inset 0 1px 0 rgba(255,255,255,.94);
+}
+
+#details .story-letter::before {
+  inset: 10px;
+  border-color: rgba(200,161,90,.42);
+}
+
+#details .story-letter::after {
+  inset: 17px;
+  border-color: rgba(200,161,90,.18);
+}
+
+/* Rebuild the front pocket with cleaner overlapping panels. */
+#details .story-envelope-pocket {
+  z-index: 6;
+  left: 12px;
+  right: 12px;
+  bottom: 18px;
+  height: 270px;
+  border-radius: 0 0 25px 25px;
+  filter: drop-shadow(0 -3px 5px rgba(3,19,14,.08));
+}
+
+#details .story-pocket-left {
+  clip-path: polygon(0 3%, 57% 100%, 0 100%);
+  background:
+    linear-gradient(150deg, rgba(255,255,255,.045), transparent 34%),
+    linear-gradient(142deg, #19523d 0%, #0e3628 80%);
+  border-left: 1px solid rgba(200,161,90,.28);
+}
+
+#details .story-pocket-right {
+  clip-path: polygon(100% 3%, 43% 100%, 100% 100%);
+  background:
+    linear-gradient(210deg, rgba(255,255,255,.04), transparent 32%),
+    linear-gradient(218deg, #19523d 0%, #0e3628 80%);
+  border-right: 1px solid rgba(200,161,90,.28);
+}
+
+#details .story-pocket-front {
+  clip-path: polygon(0 38%, 50% 100%, 100% 38%, 100% 100%, 0 100%);
+  background:
+    radial-gradient(ellipse at 50% 100%, rgba(0,0,0,.08), transparent 54%),
+    linear-gradient(180deg, rgba(255,255,255,.045), transparent 32%),
+    linear-gradient(145deg, #164b38 0%, #0b3024 86%);
+  border-bottom: 1px solid rgba(200,161,90,.34);
+}
+
+/* Gold seam accents along the two main fold edges. */
+#details .story-envelope-pocket::before,
+#details .story-envelope-pocket::after {
+  content: "";
+  position: absolute;
+  z-index: 7;
+  bottom: 1px;
+  width: 56%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(200,161,90,.44) 36%, rgba(200,161,90,.58) 100%);
+  transform-origin: 100% 50%;
+  opacity: .8;
+}
+
+#details .story-envelope-pocket::before {
+  left: -4%;
+  transform: rotate(29deg);
+}
+
+#details .story-envelope-pocket::after {
+  right: -4%;
+  transform-origin: 0 50%;
+  transform: rotate(-29deg);
+  background: linear-gradient(90deg, rgba(200,161,90,.58) 0%, rgba(200,161,90,.44) 64%, transparent 100%);
+}
+
+/* Smaller, more formal monogram seal. */
+#details .story-wax-seal {
+  z-index: 9;
+  bottom: 88px;
+  width: 72px;
+  height: 72px;
+  color: #f1d89e;
+  background:
+    radial-gradient(circle at 34% 27%, #287156 0%, #15503b 52%, #0a3427 100%);
+  border: 1px solid #d0aa5f;
+  box-shadow:
+    0 0 0 4px rgba(7,36,27,.96),
+    0 0 0 5px rgba(208,170,95,.70),
+    inset 0 0 0 2px rgba(255,255,255,.06),
+    0 12px 26px rgba(4,23,17,.30);
+  letter-spacing: .02em;
+}
+
+#details .story-wax-seal::before {
+  inset: 7px;
+  border-color: rgba(239,210,145,.72);
+  box-shadow: inset 0 0 0 2px rgba(7,40,29,.35);
+}
+
+/* Slightly airier photo presentation to match the elegant envelope. */
+#details .story-photo {
+  box-shadow: 0 14px 30px rgba(49,42,35,.20), 0 2px 4px rgba(49,42,35,.08);
+}
+
+@media (max-width: 760px) {
+  #details .our-story-envelope {
+    min-height: 720px;
+    padding: 62px 9px 110px;
+  }
+
+  #details .story-envelope-back {
+    inset: 38px 4px 12px;
+    border-radius: 18px 18px 21px 21px;
+  }
+
+  #details .story-envelope-flap {
+    top: -42px;
+    width: 86%;
+    height: 245px;
+  }
+
+  #details .story-envelope-pocket {
+    left: 4px;
+    right: 4px;
+    bottom: 12px;
+    height: 214px;
+    border-radius: 0 0 21px 21px;
+  }
+
+  #details .story-wax-seal {
+    bottom: 70px;
+    width: 62px;
+    height: 62px;
+  }
+}
+
+@media (max-width: 520px) {
+  #details .our-story-envelope {
+    min-height: 660px;
+    padding-top: 50px;
+  }
+
+  #details .story-envelope-flap {
+    top: -28px;
+    width: 90%;
+    height: 205px;
+  }
+
+  #details .story-envelope-pocket {
+    height: 182px;
+  }
+
+  #details .story-wax-seal {
+    bottom: 54px;
+    width: 56px;
+    height: 56px;
+  }
+}
+
+
+/* =========================================================
+   OUR STORY — remove envelope style.
+   Keep a refined floating paper card with photos and copy.
+   ========================================================= */
+#details .story-envelope-back,
+#details .story-envelope-flap,
+#details .story-envelope-pocket,
+#details .story-wax-seal {
+  display: none !important;
+}
+
+#details .our-story-envelope {
+  width: min(100%, 780px) !important;
+  min-height: auto !important;
+  margin: 18px auto 0 !important;
+  padding: 0 !important;
+  display: block !important;
+  perspective: none !important;
+}
+
+#details .story-letter {
+  width: min(100%, 760px) !important;
+  margin: 0 auto !important;
+  border-radius: 20px !important;
+  overflow: hidden !important;
+  box-shadow:
+    0 26px 54px rgba(25, 40, 33, .14),
+    0 8px 20px rgba(25, 40, 33, .08),
+    inset 0 1px 0 rgba(255,255,255,.94) !important;
+}
+
+#details .story-letter::before {
+  inset: 12px !important;
+}
+
+#details .story-letter::after {
+  inset: 21px !important;
+}
+
+#details .story-letter-inner {
+  padding: clamp(34px, 5vw, 54px) clamp(20px, 5vw, 54px) clamp(36px, 5vw, 52px) !important;
+}
+
+#details .story-photo-stack {
+  margin: 0 auto 38px !important;
+}
+
+#details .story-message-card {
+  margin-top: 8px !important;
+}
+
+#details .story-gift-guide {
+  margin-top: 26px !important;
+  padding-top: 22px !important;
+}
+
+@media (max-width: 760px) {
+  #details .our-story-envelope {
+    width: min(100%, 94vw) !important;
+  }
+
+  #details .story-letter {
+    width: 100% !important;
+    border-radius: 16px !important;
+  }
+
+  #details .story-letter-inner {
+    padding: 34px 20px 40px !important;
+  }
+}
+
+@media (max-width: 520px) {
+  #details .story-letter {
+    border-radius: 14px !important;
+  }
+
+  #details .story-letter-inner {
+    padding: 30px 14px 34px !important;
+  }
+}
+
+
+/* =========================================================
+   RSVP — capacity note + conditional guest / plus-one field
+   ========================================================= */
+#rsvp .rsvp-capacity-note {
+  width: min(100%, 760px);
+  margin: 18px auto 0;
+  padding: 16px 20px;
+  color: var(--ink);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(15px, 2vw, 17px);
+  line-height: 1.55;
+  text-align: center;
+  background: rgba(255, 250, 240, .72);
+  border: 1px solid rgba(var(--gold-rgb), .30);
+  border-radius: 14px;
+  box-shadow: 0 8px 22px rgba(77, 56, 42, .06);
+}
+
+#rsvp .plus-one-field {
+  margin-top: 16px;
+}
+
+#rsvp .plus-one-field > label {
+  display: block;
+  margin-bottom: 7px;
+}
+
+@media (max-width: 560px) {
+  #rsvp .rsvp-capacity-note {
+    margin-top: 15px;
+    padding: 14px 15px;
+    font-size: 15px;
+    line-height: 1.48;
+  }
+}
+
+
+/* =========================================================
+   V54 — Home + Entourage text entrance animations
+   ========================================================= */
+@keyframes weddingTextReveal {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 16px, 0);
+    filter: blur(3px);
+  }
+  62% {
+    opacity: 1;
+    transform: translate3d(0, -2px, 0);
+    filter: blur(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+    filter: none;
+  }
+}
+
+@keyframes weddingTextSoftReveal {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 10px, 0);
+    letter-spacing: .03em;
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+    letter-spacing: inherit;
+  }
+}
+
+/* Home: replay a gentle text cascade whenever Home becomes active. */
+body.section-tab-mode #home.is-active-section .invitation-copy > *,
+body.section-tab-mode #home.is-active-section .countdown-panel > p,
+body.section-tab-mode #home.is-active-section .countdown-grid strong,
+body.section-tab-mode #home.is-active-section .countdown-grid span,
+body.section-tab-mode #home.is-active-section .home-launcher-heading .section-kicker,
+body.section-tab-mode #home.is-active-section .home-launcher-heading h2,
+body.section-tab-mode #home.is-active-section .home-launcher-heading div > p:last-child,
+body.section-tab-mode #home.is-active-section .home-launcher-card strong,
+body.section-tab-mode #home.is-active-section .home-launcher-card small {
+  opacity: 0;
+  animation: weddingTextReveal .72s cubic-bezier(.2,.78,.2,1) both;
+  will-change: transform, opacity, filter;
+}
+
+body.section-tab-mode #home.is-active-section .invitation-copy > *:nth-child(1) { animation-delay: .08s; }
+body.section-tab-mode #home.is-active-section .invitation-copy > *:nth-child(2) { animation-delay: .15s; }
+body.section-tab-mode #home.is-active-section .invitation-copy > *:nth-child(3) { animation-delay: .22s; }
+body.section-tab-mode #home.is-active-section .invitation-copy > *:nth-child(4) { animation-delay: .29s; }
+body.section-tab-mode #home.is-active-section .invitation-copy > *:nth-child(5) { animation-delay: .36s; }
+body.section-tab-mode #home.is-active-section .invitation-copy > *:nth-child(6) { animation-delay: .43s; }
+body.section-tab-mode #home.is-active-section .invitation-copy > *:nth-child(7) { animation-delay: .50s; }
+body.section-tab-mode #home.is-active-section .invitation-copy > *:nth-child(8) { animation-delay: .57s; }
+
+body.section-tab-mode #home.is-active-section .countdown-panel > p { animation-delay: .18s; }
+body.section-tab-mode #home.is-active-section .countdown-grid > div:nth-child(1) strong,
+body.section-tab-mode #home.is-active-section .countdown-grid > div:nth-child(1) span { animation-delay: .25s; }
+body.section-tab-mode #home.is-active-section .countdown-grid > div:nth-child(2) strong,
+body.section-tab-mode #home.is-active-section .countdown-grid > div:nth-child(2) span { animation-delay: .32s; }
+body.section-tab-mode #home.is-active-section .countdown-grid > div:nth-child(3) strong,
+body.section-tab-mode #home.is-active-section .countdown-grid > div:nth-child(3) span { animation-delay: .39s; }
+body.section-tab-mode #home.is-active-section .countdown-grid > div:nth-child(4) strong,
+body.section-tab-mode #home.is-active-section .countdown-grid > div:nth-child(4) span { animation-delay: .46s; }
+
+body.section-tab-mode #home.is-active-section .home-launcher-heading .section-kicker { animation-delay: .12s; }
+body.section-tab-mode #home.is-active-section .home-launcher-heading h2 { animation-delay: .20s; }
+body.section-tab-mode #home.is-active-section .home-launcher-heading div > p:last-child { animation-delay: .28s; }
+
+#home .home-launcher-card:nth-child(1) { --home-card-text-delay: .25s; }
+#home .home-launcher-card:nth-child(2) { --home-card-text-delay: .31s; }
+#home .home-launcher-card:nth-child(3) { --home-card-text-delay: .37s; }
+#home .home-launcher-card:nth-child(4) { --home-card-text-delay: .43s; }
+#home .home-launcher-card:nth-child(5) { --home-card-text-delay: .49s; }
+#home .home-launcher-card:nth-child(6) { --home-card-text-delay: .55s; }
+#home .home-launcher-card:nth-child(7) { --home-card-text-delay: .61s; }
+body.section-tab-mode #home.is-active-section .home-launcher-card strong {
+  animation-delay: var(--home-card-text-delay, .25s);
+}
+body.section-tab-mode #home.is-active-section .home-launcher-card small {
+  animation-delay: calc(var(--home-card-text-delay, .25s) + .08s);
+}
+
+/* Entourage: animate headings and names in a soft cascading sequence. */
+body.section-tab-mode #entourage.is-active-section .entourage-program-heading h2,
+body.section-tab-mode #entourage.is-active-section .entourage-subsection > h3,
+body.section-tab-mode #entourage.is-active-section .entourage-group-heading p,
+body.section-tab-mode #entourage.is-active-section .entourage-member span {
+  opacity: 0;
+  animation: weddingTextSoftReveal .68s cubic-bezier(.2,.78,.2,1) both;
+  will-change: transform, opacity;
+}
+
+body.section-tab-mode #entourage.is-active-section .entourage-program-heading h2 {
+  animation: weddingTextReveal .82s cubic-bezier(.16,.84,.2,1) .08s both;
+}
+
+body.section-tab-mode #entourage.is-active-section .entourage-subsection > h3 {
+  animation-delay: .24s;
+}
+
+body.section-tab-mode #entourage.is-active-section .entourage-group-heading p {
+  animation-delay: .30s;
+}
+
+body.section-tab-mode #entourage.is-active-section .entourage-member:nth-child(1) span { animation-delay: .37s; }
+body.section-tab-mode #entourage.is-active-section .entourage-member:nth-child(2) span { animation-delay: .42s; }
+body.section-tab-mode #entourage.is-active-section .entourage-member:nth-child(3) span { animation-delay: .47s; }
+body.section-tab-mode #entourage.is-active-section .entourage-member:nth-child(4) span { animation-delay: .52s; }
+body.section-tab-mode #entourage.is-active-section .entourage-member:nth-child(5) span { animation-delay: .57s; }
+body.section-tab-mode #entourage.is-active-section .entourage-member:nth-child(6) span { animation-delay: .62s; }
+body.section-tab-mode #entourage.is-active-section .entourage-member:nth-child(n+7) span { animation-delay: .67s; }
+
+@media (prefers-reduced-motion: reduce) {
+  body.section-tab-mode #home.is-active-section .invitation-copy > *,
+  body.section-tab-mode #home.is-active-section .countdown-panel > p,
+  body.section-tab-mode #home.is-active-section .countdown-grid strong,
+  body.section-tab-mode #home.is-active-section .countdown-grid span,
+  body.section-tab-mode #home.is-active-section .home-launcher-heading .section-kicker,
+  body.section-tab-mode #home.is-active-section .home-launcher-heading h2,
+  body.section-tab-mode #home.is-active-section .home-launcher-heading div > p:last-child,
+  body.section-tab-mode #home.is-active-section .home-launcher-card strong,
+  body.section-tab-mode #home.is-active-section .home-launcher-card small,
+  body.section-tab-mode #entourage.is-active-section .entourage-program-heading h2,
+  body.section-tab-mode #entourage.is-active-section .entourage-subsection > h3,
+  body.section-tab-mode #entourage.is-active-section .entourage-group-heading p,
+  body.section-tab-mode #entourage.is-active-section .entourage-member span {
+    opacity: 1 !important;
+    animation: none !important;
+    transform: none !important;
+    filter: none !important;
+  }
+}
+
+
+/* =========================================================
+   HOME — refined text transitions
+   Elegant line-by-line reveal when Home opens, plus subtle
+   interactive text movement on the menu cards.
+   ========================================================= */
+@keyframes homeTextTransition {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 22px, 0);
+    filter: blur(5px);
+    clip-path: inset(0 0 100% 0);
+  }
+  55% {
+    opacity: 1;
+    filter: blur(0);
+    clip-path: inset(0 0 0 0);
+  }
+  78% {
+    transform: translate3d(0, -2px, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+    filter: none;
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes homeNamesTransition {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0) scale(.97);
+    filter: blur(6px);
+    letter-spacing: .045em;
+  }
+  60% {
+    opacity: 1;
+    filter: blur(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    filter: none;
+    letter-spacing: normal;
+  }
+}
+
+/* Replace the simpler Home reveal with a more visible transition. */
+body.section-tab-mode #home.is-active-section .invitation-copy > *,
+body.section-tab-mode #home.is-active-section .countdown-panel > p,
+body.section-tab-mode #home.is-active-section .countdown-grid strong,
+body.section-tab-mode #home.is-active-section .countdown-grid span,
+body.section-tab-mode #home.is-active-section .home-launcher-heading .section-kicker,
+body.section-tab-mode #home.is-active-section .home-launcher-heading h2,
+body.section-tab-mode #home.is-active-section .home-launcher-heading div > p:last-child,
+body.section-tab-mode #home.is-active-section .home-launcher-card strong,
+body.section-tab-mode #home.is-active-section .home-launcher-card small {
+  animation-name: homeTextTransition !important;
+  animation-duration: .88s !important;
+  animation-timing-function: cubic-bezier(.18,.78,.18,1) !important;
+  animation-fill-mode: both !important;
+}
+
+/* Make the couple names the focal transition. */
+body.section-tab-mode #home.is-active-section .invitation-copy h1 {
+  animation-name: homeNamesTransition !important;
+  animation-duration: 1.05s !important;
+  animation-delay: .20s !important;
+}
+
+/* Slightly slower invitation details for a graceful cascade. */
+body.section-tab-mode #home.is-active-section .invitation-copy > *:nth-child(1) { animation-delay: .08s !important; }
+body.section-tab-mode #home.is-active-section .invitation-copy > *:nth-child(2) { animation-delay: .20s !important; }
+body.section-tab-mode #home.is-active-section .invitation-copy > *:nth-child(3) { animation-delay: .34s !important; }
+body.section-tab-mode #home.is-active-section .invitation-copy > *:nth-child(4) { animation-delay: .44s !important; }
+body.section-tab-mode #home.is-active-section .invitation-copy > *:nth-child(5) { animation-delay: .54s !important; }
+body.section-tab-mode #home.is-active-section .invitation-copy > *:nth-child(6) { animation-delay: .64s !important; }
+body.section-tab-mode #home.is-active-section .invitation-copy > *:nth-child(7) { animation-delay: .74s !important; }
+body.section-tab-mode #home.is-active-section .invitation-copy > *:nth-child(8) { animation-delay: .84s !important; }
+
+/* Menu-card text transitions smoothly on hover/focus too. */
+#home .home-launcher-card strong,
+#home .home-launcher-card small {
+  transition: transform .30s ease, opacity .30s ease, letter-spacing .30s ease !important;
+}
+
+#home .home-launcher-card:hover strong,
+#home .home-launcher-card:focus-visible strong {
+  transform: translateY(-2px);
+  letter-spacing: .025em;
+}
+
+#home .home-launcher-card:hover small,
+#home .home-launcher-card:focus-visible small {
+  transform: translateY(1px);
+  opacity: .88;
+}
+
+/* Keep the transition soft on small screens. */
+@media (max-width: 600px) {
+  body.section-tab-mode #home.is-active-section .invitation-copy > *,
+  body.section-tab-mode #home.is-active-section .countdown-panel > p,
+  body.section-tab-mode #home.is-active-section .countdown-grid strong,
+  body.section-tab-mode #home.is-active-section .countdown-grid span,
+  body.section-tab-mode #home.is-active-section .home-launcher-heading .section-kicker,
+  body.section-tab-mode #home.is-active-section .home-launcher-heading h2,
+  body.section-tab-mode #home.is-active-section .home-launcher-heading div > p:last-child,
+  body.section-tab-mode #home.is-active-section .home-launcher-card strong,
+  body.section-tab-mode #home.is-active-section .home-launcher-card small {
+    animation-duration: .72s !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.section-tab-mode #home.is-active-section .invitation-copy > *,
+  body.section-tab-mode #home.is-active-section .countdown-panel > p,
+  body.section-tab-mode #home.is-active-section .countdown-grid strong,
+  body.section-tab-mode #home.is-active-section .countdown-grid span,
+  body.section-tab-mode #home.is-active-section .home-launcher-heading .section-kicker,
+  body.section-tab-mode #home.is-active-section .home-launcher-heading h2,
+  body.section-tab-mode #home.is-active-section .home-launcher-heading div > p:last-child,
+  body.section-tab-mode #home.is-active-section .home-launcher-card strong,
+  body.section-tab-mode #home.is-active-section .home-launcher-card small {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    clip-path: none !important;
+  }
+}
+
+
+/* =========================================================
+   VENUE — portrait outer layout color + reception location name
+   ========================================================= */
+#venue .venue-image-panel {
+  background: linear-gradient(180deg, #f7efe0 0%, #f1e5d1 100%) !important;
+}
+
+#venue .venue-detail-name {
+  margin: 8px 0 0 !important;
+  color: #216148 !important;
+  font-family: "Cormorant Garamond", Georgia, serif !important;
+  font-size: clamp(22px, 3vw, 30px) !important;
+  font-weight: 600 !important;
+  line-height: 1.15 !important;
+}
+
+@media (max-width: 620px) {
+  #venue .venue-detail-name {
+    font-size: 22px !important;
+  }
+}
+
+
+/* =========================================================
+   VENUE — ivory/beige tone for the church portrait background
+   ========================================================= */
+#venue .venue-image-panel {
+  background: linear-gradient(180deg, #f7efe0 0%, #f1e5d1 100%) !important;
+}
+
+#venue .venue-image-card {
+  background: #f7efe0 !important;
+}
+
+#venue .venue-image {
+  filter: none !important;
+}
+
+
+/* =========================================================
+   HOME — celebrant name animation
+   Animate each wedding name separately for a more elegant reveal.
+   ========================================================= */
+#home .invitation-copy h1 {
+  overflow: visible;
+}
+
+#home #partnerOneDisplay,
+#home .invitation-copy .ampersand,
+#home #partnerTwoDisplay {
+  will-change: transform, opacity, filter;
+  transform-origin: center center;
+}
+
+body.home-entry-animation #home .invitation-copy h1,
+body.section-tab-mode #home.is-active-section .invitation-copy h1 {
+  animation: none !important;
+}
+
+body.home-entry-animation #home #partnerOneDisplay,
+body.section-tab-mode #home.is-active-section #partnerOneDisplay {
+  animation: homeCelebrantLeft 1s cubic-bezier(.18,.78,.18,1) both !important;
+  animation-delay: .20s !important;
+}
+
+body.home-entry-animation #home .invitation-copy .ampersand,
+body.section-tab-mode #home.is-active-section .invitation-copy .ampersand {
+  animation: homeCelebrantAmp 1s cubic-bezier(.18,.78,.18,1) both !important;
+  animation-delay: .34s !important;
+}
+
+body.home-entry-animation #home #partnerTwoDisplay,
+body.section-tab-mode #home.is-active-section #partnerTwoDisplay {
+  animation: homeCelebrantRight 1s cubic-bezier(.18,.78,.18,1) both !important;
+  animation-delay: .48s !important;
+}
+
+@keyframes homeCelebrantLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-26px) translateY(8px) scale(.97);
+    filter: blur(10px);
+    letter-spacing: .07em;
+  }
+  60% {
+    opacity: 1;
+    transform: translateX(3px) translateY(0) scale(1.02);
+    filter: blur(0);
+    letter-spacing: .02em;
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) translateY(0) scale(1);
+    filter: blur(0);
+    letter-spacing: 0;
+  }
+}
+
+@keyframes homeCelebrantRight {
+  0% {
+    opacity: 0;
+    transform: translateX(26px) translateY(8px) scale(.97);
+    filter: blur(10px);
+    letter-spacing: .07em;
+  }
+  60% {
+    opacity: 1;
+    transform: translateX(-3px) translateY(0) scale(1.02);
+    filter: blur(0);
+    letter-spacing: .02em;
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) translateY(0) scale(1);
+    filter: blur(0);
+    letter-spacing: 0;
+  }
+}
+
+@keyframes homeCelebrantAmp {
+  0% {
+    opacity: 0;
+    transform: translateY(12px) scale(.6) rotate(-12deg);
+    filter: blur(8px);
+  }
+  55% {
+    opacity: 1;
+    transform: translateY(-2px) scale(1.12) rotate(2deg);
+    filter: blur(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1) rotate(0deg);
+    filter: blur(0);
+  }
+}
+
+@media (max-width: 600px) {
+  body.home-entry-animation #home #partnerOneDisplay,
+  body.section-tab-mode #home.is-active-section #partnerOneDisplay,
+  body.home-entry-animation #home .invitation-copy .ampersand,
+  body.section-tab-mode #home.is-active-section .invitation-copy .ampersand,
+  body.home-entry-animation #home #partnerTwoDisplay,
+  body.section-tab-mode #home.is-active-section #partnerTwoDisplay {
+    animation-duration: .84s !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.home-entry-animation #home #partnerOneDisplay,
+  body.section-tab-mode #home.is-active-section #partnerOneDisplay,
+  body.home-entry-animation #home .invitation-copy .ampersand,
+  body.section-tab-mode #home.is-active-section .invitation-copy .ampersand,
+  body.home-entry-animation #home #partnerTwoDisplay,
+  body.section-tab-mode #home.is-active-section #partnerTwoDisplay {
+    animation: none !important;
+  }
+}
+
+
+/* =========================================================
+   HOME — celebrant name visibility fix
+   The parent heading must stay visible while its child names animate.
+   ========================================================= */
+body.home-entry-animation #home .invitation-copy h1,
+body.section-tab-mode #home.is-active-section .invitation-copy h1 {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
+  filter: none !important;
+  clip-path: none !important;
+  animation: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #home #partnerOneDisplay,
+  #home .invitation-copy .ampersand,
+  #home #partnerTwoDisplay {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+    filter: none !important;
+  }
+}
+
+
+/* =========================================================
+   HOME — celebrant names animation V3 (explicit JS trigger)
+   This version runs only when the heading receives the replay class,
+   preventing the animation from finishing behind the opening envelope.
+   ========================================================= */
+#home .invitation-copy h1 {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
+  filter: none !important;
+  animation: none !important;
+}
+
+#home .invitation-copy h1 #partnerOneDisplay,
+#home .invitation-copy h1 .ampersand,
+#home .invitation-copy h1 #partnerTwoDisplay {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  filter: none;
+}
+
+#home .invitation-copy h1.celebrant-names-animate #partnerOneDisplay {
+  animation: celebrantNameFromLeft 1.15s cubic-bezier(.16,.84,.24,1) both !important;
+}
+
+#home .invitation-copy h1.celebrant-names-animate .ampersand {
+  animation: celebrantAmpersandReveal .9s cubic-bezier(.16,.84,.24,1) .20s both !important;
+}
+
+#home .invitation-copy h1.celebrant-names-animate #partnerTwoDisplay {
+  animation: celebrantNameFromRight 1.15s cubic-bezier(.16,.84,.24,1) .36s both !important;
+}
+
+@keyframes celebrantNameFromLeft {
+  0% {
+    opacity: 0;
+    transform: translate3d(-52px, 14px, 0) scale(.92);
+    filter: blur(12px);
+  }
+  58% {
+    opacity: 1;
+    transform: translate3d(5px, -2px, 0) scale(1.035);
+    filter: blur(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes celebrantNameFromRight {
+  0% {
+    opacity: 0;
+    transform: translate3d(52px, 14px, 0) scale(.92);
+    filter: blur(12px);
+  }
+  58% {
+    opacity: 1;
+    transform: translate3d(-5px, -2px, 0) scale(1.035);
+    filter: blur(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes celebrantAmpersandReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(16px) scale(.55) rotate(-10deg);
+    filter: blur(8px);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(-3px) scale(1.16) rotate(2deg);
+    filter: blur(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1) rotate(0deg);
+    filter: blur(0);
+  }
+}
+
+@media (max-width: 600px) {
+  #home .invitation-copy h1.celebrant-names-animate #partnerOneDisplay,
+  #home .invitation-copy h1.celebrant-names-animate #partnerTwoDisplay {
+    animation-duration: .95s !important;
+  }
+  #home .invitation-copy h1.celebrant-names-animate .ampersand {
+    animation-duration: .76s !important;
+  }
+}
+
+
+/* =========================================================
+   HOME — refined transparent countdown
+   Remove the emerald fill and use green typography.
+   ========================================================= */
+#home .countdown-panel {
+  max-width: 650px !important;
+  margin: 34px auto 0 !important;
+  padding: 28px 24px 24px !important;
+  color: #216148 !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+  position: relative !important;
+}
+
+#home .countdown-panel::before,
+#home .countdown-panel::after {
+  content: "";
+  display: block;
+  width: min(360px, 72%);
+  height: 1px;
+  margin-inline: auto;
+  background: linear-gradient(90deg, transparent, rgba(33,97,72,.48), transparent);
+}
+
+#home .countdown-panel::before {
+  margin-bottom: 20px;
+}
+
+#home .countdown-panel::after {
+  margin-top: 22px;
+}
+
+#home .countdown-panel > p {
+  margin: 0 !important;
+  color: #2a7257 !important;
+  font-weight: 600 !important;
+}
+
+#home .countdown-grid {
+  max-width: 560px !important;
+  margin: 18px auto 0 !important;
+}
+
+#home .countdown-grid div {
+  border-right-color: rgba(33,97,72,.24) !important;
+}
+
+#home .countdown-grid strong {
+  color: #1f5c45 !important;
+  font-size: clamp(30px, 4vw, 38px) !important;
+  font-weight: 600 !important;
+}
+
+#home .countdown-grid span {
+  margin-top: 3px !important;
+  color: #3e745e !important;
+  font-weight: 600 !important;
+}
+
+@media (max-width: 600px) {
+  #home .countdown-panel {
+    padding: 24px 10px 20px !important;
+  }
+
+  #home .countdown-panel::before,
+  #home .countdown-panel::after {
+    width: 78%;
+  }
+
+  #home .countdown-grid {
+    gap: 0 !important;
+  }
+
+  #home .countdown-grid strong {
+    font-size: 28px !important;
+  }
+}
+
+
+/* =========================================================
+   HOME — classic framed countdown
+   Ivory paper, double gold frame, green typography.
+   ========================================================= */
+#home .countdown-panel {
+  max-width: 690px !important;
+  margin: 38px auto 0 !important;
+  padding: 34px 34px 30px !important;
+  color: #215f48 !important;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255,255,255,.72), transparent 40%),
+    rgba(255,250,240,.68) !important;
+  border: 1px solid rgba(198,161,91,.82) !important;
+  border-radius: 10px !important;
+  box-shadow:
+    inset 0 0 0 5px rgba(247,241,227,.96),
+    inset 0 0 0 6px rgba(198,161,91,.36),
+    0 16px 34px rgba(57,45,31,.08) !important;
+  position: relative !important;
+}
+
+#home .countdown-panel::before,
+#home .countdown-panel::after {
+  position: absolute !important;
+  left: 50% !important;
+  width: auto !important;
+  height: auto !important;
+  margin: 0 !important;
+  transform: translateX(-50%) !important;
+  color: #b88c43 !important;
+  background: var(--cream) !important;
+  padding: 0 12px !important;
+  font-size: 13px !important;
+  line-height: 1 !important;
+  letter-spacing: .18em !important;
+  z-index: 2 !important;
+}
+
+#home .countdown-panel::before {
+  content: "✦" !important;
+  top: -7px !important;
+}
+
+#home .countdown-panel::after {
+  content: "✦" !important;
+  bottom: -7px !important;
+}
+
+#home .countdown-panel > p {
+  margin: 0 !important;
+  color: #216148 !important;
+  font-family: "Parisienne", "Cormorant Garamond", cursive !important;
+  font-size: clamp(26px, 4vw, 34px) !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+  line-height: 1.15 !important;
+  letter-spacing: .01em !important;
+}
+
+#home .countdown-grid {
+  max-width: 590px !important;
+  margin: 22px auto 0 !important;
+  padding: 7px 0 2px !important;
+}
+
+#home .countdown-grid div {
+  position: relative !important;
+  padding: 4px 10px 2px !important;
+  border-right: 1px solid rgba(198,161,91,.46) !important;
+}
+
+#home .countdown-grid div:last-child {
+  border-right: 0 !important;
+}
+
+#home .countdown-grid strong {
+  color: #1f5c45 !important;
+  font-family: "Cormorant Garamond", Georgia, serif !important;
+  font-size: clamp(34px, 4.5vw, 44px) !important;
+  font-weight: 500 !important;
+  line-height: 1 !important;
+  letter-spacing: .025em !important;
+}
+
+#home .countdown-grid span {
+  margin-top: 8px !important;
+  color: #92733c !important;
+  font-family: "Inter", Arial, sans-serif !important;
+  font-size: 9px !important;
+  font-weight: 700 !important;
+  letter-spacing: .20em !important;
+  text-transform: uppercase !important;
+}
+
+@media (max-width: 600px) {
+  #home .countdown-panel {
+    width: min(100%, calc(100% - 16px)) !important;
+    margin-top: 30px !important;
+    padding: 30px 14px 26px !important;
+    border-radius: 8px !important;
+    box-shadow:
+      inset 0 0 0 4px rgba(247,241,227,.96),
+      inset 0 0 0 5px rgba(198,161,91,.34),
+      0 12px 26px rgba(57,45,31,.07) !important;
+  }
+
+  #home .countdown-panel > p {
+    font-size: 27px !important;
+  }
+
+  #home .countdown-grid {
+    margin-top: 18px !important;
+  }
+
+  #home .countdown-grid div {
+    padding-inline: 5px !important;
+  }
+
+  #home .countdown-grid strong {
+    font-size: 30px !important;
+  }
+
+  #home .countdown-grid span {
+    margin-top: 6px !important;
+    font-size: 7px !important;
+    letter-spacing: .14em !important;
+  }
+}
