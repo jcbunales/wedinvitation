@@ -15212,3 +15212,372 @@ body.section-tab-mode #home.is-active-section .invitation-copy h1 {
     animation: none !important;
   }
 }
+
+
+/* =========================================================
+   MOBILE TYPOGRAPHY — final responsive readability pass
+   Keeps the classic desktop type while preventing oversized,
+   tiny, or cramped text on phones.
+   ========================================================= */
+@media (max-width: 620px) {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  body {
+    font-size: 16px;
+  }
+
+  .section-kicker,
+  .eyebrow {
+    font-size: 10px !important;
+    line-height: 1.35 !important;
+    letter-spacing: .16em !important;
+  }
+
+  .section-heading h2 {
+    font-size: clamp(36px, 11vw, 46px) !important;
+    line-height: 1.02 !important;
+  }
+
+  .section-heading .section-intro,
+  .section-intro {
+    font-size: 15px !important;
+    line-height: 1.55 !important;
+  }
+
+  .section-return-link {
+    font-size: 13px !important;
+  }
+
+  /* Home invitation */
+  #home .invitation-copy {
+    padding-inline: 22px !important;
+  }
+
+  #home .invitation-copy h1 {
+    font-size: clamp(50px, 15vw, 66px) !important;
+    line-height: .90 !important;
+    letter-spacing: 0 !important;
+  }
+
+  #home .invitation-copy .ampersand {
+    font-size: .62em !important;
+    line-height: 1 !important;
+  }
+
+  #home .invitation-copy .invite-line {
+    max-width: 290px !important;
+    font-size: 17px !important;
+    line-height: 1.4 !important;
+  }
+
+  #home .date-block .day {
+    font-size: 12px !important;
+    letter-spacing: .18em !important;
+  }
+
+  #home .date-block strong {
+    font-size: 23px !important;
+    line-height: 1.2 !important;
+  }
+
+  #home .date-block span:last-child {
+    font-size: 15px !important;
+  }
+
+  #home .venue-name {
+    font-size: 22px !important;
+    line-height: 1.2 !important;
+  }
+
+  #home .venue-address {
+    font-size: 13px !important;
+    line-height: 1.45 !important;
+  }
+
+  #home .primary-btn {
+    font-size: 13px !important;
+  }
+
+  /* Classic countdown */
+  #home .countdown-panel > p {
+    font-size: 26px !important;
+  }
+
+  #home .countdown-grid strong {
+    font-size: 29px !important;
+  }
+
+  #home .countdown-grid span {
+    font-size: 9px !important;
+    letter-spacing: .11em !important;
+  }
+
+  /* Home section cards */
+  #home .home-launcher-heading h2 {
+    font-size: 36px !important;
+    line-height: 1.05 !important;
+  }
+
+  #home .home-launcher-heading p:last-child {
+    font-size: 14px !important;
+    line-height: 1.45 !important;
+  }
+
+  #home .home-launcher-card strong {
+    font-size: 21px !important;
+    line-height: 1.05 !important;
+  }
+
+  #home .home-launcher-card small {
+    max-width: 145px !important;
+    font-size: 12px !important;
+    line-height: 1.35 !important;
+  }
+
+  /* Our Story */
+  #details .story-heading h2 {
+    font-size: 43px !important;
+    line-height: 1 !important;
+  }
+
+  #details .story-photo figcaption {
+    font-size: 10px !important;
+    line-height: 1.15 !important;
+  }
+
+  #details .story-message-card p {
+    font-size: 16px !important;
+    line-height: 1.6 !important;
+  }
+
+  #details .story-hashtag {
+    font-size: 15px !important;
+    line-height: 1.35 !important;
+    letter-spacing: .02em !important;
+    overflow-wrap: anywhere;
+  }
+
+  #details .story-gift-heading {
+    font-size: 31px !important;
+  }
+
+  #details .story-gift-guide p {
+    font-size: 14px !important;
+    line-height: 1.58 !important;
+  }
+
+  /* Schedule */
+  #schedule .schedule-card time {
+    font-size: 10px !important;
+  }
+
+  #schedule .schedule-card h3 {
+    font-size: 24px !important;
+    line-height: 1.1 !important;
+  }
+
+  #schedule .schedule-card p {
+    font-size: 14px !important;
+    line-height: 1.5 !important;
+  }
+
+  /* Entourage — previous mobile rules made names too small. */
+  #entourage .entourage-program-heading h2 {
+    font-size: clamp(46px, 14vw, 58px) !important;
+    line-height: .96 !important;
+  }
+
+  #entourage .entourage-program-heading .section-intro {
+    font-size: 15px !important;
+    line-height: 1.5 !important;
+  }
+
+  #entourage .entourage-subsection > h3 {
+    font-size: clamp(19px, 5.6vw, 23px) !important;
+    line-height: 1.08 !important;
+  }
+
+  #entourage .entourage-group-heading p,
+  #entourage .entourage-group.olive-group .entourage-group-heading p,
+  #entourage .entourage-group.burgundy-group .entourage-group-heading p,
+  #entourage .entourage-primary-row .entourage-group-heading p {
+    font-size: clamp(16px, 4.7vw, 19px) !important;
+    line-height: 1.08 !important;
+  }
+
+  #entourage .entourage-symbolic-row .entourage-group-heading p {
+    font-size: clamp(14px, 4.1vw, 17px) !important;
+    line-height: 1.12 !important;
+  }
+
+  #entourage .entourage-member span,
+  #entourage .entourage-group .entourage-member span,
+  #entourage .entourage-primary-column .entourage-member span {
+    font-size: clamp(11px, 3.25vw, 13px) !important;
+    line-height: 1.25 !important;
+    letter-spacing: .025em !important;
+  }
+
+  /* Attire */
+  #dress .dress-copy h2 {
+    font-size: clamp(36px, 11vw, 46px) !important;
+    line-height: 1.02 !important;
+  }
+
+  #dress .dress-copy p {
+    font-size: 15px !important;
+    line-height: 1.55 !important;
+  }
+
+  #dress .motif-swatch strong {
+    font-size: 11px !important;
+    line-height: 1.2 !important;
+  }
+
+  /* Venue */
+  #venue .venue-heading h2 {
+    font-size: clamp(36px, 11vw, 46px) !important;
+  }
+
+  #venue .venue-tab-label {
+    font-size: 14px !important;
+    line-height: 1.1 !important;
+  }
+
+  #venue .venue-tab-note {
+    font-size: 8px !important;
+    line-height: 1.2 !important;
+    letter-spacing: .07em !important;
+  }
+
+  #venue #venueHeadingDisplay {
+    font-size: 34px !important;
+    line-height: 1.05 !important;
+  }
+
+  #venue #venueFullAddressDisplay {
+    font-size: 15px !important;
+    line-height: 1.45 !important;
+  }
+
+  #venue .venue-meta-label {
+    font-size: 9px !important;
+  }
+
+  #venue .venue-meta-item strong,
+  #venue .venue-meta-item p,
+  #venue .venue-helper {
+    font-size: 14px !important;
+    line-height: 1.45 !important;
+  }
+
+  #venue .venue-detail-card h3 {
+    font-size: 38px !important;
+    line-height: 1 !important;
+  }
+
+  #venue .venue-detail-name {
+    font-size: 20px !important;
+    line-height: 1.2 !important;
+  }
+
+  #venue .venue-detail-row dt {
+    font-size: 9px !important;
+  }
+
+  #venue .venue-detail-row dd {
+    font-size: 17px !important;
+    line-height: 1.3 !important;
+  }
+
+  /* FAQs */
+  #faqs .faq-heading h2 {
+    font-size: clamp(36px, 11vw, 46px) !important;
+  }
+
+  #faqs .faq-item summary {
+    font-size: 17px !important;
+    line-height: 1.3 !important;
+  }
+
+  #faqs .faq-answer p {
+    font-size: 15px !important;
+    line-height: 1.6 !important;
+  }
+
+  /* RSVP */
+  #rsvp .rsvp-heading h2 {
+    font-size: clamp(38px, 12vw, 46px) !important;
+    line-height: 1 !important;
+  }
+
+  #rsvp .rsvp-heading #rsvpDeadlineDisplay {
+    font-size: 16px !important;
+    line-height: 1.45 !important;
+  }
+
+  #rsvp .rsvp-capacity-note {
+    font-size: 15px !important;
+    line-height: 1.55 !important;
+  }
+
+  #rsvp label,
+  #rsvp .form-help,
+  #rsvp .choice-card,
+  #rsvp .guest-found-card,
+  #rsvp .rsvp-result-card {
+    line-height: 1.45 !important;
+  }
+
+  #rsvp label {
+    font-size: 14px !important;
+  }
+
+  /* 16px inputs prevent iOS from auto-zooming the page. */
+  #rsvp input,
+  #rsvp select,
+  #rsvp textarea {
+    font-size: 16px !important;
+  }
+
+  #rsvp .form-help {
+    font-size: 13px !important;
+  }
+
+  #rsvp button,
+  #rsvp .primary-btn,
+  #rsvp .secondary-btn {
+    font-size: 14px !important;
+  }
+}
+
+@media (max-width: 380px) {
+  #home .invitation-copy h1 {
+    font-size: clamp(46px, 14vw, 56px) !important;
+  }
+
+  #home .home-launcher-card strong {
+    font-size: 19px !important;
+  }
+
+  #home .home-launcher-card small {
+    font-size: 11px !important;
+  }
+
+  #entourage .entourage-member span,
+  #entourage .entourage-group .entourage-member span,
+  #entourage .entourage-primary-column .entourage-member span {
+    font-size: 11px !important;
+  }
+
+  #venue .venue-tab-label {
+    font-size: 13px !important;
+  }
+
+  #details .story-hashtag {
+    font-size: 14px !important;
+  }
+}
