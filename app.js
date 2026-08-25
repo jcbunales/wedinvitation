@@ -2236,7 +2236,7 @@ function initialiseHomeScrollAnimations() {
 
 
 // Icon-based section navigation: Home acts as a section launcher and each tab opens one panel.
-const PUBLIC_SECTION_IDS = ["home", "details", "schedule", "entourage", "dress", "venue", "faqs", "rsvp"];
+const PUBLIC_SECTION_IDS = ["home", "details", "schedule", "entourage", "dress", "venue", "rsvp"];
 
 
 function playOurStoryPhotoAnimation() {

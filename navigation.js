@@ -1,5 +1,5 @@
 (() => {
-  const SECTION_IDS = ["home", "details", "schedule", "entourage", "dress", "venue", "faqs", "rsvp"];
+  const SECTION_IDS = ["home", "details", "schedule", "entourage", "dress", "venue", "rsvp"];
 
 
   function playOurStoryPhotoAnimation() {
