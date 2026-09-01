@@ -1098,6 +1098,36 @@ function findGuest(query) {
     || state.guests.find(g => g.name.toLowerCase().includes(needle) || (g.email && g.email.toLowerCase().includes(needle)));
 }
 
+
+function clearRsvpLookupError() {
+  const errorMessage = byId("rsvpLookupError");
+  const input = byId("guestLookup");
+  if (errorMessage) {
+    errorMessage.textContent = "";
+    errorMessage.classList.add("hidden");
+  }
+  if (input) {
+    input.classList.remove("has-error");
+    input.removeAttribute("aria-invalid");
+    input.removeAttribute("aria-describedby");
+  }
+}
+
+function showRsvpLookupError(message) {
+  const errorMessage = byId("rsvpLookupError");
+  const input = byId("guestLookup");
+  if (errorMessage) {
+    errorMessage.textContent = message;
+    errorMessage.classList.remove("hidden");
+  }
+  if (input) {
+    input.classList.add("has-error");
+    input.setAttribute("aria-invalid", "true");
+    input.setAttribute("aria-describedby", "rsvpLookupError");
+    input.focus({ preventScroll: true });
+  }
+}
+
 async function lookupGuest(query) {
   const value = query.trim();
   if (!value) return null;
@@ -1122,16 +1152,63 @@ function setRsvpDisplayMode(mode = "lookup") {
   form.classList.toggle("is-success-mode", successMode);
 }
 
+function splitAdditionalGuestNames(value = "") {
+  if (!value) return [];
+  return String(value)
+    .split(/\s*\|\s*|\s*;\s*|\n+/)
+    .map(name => name.trim())
+    .filter(Boolean);
+}
+
+function renderAdditionalGuestNameFields(count = 0, existingNames = []) {
+  const list = byId("plusOneNamesList");
+  if (!list) return;
+
+  const currentNames = Array.from(list.querySelectorAll(".plus-one-name-input")).map(input => input.value.trim());
+  const names = currentNames.length ? currentNames : existingNames;
+
+  list.innerHTML = Array.from({ length: Math.max(0, count) }, (_, index) => {
+    const guestNumber = index + 2;
+    const value = names[index] || "";
+    return `
+      <div class="plus-one-name-entry">
+        <label for="plusOneName${guestNumber}">Guest ${guestNumber} name</label>
+        <input
+          id="plusOneName${guestNumber}"
+          class="plus-one-name-input"
+          type="text"
+          value="${escapeHtml(value)}"
+          placeholder="Guest ${guestNumber} name"
+          autocomplete="name"
+          required
+        />
+      </div>`;
+  }).join("");
+}
+
 function showRsvpGuest(guest) {
   activeGuestId = guest.id;
   activeGuestRecord = guest;
   setRsvpDisplayMode("response");
   byId("foundGuestName").textContent = guest.name;
   const select = byId("partyAttending");
-  select.innerHTML = Array.from({ length: guest.partySize }, (_, i) => `<option value="${i + 1}">${i + 1}</option>`).join("");
-  select.value = String(Math.max(1, guest.attendingCount || 1));
+  const partySize = Math.max(1, Number(guest.partySize || 1));
+  const maxAdditionalGuests = Math.max(0, partySize - 1);
+  const savedTotalAttending = Math.max(0, Number(guest.attendingCount || 0));
+  const savedAdditionalAttending = guest.status === "Attending"
+    ? Math.max(0, Math.min(maxAdditionalGuests, savedTotalAttending - 1))
+    : 0;
+
+  // The primary invited guest is counted automatically. This selector only
+  // controls how many additional invited guests are attending.
+  select.innerHTML = Array.from({ length: maxAdditionalGuests + 1 }, (_, i) => `<option value="${i}">${i}</option>`).join("");
+  select.value = String(savedAdditionalAttending);
+
+  const countField = byId("rsvpAttendingCount");
+  if (countField) countField.classList.toggle("hidden", partySize === 1);
+
   document.querySelectorAll('input[name="attendance"]').forEach(el => el.checked = el.value === guest.status);
-  byId("plusOneName").value = guest.plusOneName || "";
+  renderAdditionalGuestNameFields(0, splitAdditionalGuestNames(guest.plusOneName || ""));
   byId("rsvpLookupStep").classList.add("hidden");
   byId("rsvpSuccess").classList.add("hidden");
   byId("rsvpResponseStep").classList.remove("hidden");
@@ -1143,6 +1220,7 @@ function resetRsvp() {
   activeGuestRecord = null;
   setRsvpDisplayMode("lookup");
   byId("guestLookup").value = "";
+  clearRsvpLookupError();
   byId("rsvpResponseStep").classList.add("hidden");
   byId("rsvpSuccess").classList.add("hidden");
   byId("rsvpLookupStep").classList.remove("hidden");
@@ -1150,16 +1228,48 @@ function resetRsvp() {
 
 function togglePlusOneField() {
   const attendance = document.querySelector('input[name="attendance"]:checked')?.value;
-  const attendingCount = Number(byId("partyAttending")?.value || 0);
+  const partySize = Math.max(1, Number(activeGuestRecord?.partySize || 1));
+  const maxAdditionalGuests = Math.max(0, partySize - 1);
+  const selectedAdditionalGuests = partySize === 1
+    ? 0
+    : Math.max(0, Math.min(maxAdditionalGuests, Number(byId("partyAttending")?.value || 0)));
   const plusOneField = byId("plusOneField");
-  const shouldShow = attendance === "Attending" && attendingCount >= 2;
+  const additionalGuestCount = attendance === "Attending" ? selectedAdditionalGuests : 0;
+  const shouldShow = additionalGuestCount > 0;
+
   if (plusOneField) plusOneField.classList.toggle("hidden", !shouldShow);
-  if (!shouldShow && byId("plusOneName")) byId("plusOneName").value = "";
+
+  if (shouldShow) {
+    const existingNames = splitAdditionalGuestNames(activeGuestRecord?.plusOneName || "");
+    renderAdditionalGuestNameFields(additionalGuestCount, existingNames);
+  } else {
+    renderAdditionalGuestNameFields(0);
+  }
 }
 
 function toggleAttendingFields() {
   const val = document.querySelector('input[name="attendance"]:checked')?.value;
-  byId("attendingFields").classList.toggle("hidden", val === "Declined");
+  const attendingFields = byId("attendingFields");
+  const partySize = Math.max(1, Number(activeGuestRecord?.partySize || 1));
+
+  // Only show the additional-guest controls when the invitation allows
+  // more than one person AND the main guest joyfully accepts.
+  const shouldShowAttendingFields = val === "Attending" && partySize > 1;
+
+  if (attendingFields) attendingFields.classList.toggle("hidden", !shouldShowAttendingFields);
+
+  // Single-person invitations must never expose any additional guest UI.
+  if (partySize <= 1) {
+    const countField = byId("rsvpAttendingCount");
+    const plusOneField = byId("plusOneField");
+    const select = byId("partyAttending");
+    if (countField) countField.classList.add("hidden");
+    if (plusOneField) plusOneField.classList.add("hidden");
+    if (select) select.value = "0";
+    renderAdditionalGuestNameFields(0);
+    return;
+  }
+
   togglePlusOneField();
 }
 
@@ -1167,21 +1277,36 @@ document.querySelectorAll('input[name="attendance"]').forEach(el => el.addEventL
 byId("partyAttending").addEventListener("change", togglePlusOneField);
 byId("findInvitationBtn").addEventListener("click", async () => {
   const button = byId("findInvitationBtn");
+  const lookupInput = byId("guestLookup");
+  const query = lookupInput.value.trim();
+
+  clearRsvpLookupError();
+
+  if (!query) {
+    showRsvpLookupError("Please enter the full name or email address shown on your invitation.");
+    return;
+  }
+
   button.disabled = true;
   const originalText = button.textContent;
   button.textContent = "Searching…";
   try {
-    const guest = await lookupGuest(byId("guestLookup").value);
-    if (!guest) return showToast("We couldn't find that invitation. Try the exact full name or email address.");
+    const guest = await lookupGuest(query);
+    if (!guest) {
+      showRsvpLookupError("Invitation not found. Please check the spelling and enter your full name exactly as it appears on your invitation.");
+      return;
+    }
+    clearRsvpLookupError();
     showRsvpGuest(guest);
   } catch (error) {
     console.error(error);
-    showToast("Could not check the invitation right now. Please try again.");
+    showRsvpLookupError("We couldn't check your invitation right now. Please try again in a moment.");
   } finally {
     button.disabled = false;
     button.textContent = originalText;
   }
 });
+byId("guestLookup").addEventListener("input", clearRsvpLookupError);
 byId("guestLookup").addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); byId("findInvitationBtn").click(); } });
 byId("backToLookupBtn").addEventListener("click", resetRsvp);
 byId("submitAnotherBtn").addEventListener("click", resetRsvp);
@@ -1193,9 +1318,22 @@ byId("rsvpForm").addEventListener("submit", async e => {
   if (!attendance) return showToast("Please choose whether you can attend.");
 
   guest.status = attendance;
-  guest.attendingCount = attendance === "Attending" ? Number(byId("partyAttending").value) : 0;
+  const invitedPartySize = Math.max(1, Number(guest.partySize || 1));
+  const maxAdditionalGuests = Math.max(0, invitedPartySize - 1);
+  const selectedAdditionalGuests = invitedPartySize === 1
+    ? 0
+    : Math.max(0, Math.min(maxAdditionalGuests, Number(byId("partyAttending").value || 0)));
+
+  // attendingCount remains the TOTAL attending count in storage/stats:
+  // primary invited guest (1) + selected additional guests.
+  guest.attendingCount = attendance === "Attending" ? 1 + selectedAdditionalGuests : 0;
   guest.mealChoice = "";
-  guest.plusOneName = attendance === "Attending" && guest.attendingCount >= 2 ? byId("plusOneName").value.trim() : "";
+  guest.plusOneName = attendance === "Attending" && guest.attendingCount >= 2
+    ? Array.from(document.querySelectorAll("#plusOneNamesList .plus-one-name-input"))
+        .map(input => input.value.trim())
+        .filter(Boolean)
+        .join(" | ")
+    : "";
   guest.dietaryNotes = "";
   guest.respondedAt = new Date().toISOString();
 
@@ -1423,7 +1561,7 @@ function renderConfirmations() {
       <div><h3>${escapeHtml(g.name)}</h3><p>${escapeHtml(g.email || g.phone || "No contact saved")} · ${formatResponseTime(g.respondedAt)}</p></div>
       <div class="confirmation-field"><span>Status</span><strong><span class="status-pill ${g.status}">${g.status}</span></strong></div>
       <div class="confirmation-field"><span>Attending</span><strong>${g.status === "Attending" ? `${g.attendingCount} / ${g.partySize}` : "0"}</strong></div>
-      <div class="confirmation-field"><span>Guest / plus-one</span><strong>${escapeHtml(g.plusOneName || "—")}</strong></div>
+      <div class="confirmation-field"><span>Additional guest names</span><strong>${escapeHtml(g.plusOneName || "—")}</strong></div>
     </article>`).join("") : `<div class="admin-card"><p>No RSVP responses yet.</p></div>`;
 }
 

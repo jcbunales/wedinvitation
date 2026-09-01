@@ -15838,3 +15838,76 @@ body.section-tab-mode #home.is-active-section .invitation-copy h1 {
     line-height: 1.6 !important;
   }
 }
+
+
+/* =========================================================
+   RSVP — invitation-aware attendance and multiple guest names
+   ========================================================= */
+#rsvp .plus-one-heading {
+  display: block;
+  margin-bottom: 10px;
+  color: #315f4c;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: .02em;
+}
+
+#rsvp .plus-one-names-list {
+  display: grid;
+  gap: 12px;
+}
+
+#rsvp .plus-one-name-entry {
+  min-width: 0;
+}
+
+#rsvp .plus-one-name-entry label {
+  display: block;
+  margin-bottom: 6px;
+}
+
+#rsvp .plus-one-name-entry input {
+  width: 100%;
+}
+
+@media (max-width: 560px) {
+  #rsvp .plus-one-names-list {
+    gap: 10px;
+  }
+}
+
+
+/* =========================================================
+   RSVP — clear inline invitation lookup error
+   ========================================================= */
+#rsvp .rsvp-lookup-error {
+  width: 100%;
+  margin: 10px 0 0;
+  padding: 11px 13px;
+  color: #7d2f2f;
+  background: rgba(255, 246, 241, .94);
+  border: 1px solid rgba(156, 74, 63, .28);
+  border-left: 3px solid #9c4a3f;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.45;
+  text-align: left;
+}
+
+#rsvp .rsvp-invitation-form #guestLookup.has-error {
+  border-color: #9c4a3f !important;
+  box-shadow: 0 0 0 3px rgba(156, 74, 63, .10) !important;
+}
+
+#rsvp .rsvp-lookup-error.hidden {
+  display: none !important;
+}
+
+@media (max-width: 620px) {
+  #rsvp .rsvp-lookup-error {
+    margin-top: 9px;
+    padding: 10px 12px;
+    font-size: 13px !important;
+  }
+}

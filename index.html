@@ -391,6 +391,7 @@
                 <button type="button" id="findInvitationBtn" class="primary-btn compact">Find invitation</button>
               </div>
               <p class="form-help">Use the name or email address that appears on your invitation.</p>
+              <p id="rsvpLookupError" class="rsvp-lookup-error hidden" role="alert" aria-live="polite"></p>
             </div>
 
             <div id="rsvpResponseStep" class="hidden">
@@ -413,14 +414,14 @@
                 </div>
               </fieldset>
 
-              <div id="attendingFields">
-                <div class="rsvp-attending-count">
-                  <label for="partyAttending">Guests attending</label>
+              <div id="attendingFields" class="hidden">
+                <div id="rsvpAttendingCount" class="rsvp-attending-count">
+                  <label for="partyAttending">Additional guests attending</label>
                   <select id="partyAttending"></select>
                 </div>
                 <div id="plusOneField" class="plus-one-field hidden">
-                  <label for="plusOneName">Guest / plus-one name</label>
-                  <input id="plusOneName" type="text" placeholder="Guest / plus-one name" />
+                  <span class="plus-one-heading">Additional guest names</span>
+                  <div id="plusOneNamesList" class="plus-one-names-list"></div>
                 </div>
               </div>
 
