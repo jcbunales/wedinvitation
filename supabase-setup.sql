@@ -6,8 +6,8 @@ create extension if not exists pgcrypto;
 
 create table if not exists public.wedding_settings (
   id integer primary key default 1 check (id = 1),
-  partner_one text not null default 'Olivia',
-  partner_two text not null default 'Ethan',
+  partner_one text not null default 'Princess Joy',
+  partner_two text not null default 'Georgio Christian',
   wedding_date date not null default '2026-08-24',
   wedding_time time not null default '16:00',
   rsvp_deadline date not null default '2026-07-01',
@@ -54,8 +54,8 @@ insert into public.wedding_settings (
 )
 values (
   1,
-  'Olivia',
-  'Ethan',
+  'Princess Joy',
+  'Georgio Christian',
   '2026-08-24',
   '16:00',
   '2026-07-01',

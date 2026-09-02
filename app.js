@@ -2,8 +2,8 @@ const STORAGE_KEY = "fernWeddingSite_v1";
 
 const defaultState = {
   wedding: {
-    partnerOne: "Olivia",
-    partnerTwo: "Ethan",
+    partnerOne: "Princess Joy",
+    partnerTwo: "Georgio Christian",
     weddingDate: "2026-08-24",
     weddingTime: "16:00",
     rsvpDeadline: "2026-07-01",
